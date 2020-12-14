@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\infrastructure\LSS.HCM.Core.Infrastructure\LSS.HCM.Core.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\security\LSS.HCM.Core.Security\LSS.HCM.Core.Security.csproj" />
+    <ProjectReference Include="..\LSS.HCM.Core.Common\LSS.HCM.Core.Common.csproj" />
+    <ProjectReference Include="..\LSS.HCM.Core.DataObjects\LSS.HCM.Core.DataObjects.csproj" />
+  </ItemGroup>
+
+</Project>
