@@ -579,23 +579,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Hasan\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\pc\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Box24\\Project Execution\\Source Code\\HCM\\LockerStationSoftware\\lib\\domain\\common\\LSS.HCM.Core.DataObjects\\LSS.HCM.Core.DataObjects.csproj",
+      "projectUniqueName": "D:\\Hardware Contol Library\\lib\\domain\\common\\LSS.HCM.Core.DataObjects\\LSS.HCM.Core.DataObjects.csproj",
       "projectName": "LSS.HCM.Core.DataObjects",
-      "projectPath": "C:\\Box24\\Project Execution\\Source Code\\HCM\\LockerStationSoftware\\lib\\domain\\common\\LSS.HCM.Core.DataObjects\\LSS.HCM.Core.DataObjects.csproj",
-      "packagesPath": "C:\\Users\\Hasan\\.nuget\\packages\\",
-      "outputPath": "C:\\Box24\\Project Execution\\Source Code\\HCM\\LockerStationSoftware\\lib\\domain\\common\\LSS.HCM.Core.DataObjects\\obj\\",
+      "projectPath": "D:\\Hardware Contol Library\\lib\\domain\\common\\LSS.HCM.Core.DataObjects\\LSS.HCM.Core.DataObjects.csproj",
+      "packagesPath": "C:\\Users\\pc\\.nuget\\packages\\",
+      "outputPath": "D:\\Hardware Contol Library\\lib\\domain\\common\\LSS.HCM.Core.DataObjects\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-      ],
       "configFilePaths": [
-        "C:\\Users\\Hasan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\pc\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -607,12 +603,13 @@
       },
       "frameworks": {
         "netstandard2.0": {
+          "targetAlias": "netstandard2.0",
           "projectReferences": {
-            "C:\\Box24\\Project Execution\\Source Code\\HCM\\LockerStationSoftware\\lib\\domain\\common\\LSS.HCM.Core.Common\\LSS.HCM.Core.Common.csproj": {
-              "projectPath": "C:\\Box24\\Project Execution\\Source Code\\HCM\\LockerStationSoftware\\lib\\domain\\common\\LSS.HCM.Core.Common\\LSS.HCM.Core.Common.csproj"
+            "D:\\Hardware Contol Library\\lib\\domain\\common\\LSS.HCM.Core.Common\\LSS.HCM.Core.Common.csproj": {
+              "projectPath": "D:\\Hardware Contol Library\\lib\\domain\\common\\LSS.HCM.Core.Common\\LSS.HCM.Core.Common.csproj"
             },
-            "C:\\Box24\\Project Execution\\Source Code\\HCM\\LockerStationSoftware\\lib\\domain\\core\\LSS.HCM.Core.Entities\\LSS.HCM.Core.Entities.csproj": {
-              "projectPath": "C:\\Box24\\Project Execution\\Source Code\\HCM\\LockerStationSoftware\\lib\\domain\\core\\LSS.HCM.Core.Entities\\LSS.HCM.Core.Entities.csproj"
+            "D:\\Hardware Contol Library\\lib\\domain\\core\\LSS.HCM.Core.Entities\\LSS.HCM.Core.Entities.csproj": {
+              "projectPath": "D:\\Hardware Contol Library\\lib\\domain\\core\\LSS.HCM.Core.Entities\\LSS.HCM.Core.Entities.csproj"
             }
           }
         }
@@ -625,6 +622,7 @@
     },
     "frameworks": {
       "netstandard2.0": {
+        "targetAlias": "netstandard2.0",
         "dependencies": {
           "MongoDB.Bson": {
             "target": "Package",
@@ -647,7 +645,7 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.101\\RuntimeIdentifierGraph.json"
       }
     }
   }

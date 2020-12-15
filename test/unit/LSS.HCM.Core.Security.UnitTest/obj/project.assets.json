@@ -3217,23 +3217,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Hasan\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\pc\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Box24\\Project Execution\\Source Code\\HCM\\LockerStationSoftware\\test\\unit\\LSS.HCM.Core.Security.UnitTest\\LSS.HCM.Core.Security.UnitTest.csproj",
+      "projectUniqueName": "D:\\Hardware Contol Library\\test\\unit\\LSS.HCM.Core.Security.UnitTest\\LSS.HCM.Core.Security.UnitTest.csproj",
       "projectName": "LSS.HCM.Core.Security.UnitTest",
-      "projectPath": "C:\\Box24\\Project Execution\\Source Code\\HCM\\LockerStationSoftware\\test\\unit\\LSS.HCM.Core.Security.UnitTest\\LSS.HCM.Core.Security.UnitTest.csproj",
-      "packagesPath": "C:\\Users\\Hasan\\.nuget\\packages\\",
-      "outputPath": "C:\\Box24\\Project Execution\\Source Code\\HCM\\LockerStationSoftware\\test\\unit\\LSS.HCM.Core.Security.UnitTest\\obj\\",
+      "projectPath": "D:\\Hardware Contol Library\\test\\unit\\LSS.HCM.Core.Security.UnitTest\\LSS.HCM.Core.Security.UnitTest.csproj",
+      "packagesPath": "C:\\Users\\pc\\.nuget\\packages\\",
+      "outputPath": "D:\\Hardware Contol Library\\test\\unit\\LSS.HCM.Core.Security.UnitTest\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-      ],
       "configFilePaths": [
-        "C:\\Users\\Hasan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\pc\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -3245,12 +3241,13 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "C:\\Box24\\Project Execution\\Source Code\\HCM\\LockerStationSoftware\\lib\\domain\\security\\LSS.HCM.Core.Security\\LSS.HCM.Core.Security.csproj": {
-              "projectPath": "C:\\Box24\\Project Execution\\Source Code\\HCM\\LockerStationSoftware\\lib\\domain\\security\\LSS.HCM.Core.Security\\LSS.HCM.Core.Security.csproj"
+            "D:\\Hardware Contol Library\\lib\\domain\\security\\LSS.HCM.Core.Security\\LSS.HCM.Core.Security.csproj": {
+              "projectPath": "D:\\Hardware Contol Library\\lib\\domain\\security\\LSS.HCM.Core.Security\\LSS.HCM.Core.Security.csproj"
             },
-            "C:\\Box24\\Project Execution\\Source Code\\HCM\\LockerStationSoftware\\test\\unit\\LSS.HCM.UnitTest.DependencyResolver\\LSS.HCM.UnitTest.DependencyResolver.csproj": {
-              "projectPath": "C:\\Box24\\Project Execution\\Source Code\\HCM\\LockerStationSoftware\\test\\unit\\LSS.HCM.UnitTest.DependencyResolver\\LSS.HCM.UnitTest.DependencyResolver.csproj"
+            "D:\\Hardware Contol Library\\test\\unit\\LSS.HCM.UnitTest.DependencyResolver\\LSS.HCM.UnitTest.DependencyResolver.csproj": {
+              "projectPath": "D:\\Hardware Contol Library\\test\\unit\\LSS.HCM.UnitTest.DependencyResolver\\LSS.HCM.UnitTest.DependencyResolver.csproj"
             }
           }
         }
@@ -3263,6 +3260,7 @@
     },
     "frameworks": {
       "netcoreapp3.1": {
+        "targetAlias": "netcoreapp3.1",
         "dependencies": {
           "Microsoft.AspNetCore": {
             "target": "Package",
@@ -3300,7 +3298,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.101\\RuntimeIdentifierGraph.json"
       }
     }
   }

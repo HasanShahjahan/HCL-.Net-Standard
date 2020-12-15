@@ -2037,23 +2037,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Hasan\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\pc\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Box24\\Project Execution\\Source Code\\HCM\\LockerStationSoftware\\lib\\presentation\\HardwareControlModule.TestCaller\\HardwareControlModule.TestCaller.csproj",
+      "projectUniqueName": "D:\\Hardware Contol Library\\lib\\presentation\\HardwareControlModule.TestCaller\\HardwareControlModule.TestCaller.csproj",
       "projectName": "HardwareControlModule.TestCaller",
-      "projectPath": "C:\\Box24\\Project Execution\\Source Code\\HCM\\LockerStationSoftware\\lib\\presentation\\HardwareControlModule.TestCaller\\HardwareControlModule.TestCaller.csproj",
-      "packagesPath": "C:\\Users\\Hasan\\.nuget\\packages\\",
-      "outputPath": "C:\\Box24\\Project Execution\\Source Code\\HCM\\LockerStationSoftware\\lib\\presentation\\HardwareControlModule.TestCaller\\obj\\",
+      "projectPath": "D:\\Hardware Contol Library\\lib\\presentation\\HardwareControlModule.TestCaller\\HardwareControlModule.TestCaller.csproj",
+      "packagesPath": "C:\\Users\\pc\\.nuget\\packages\\",
+      "outputPath": "D:\\Hardware Contol Library\\lib\\presentation\\HardwareControlModule.TestCaller\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-      ],
       "configFilePaths": [
-        "C:\\Users\\Hasan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\pc\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -2065,9 +2061,10 @@
       },
       "frameworks": {
         "netcoreapp2.0": {
+          "targetAlias": "netcoreapp2.0",
           "projectReferences": {
-            "C:\\Box24\\Project Execution\\Source Code\\HCM\\LockerStationSoftware\\lib\\domain\\core\\LSS.HCM.Core.Domain\\LSS.HCM.Core.Domain.csproj": {
-              "projectPath": "C:\\Box24\\Project Execution\\Source Code\\HCM\\LockerStationSoftware\\lib\\domain\\core\\LSS.HCM.Core.Domain\\LSS.HCM.Core.Domain.csproj"
+            "D:\\Hardware Contol Library\\lib\\domain\\core\\LSS.HCM.Core.Domain\\LSS.HCM.Core.Domain.csproj": {
+              "projectPath": "D:\\Hardware Contol Library\\lib\\domain\\core\\LSS.HCM.Core.Domain\\LSS.HCM.Core.Domain.csproj"
             }
           }
         }
@@ -2080,6 +2077,7 @@
     },
     "frameworks": {
       "netcoreapp2.0": {
+        "targetAlias": "netcoreapp2.0",
         "dependencies": {
           "Microsoft.NETCore.App": {
             "suppressParent": "All",
@@ -2102,7 +2100,7 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.101\\RuntimeIdentifierGraph.json"
       }
     }
   }

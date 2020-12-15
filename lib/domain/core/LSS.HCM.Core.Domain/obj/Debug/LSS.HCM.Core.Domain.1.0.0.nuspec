@@ -4,7 +4,6 @@
     <id>LSS.HCM.Core.Domain</id>
     <version>1.0.0</version>
     <authors>Hasan Shahjahan</authors>
-    <owners>Hasan Shahjahan</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Hardware Control API (HWAPI) brings hardware communication and collaboration into one place so you can get all the hardware status from one place, whether you belong to a large enterprise or a small project.</description>
     <dependencies>
@@ -17,6 +16,6 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="C:\Box24\Project Execution\Source Code\HCM\LockerStationSoftware\lib\domain\core\LSS.HCM.Core.Domain\bin\Debug\netstandard2.0\LSS.HCM.Core.Domain.dll" target="lib\netstandard2.0\LSS.HCM.Core.Domain.dll" />
+    <file src="D:\Hardware Contol Library\lib\domain\core\LSS.HCM.Core.Domain\bin\Debug\netstandard2.0\LSS.HCM.Core.Domain.dll" target="lib\netstandard2.0\LSS.HCM.Core.Domain.dll" />
   </files>
 </package>

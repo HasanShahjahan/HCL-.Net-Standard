@@ -1,23 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Box24\\Project Execution\\Source Code\\HCM\\LockerStationSoftware\\test\\unit\\LSS.HCM.UnitTest.DependencyResolver\\LSS.HCM.UnitTest.DependencyResolver.csproj": {}
+    "D:\\Hardware Contol Library\\test\\unit\\LSS.HCM.UnitTest.DependencyResolver\\LSS.HCM.UnitTest.DependencyResolver.csproj": {}
   },
   "projects": {
-    "C:\\Box24\\Project Execution\\Source Code\\HCM\\LockerStationSoftware\\test\\unit\\LSS.HCM.UnitTest.DependencyResolver\\LSS.HCM.UnitTest.DependencyResolver.csproj": {
+    "D:\\Hardware Contol Library\\test\\unit\\LSS.HCM.UnitTest.DependencyResolver\\LSS.HCM.UnitTest.DependencyResolver.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Box24\\Project Execution\\Source Code\\HCM\\LockerStationSoftware\\test\\unit\\LSS.HCM.UnitTest.DependencyResolver\\LSS.HCM.UnitTest.DependencyResolver.csproj",
+        "projectUniqueName": "D:\\Hardware Contol Library\\test\\unit\\LSS.HCM.UnitTest.DependencyResolver\\LSS.HCM.UnitTest.DependencyResolver.csproj",
         "projectName": "LSS.HCM.UnitTest.DependencyResolver",
-        "projectPath": "C:\\Box24\\Project Execution\\Source Code\\HCM\\LockerStationSoftware\\test\\unit\\LSS.HCM.UnitTest.DependencyResolver\\LSS.HCM.UnitTest.DependencyResolver.csproj",
-        "packagesPath": "C:\\Users\\Hasan\\.nuget\\packages\\",
-        "outputPath": "C:\\Box24\\Project Execution\\Source Code\\HCM\\LockerStationSoftware\\test\\unit\\LSS.HCM.UnitTest.DependencyResolver\\obj\\",
+        "projectPath": "D:\\Hardware Contol Library\\test\\unit\\LSS.HCM.UnitTest.DependencyResolver\\LSS.HCM.UnitTest.DependencyResolver.csproj",
+        "packagesPath": "C:\\Users\\pc\\.nuget\\packages\\",
+        "outputPath": "D:\\Hardware Contol Library\\test\\unit\\LSS.HCM.UnitTest.DependencyResolver\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Hasan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\pc\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -29,6 +26,7 @@
         },
         "frameworks": {
           "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
             "projectReferences": {}
           }
         },
@@ -40,6 +38,7 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
           "dependencies": {
             "Microsoft.AspNetCore.Hosting.Abstractions": {
               "target": "Package",
@@ -77,7 +76,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     }

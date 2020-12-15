@@ -1,11 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "7SklyP32lHHkJjeDKGvVmvhpqqj6Jlg+bs7RittJy75nhIYLUvpqX1zufWz240S11TWyzLHFN9k/QhQkxOF7EQ==",
+  "dgSpecHash": "QoILd6mMd9JR0jXRxz1dAIo4tzLkSm9+sUVb+1RDgdxNGQN3kBSfi7kqaQq2c6u4mQYKVvNFpaKjDR8H1hvEfw==",
   "success": true,
-  "projectFilePath": "C:\\Box24\\Project Execution\\Source Code\\HCM\\LockerStationSoftware\\lib\\domain\\core\\LSS.HCM.Core.Entities\\LSS.HCM.Core.Entities.csproj",
+  "projectFilePath": "D:\\Hardware Contol Library\\lib\\domain\\core\\LSS.HCM.Core.Entities\\LSS.HCM.Core.Entities.csproj",
   "expectedPackageFiles": [
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"
+    "C:\\Users\\pc\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\pc\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"
   ],
   "logs": []
 }
