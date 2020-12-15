@@ -2,9 +2,10 @@
 using LSS.HCM.Core.DataObjects.Settings;
 using System;
 using System.Collections.Generic;
-using CompartmentConfig = LSS.HCM.Core.DataObjects.Settings.Compartment;
+using CompartmentConfiguration = LSS.HCM.Core.DataObjects.Settings.Compartment;
 using Compartment = LSS.HCM.Core.Entities.Locker.Compartment;
 using LSS.HCM.Core.Domain.Helpers;
+using System.Linq;
 
 namespace LSS.HCM.Core.Domain.Services
 {
@@ -28,23 +29,27 @@ namespace LSS.HCM.Core.Domain.Services
             return compartmentResult;
         }
 
-        public static List<Compartment> CompartmentStatus(LockerConfiguration lockerConfiguration)
+        public static List<Compartment> CompartmentStatus(DataObjects.Models.Compartment model, LockerConfiguration lockerConfiguration)
         {
             // Find locker controller board module id and object detection module id list
             var lcbModuleList = new List<string> { };
             var odbModuleList = new List<string> { };
-            List<CompartmentConfig> compartments = lockerConfiguration.Compartments;
-            foreach (CompartmentConfig compatment in compartments)
+            List<CompartmentConfiguration> compartments = lockerConfiguration.Compartments;
+           
+            if (model.CompartmentIds.Any(CompartmentId => CompartmentId == "All")) model.CompartmentIds = lockerConfiguration.Compartments.Select(compartment => compartment.CompartmentId).ToArray();
+           
+            foreach (var compartmentId in model.CompartmentIds)
             {
-                // Get locker controller module id
-                if (!lcbModuleList.Contains(compatment.CompartmentCode.Lcbmod))
+                var compartment = compartments.Find(c => c.CompartmentId == compartmentId);
+                if (!odbModuleList.Contains(compartment.CompartmentCode.Odbmod)) // Get object detection module id
                 {
-                    lcbModuleList.Add(compatment.CompartmentCode.Lcbmod);
+                    odbModuleList.Add(compartment.CompartmentCode.Odbmod);
                 }
-                // Get object detection module id
-                if (!odbModuleList.Contains(compatment.CompartmentCode.Odbmod))
+
+                // Get locker controller module id
+                if (!lcbModuleList.Contains(compartment.CompartmentCode.Lcbmod))
                 {
-                    odbModuleList.Add(compatment.CompartmentCode.Odbmod);
+                    lcbModuleList.Add(compartment.CompartmentCode.Lcbmod);
                 }
             }
 
@@ -61,7 +66,7 @@ namespace LSS.HCM.Core.Domain.Services
                 objectdetectStatusAry[moduleNo] = CompartmentHelper.GetStatusByModuleId(CommandType.ItemDetection ,moduleNo);
             }
 
-            foreach (CompartmentConfig compatment in compartments)
+            foreach (CompartmentConfiguration compatment in compartments)
             {
                 Dictionary<string, byte> opendoorStatus = opendoorStatusAry[compatment.CompartmentCode.Lcbmod]; //[compatment.CompartmentCode.Lcbid];
                 Dictionary<string, byte> objectdetectStatus = objectdetectStatusAry[compatment.CompartmentCode.Odbmod]; //[compatment.CompartmentCode.Odbid];
@@ -70,7 +75,7 @@ namespace LSS.HCM.Core.Domain.Services
                                                                  compatment.CompartmentSize,
                                                                  opendoorStatus[compatment.CompartmentCode.Lcbid] == 0 ? true : false,
                                                                  opendoorStatus[compatment.CompartmentCode.Lcbid] == 0 ? false : true,
-                                                                 objectdetectStatus[compatment.CompartmentCode.Odbid] == 0 ? true : false,
+                                                                 objectdetectStatus[compatment.CompartmentCode.Odbid] == 1 ? true : false,
                                                                  opendoorStatus[compatment.CompartmentCode.Lcbid] == 0 ? "ON" : "OFF");
                 compartmentList.Add(compartmentResult);
             }

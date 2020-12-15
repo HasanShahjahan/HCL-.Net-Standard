@@ -20,6 +20,7 @@ namespace LSS.HCM.Core.Common.Exceptions
         public const string InvalidCaptureType = "INVALID_IMAGE_CAPTURE_TYPE";
 
         public const string MongoDbConnectionProblem = "MONGODB_CONNECTION_ERROR";
+        public const string InternalServerError = "INTERNAL_SERVER_ERROR";
         public static string GetMessage(string value)
         {
             switch (value)

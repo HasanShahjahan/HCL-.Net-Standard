@@ -3,35 +3,30 @@ using LSS.HCM.Core.DataObjects.Settings;
 using LSS.HCM.Core.Domain.Helpers;
 using LSS.HCM.Core.Domain.Services;
 using LSS.HCM.Core.Entities.Locker;
-using LSS.HCM.Core.Infrastructure.Repository;
 using MongoDB.Driver;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using CompartmentConfig = LSS.HCM.Core.DataObjects.Settings.Compartment;
+using CompartmentConfiguration = LSS.HCM.Core.DataObjects.Settings.Compartment;
 
 namespace LSS.HCM.Core.Domain.Managers
 {
     public sealed class CompartmentManager
     {
-        public static Locker CompartmentOpen(DataObjects.Models.Compartment model) 
+        public static Locker CompartmentOpen(DataObjects.Models.Compartment model, LockerConfiguration lockerConfiguration) 
         {
-            var lockerConfiguration = Repository<LockerConfiguration>.Get(model.DataBaseCredentials.ConnectionString, model.DataBaseCredentials.DatabaseName, model.DataBaseCredentials.CollectionName).Find(configuration => configuration.LockerId == model.LockerId).FirstOrDefault();
-            // Find  object detection module id list by input list of compartment
-            var odbModuleList = new List<string> { };
-            List<CompartmentConfig> compartments = lockerConfiguration.Compartments;
-            foreach (CompartmentConfig compatment in compartments)
+            var odbModuleList = new List<string> { }; // Find  object detection module id list by input list of compartment
+            List<CompartmentConfiguration> compartments = lockerConfiguration.Compartments;
+
+            if (model.CompartmentIds.Any(CompartmentId => CompartmentId == "All")) model.CompartmentIds = lockerConfiguration.Compartments.Select(compartment => compartment.CompartmentId).ToArray();
+            foreach (var compartmentId in model.CompartmentIds) 
             {
-                if (model.CompartmentIds.Contains(compatment.CompartmentId))
+                var compartment = compartments.Find(c => c.CompartmentId == compartmentId);
+                if (!odbModuleList.Contains(compartment.CompartmentCode.Odbmod)) // Get object detection module id
                 {
-                    // Get object detection module id
-                    if (!odbModuleList.Contains(compatment.CompartmentCode.Odbmod))
-                    {
-                        odbModuleList.Add(compatment.CompartmentCode.Odbmod);
-                    }
+                    odbModuleList.Add(compartment.CompartmentCode.Odbmod);
                 }
             }
-
+            
             // Update object detection status of selected modules
             var objectdetectStatusAry = new Dictionary<string, Dictionary<string, byte>> { };
             foreach (string moduleNo in odbModuleList)
@@ -45,19 +40,18 @@ namespace LSS.HCM.Core.Domain.Managers
                 var targetCompartment = CompartmentService.CompartmentOpen(compartmentId, lockerConfiguration);
 
                 // Update objectdetection status
-                CompartmentConfig targetCompartmentConfig = CompartmentHelper.MapCompartment(compartmentId, lockerConfiguration);
+                CompartmentConfiguration targetCompartmentConfig = CompartmentHelper.MapCompartment(compartmentId, lockerConfiguration);
                 Dictionary<string, byte> objectdetectStatus = objectdetectStatusAry[targetCompartmentConfig.CompartmentCode.Odbmod];
-                targetCompartment.ObjectDetected = objectdetectStatus[targetCompartmentConfig.CompartmentCode.Odbid] == 0 ? false : true;
+                targetCompartment.ObjectDetected = objectdetectStatus[targetCompartmentConfig.CompartmentCode.Odbid] == 1 ? true : false;
                 result.Compartments.Add(targetCompartment);
             }
             result.TransactionId = model.TransactionId;
             return result;
         }
-        public static List<Entities.Locker.Compartment> CompartmentStatus(DataObjects.Models.Compartment model)
+        public static List<Entities.Locker.Compartment> CompartmentStatus(DataObjects.Models.Compartment model, LockerConfiguration lockerConfiguration)
         {
-            var lockerConfiguration = Repository<LockerConfiguration>.Get(model.DataBaseCredentials.ConnectionString, model.DataBaseCredentials.DatabaseName, model.DataBaseCredentials.CollectionName).Find(configuration => configuration.LockerId == model.LockerId).FirstOrDefault();
             // Find  object detection module id list by input list of compartment
-            var compartments = CompartmentService.CompartmentStatus(lockerConfiguration);
+            var compartments = CompartmentService.CompartmentStatus(model, lockerConfiguration);
             return compartments;
         }
     }

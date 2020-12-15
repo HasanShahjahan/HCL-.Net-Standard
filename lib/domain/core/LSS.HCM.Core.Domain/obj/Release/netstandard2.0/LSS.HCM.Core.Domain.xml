@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>LSS.HCM.Core.Domain</name>
+    </assembly>
+    <members>
+        <member name="T:LSS.HCM.Core.Domain.Managers.LockerManager">
+             <summary>
+               Represents locker as a sequence of compartment open and it's status.
+            </summary>
+        </member>
+        <member name="M:LSS.HCM.Core.Domain.Managers.LockerManager.OpenCompartment(LSS.HCM.Core.DataObjects.Models.Compartment)">
+            <summary>
+            Gets the open compartment parameters with Json web token credentials and MongoDB database credentials.
+            Json web token credentials contains enable or disable, if enable then need to provide jwt secret and token.
+            MongoDb contains each and every Locker station configuration with compartment details.  
+            </summary>
+            <returns>
+             List of compartment open status with object detection, LED status by requested compartment id's.
+            </returns>
+        </member>
+    </members>
+</doc>

@@ -23,49 +23,49 @@ namespace HCM.Core.Validator.UnitTest
         [Fact]
         public void OpenCompartmentEmptyTransactionId()
         {
-            var (_, errorResult) = LockerManagementValidator.PayloadValidator(true, jwtSecret, token, PayloadTypes.OpenCompartment, connectionString, databaseName, collectionName, lockerId, string.Empty, null, null);
+            var (_, errorResult,_) = LockerManagementValidator.PayloadValidator(true, jwtSecret, token, PayloadTypes.OpenCompartment, connectionString, databaseName, collectionName, lockerId, string.Empty, null, null);
             Assert.Equal(ApplicationErrorCodes.GetMessage(ApplicationErrorCodes.EmptyTransactionId), errorResult.Message);
         }
 
         [Fact]
         public void OpenCompartmentEmptyLockerId()
         {
-            var (_, errorResult) = LockerManagementValidator.PayloadValidator(true, jwtSecret, token, PayloadTypes.OpenCompartment, connectionString, databaseName, collectionName, string.Empty, transactionId, null, null);
+            var (_, errorResult, _) = LockerManagementValidator.PayloadValidator(true, jwtSecret, token, PayloadTypes.OpenCompartment, connectionString, databaseName, collectionName, string.Empty, transactionId, null, null);
             Assert.Equal(ApplicationErrorCodes.GetMessage(ApplicationErrorCodes.EmptyLockerId), errorResult.Message);
         }
 
         [Fact]
         public void OpenCompartmentInvalidLockerId()
         {
-            var (_, errorResult) = LockerManagementValidator.PayloadValidator(true, jwtSecret, token, PayloadTypes.OpenCompartment, connectionString, databaseName, collectionName, "Hasan", transactionId, validCompartmentIds, null);
+            var (_, errorResult, _) = LockerManagementValidator.PayloadValidator(true, jwtSecret, token, PayloadTypes.OpenCompartment, connectionString, databaseName, collectionName, "Hasan", transactionId, validCompartmentIds, null);
             Assert.Equal(ApplicationErrorCodes.GetMessage(ApplicationErrorCodes.InvalidLockerId), errorResult.Message);
         }
 
         [Fact]
         public void OpenCompartmentValidLockerId()
         {
-            var (statusCode, _) = LockerManagementValidator.PayloadValidator(true, jwtSecret, token, PayloadTypes.OpenCompartment, connectionString, databaseName, collectionName ,lockerId, transactionId, validCompartmentIds, null);
+            var (statusCode, _, _) = LockerManagementValidator.PayloadValidator(true, jwtSecret, token, PayloadTypes.OpenCompartment, connectionString, databaseName, collectionName ,lockerId, transactionId, validCompartmentIds, null);
             Assert.Equal(200, statusCode);
         }
 
         [Fact]
         public void OpenCompartmentEmptyCompartmentIds()
         {
-            var (_, errorResult) = LockerManagementValidator.PayloadValidator(true, jwtSecret, token, PayloadTypes.OpenCompartment, connectionString, databaseName, collectionName ,lockerId, transactionId, null, null);
+            var (_, errorResult, _) = LockerManagementValidator.PayloadValidator(true, jwtSecret, token, PayloadTypes.OpenCompartment, connectionString, databaseName, collectionName ,lockerId, transactionId, null, null);
             Assert.Equal(ApplicationErrorCodes.GetMessage(ApplicationErrorCodes.EmptyCompartmentId), errorResult.Message);
         }
 
         [Fact]
         public void OpenCompartmentInvalidCompartmentIds()
         {
-            var (_, errorResult) = LockerManagementValidator.PayloadValidator(true, jwtSecret, token, PayloadTypes.OpenCompartment, connectionString, databaseName, collectionName ,lockerId, transactionId, invalidCompartmentIds, null);
+            var (_, errorResult, _) = LockerManagementValidator.PayloadValidator(true, jwtSecret, token, PayloadTypes.OpenCompartment, connectionString, databaseName, collectionName ,lockerId, transactionId, invalidCompartmentIds, null);
             Assert.Equal(ApplicationErrorCodes.GetMessage(ApplicationErrorCodes.InvalidCompartmentId), errorResult.Message);
         }
 
         [Fact]
         public void OpenCompartmentValidCompartmentIds()
         {
-            var (statusCode, _) = LockerManagementValidator.PayloadValidator(true, jwtSecret, token, PayloadTypes.OpenCompartment, connectionString, databaseName, collectionName,lockerId, transactionId, validCompartmentIds, null);
+            var (statusCode, _, _) = LockerManagementValidator.PayloadValidator(true, jwtSecret, token, PayloadTypes.OpenCompartment, connectionString, databaseName, collectionName,lockerId, transactionId, validCompartmentIds, null);
             Assert.Equal(200, statusCode);
         }
 
@@ -75,21 +75,21 @@ namespace HCM.Core.Validator.UnitTest
         [Fact]
         public void CompartmentStatusEmptyLockerId()
         {
-            var (_, errorResult) = LockerManagementValidator.PayloadValidator(true,jwtSecret, token, PayloadTypes.CompartmentStatus, connectionString, databaseName, collectionName ,string.Empty, transactionId, null, null);
+            var (_, errorResult, _) = LockerManagementValidator.PayloadValidator(true,jwtSecret, token, PayloadTypes.CompartmentStatus, connectionString, databaseName, collectionName ,string.Empty, transactionId, null, null);
             Assert.Equal(ApplicationErrorCodes.GetMessage(ApplicationErrorCodes.EmptyLockerId), errorResult.Message);
         }
 
         [Fact]
         public void CompartmentStatusInvalidLockerId()
         {
-            var (_, errorResult) = LockerManagementValidator.PayloadValidator(true, jwtSecret, token, PayloadTypes.CompartmentStatus, connectionString, databaseName, collectionName ,"Hasan", transactionId, validCompartmentIds, null);
+            var (_, errorResult, _) = LockerManagementValidator.PayloadValidator(true, jwtSecret, token, PayloadTypes.CompartmentStatus, connectionString, databaseName, collectionName ,"Hasan", transactionId, validCompartmentIds, null);
             Assert.Equal(ApplicationErrorCodes.GetMessage(ApplicationErrorCodes.InvalidLockerId), errorResult.Message);
         }
 
         [Fact]
         public void CompartmentStatusValidLockerId()
         {
-            var (statusCode, _) = LockerManagementValidator.PayloadValidator(true, jwtSecret, token, PayloadTypes.CompartmentStatus, connectionString, databaseName, collectionName ,lockerId, transactionId, validCompartmentIds, null);
+            var (statusCode, _, _) = LockerManagementValidator.PayloadValidator(true, jwtSecret, token, PayloadTypes.CompartmentStatus, connectionString, databaseName, collectionName ,lockerId, transactionId, validCompartmentIds, null);
             Assert.Equal(200, statusCode);
         }
         #endregion
@@ -98,21 +98,21 @@ namespace HCM.Core.Validator.UnitTest
         [Fact]
         public void LockerStatusEmptyLockerId()
         {
-            var (_, errorResult) = LockerManagementValidator.PayloadValidator(true, jwtSecret, token, PayloadTypes.LockerStatus, connectionString, databaseName, collectionName, string.Empty, transactionId, null, null);
+            var (_, errorResult, _) = LockerManagementValidator.PayloadValidator(true, jwtSecret, token, PayloadTypes.LockerStatus, connectionString, databaseName, collectionName, string.Empty, transactionId, null, null);
             Assert.Equal(ApplicationErrorCodes.GetMessage(ApplicationErrorCodes.EmptyLockerId), errorResult.Message);
         }
 
         [Fact]
         public void LockerStatusInvalidLockerId()
         {
-            var (_, errorResult) = LockerManagementValidator.PayloadValidator(true, jwtSecret, token, PayloadTypes.LockerStatus, connectionString, databaseName, collectionName ,"Hasan", transactionId, validCompartmentIds, null);
+            var (_, errorResult, _) = LockerManagementValidator.PayloadValidator(true, jwtSecret, token, PayloadTypes.LockerStatus, connectionString, databaseName, collectionName ,"Hasan", transactionId, validCompartmentIds, null);
             Assert.Equal(ApplicationErrorCodes.GetMessage(ApplicationErrorCodes.InvalidLockerId), errorResult.Message);
         }
 
         [Fact]
         public void LockerStatusValidLockerId()
         {
-            var (statusCode, _) = LockerManagementValidator.PayloadValidator(true, jwtSecret, token, PayloadTypes.LockerStatus, connectionString, databaseName, collectionName, lockerId, transactionId, validCompartmentIds, null);
+            var (statusCode, _, _) = LockerManagementValidator.PayloadValidator(true, jwtSecret, token, PayloadTypes.LockerStatus, connectionString, databaseName, collectionName, lockerId, transactionId, validCompartmentIds, null);
             Assert.Equal(200, statusCode);
         }
         #endregion
@@ -121,49 +121,49 @@ namespace HCM.Core.Validator.UnitTest
         [Fact]
         public void CaptureImageEmptyLockerId()
         {
-            var (_, errorResult) = LockerManagementValidator.PayloadValidator(true, jwtSecret, token, PayloadTypes.CaptureImage, connectionString, databaseName, collectionName, string.Empty, transactionId, null, captureType);
+            var (_, errorResult, _) = LockerManagementValidator.PayloadValidator(true, jwtSecret, token, PayloadTypes.CaptureImage, connectionString, databaseName, collectionName, string.Empty, transactionId, null, captureType);
             Assert.Equal(ApplicationErrorCodes.GetMessage(ApplicationErrorCodes.EmptyLockerId), errorResult.Message);
         }
 
         [Fact]
         public void CaptureImageInvalidLockerId()
         {
-            var (_, errorResult) = LockerManagementValidator.PayloadValidator(true, jwtSecret, token, PayloadTypes.CaptureImage, connectionString, databaseName, collectionName,"Hasan", transactionId, null, captureType);
+            var (_, errorResult, _) = LockerManagementValidator.PayloadValidator(true, jwtSecret, token, PayloadTypes.CaptureImage, connectionString, databaseName, collectionName,"Hasan", transactionId, null, captureType);
             Assert.Equal(ApplicationErrorCodes.GetMessage(ApplicationErrorCodes.InvalidLockerId), errorResult.Message);
         }
 
         [Fact]
         public void CaptureImageValidLockerId()
         {
-            var (statusCode, _) = LockerManagementValidator.PayloadValidator(true, jwtSecret, token, PayloadTypes.CaptureImage, connectionString, databaseName, collectionName  ,lockerId, transactionId, null, captureType);
+            var (statusCode, _, _) = LockerManagementValidator.PayloadValidator(true, jwtSecret, token, PayloadTypes.CaptureImage, connectionString, databaseName, collectionName  ,lockerId, transactionId, null, captureType);
             Assert.Equal(200, statusCode);
         }
 
         [Fact]
         public void CaptureImageEmptyCaptureType()
         {
-            var (_, errorResult) = LockerManagementValidator.PayloadValidator(true, jwtSecret, token, PayloadTypes.CaptureImage, connectionString, databaseName, collectionName ,lockerId, transactionId, null, string.Empty);
+            var (_, errorResult, _) = LockerManagementValidator.PayloadValidator(true, jwtSecret, token, PayloadTypes.CaptureImage, connectionString, databaseName, collectionName ,lockerId, transactionId, null, string.Empty);
             Assert.Equal(ApplicationErrorCodes.GetMessage(ApplicationErrorCodes.EmptyCaptureType), errorResult.Message);
         }
 
         [Fact]
         public void CaptureImageInvalidCaptureType()
         {
-            var (_, errorResult) = LockerManagementValidator.PayloadValidator(true, jwtSecret, token, PayloadTypes.CaptureImage, connectionString, databaseName, collectionName ,lockerId, transactionId, null, "Hasan");
+            var (_, errorResult, _) = LockerManagementValidator.PayloadValidator(true, jwtSecret, token, PayloadTypes.CaptureImage, connectionString, databaseName, collectionName ,lockerId, transactionId, null, "Hasan");
             Assert.Equal(ApplicationErrorCodes.GetMessage(ApplicationErrorCodes.InvalidCaptureType), errorResult.Message);
         }
 
         [Fact]
         public void CaptureImageValidCaptureType()
         {
-            var (statusCode, _) = LockerManagementValidator.PayloadValidator(true, jwtSecret, token, PayloadTypes.CaptureImage, connectionString, databaseName, collectionName ,lockerId, transactionId, null, captureType);
+            var (statusCode, _, _) = LockerManagementValidator.PayloadValidator(true, jwtSecret, token, PayloadTypes.CaptureImage, connectionString, databaseName, collectionName ,lockerId, transactionId, null, captureType);
             Assert.Equal(200, statusCode);
         }
 
         [Fact]
         public void CaptureImageEmptyTransactionId()
         {
-            var (_, errorResult) = LockerManagementValidator.PayloadValidator(true, jwtSecret, token, PayloadTypes.CaptureImage, connectionString, databaseName, collectionName ,lockerId, string.Empty, null, captureType);
+            var (_, errorResult, _) = LockerManagementValidator.PayloadValidator(true, jwtSecret, token, PayloadTypes.CaptureImage, connectionString, databaseName, collectionName ,lockerId, string.Empty, null, captureType);
             Assert.Equal(ApplicationErrorCodes.GetMessage(ApplicationErrorCodes.EmptyTransactionId), errorResult.Message);
         }
         #endregion
