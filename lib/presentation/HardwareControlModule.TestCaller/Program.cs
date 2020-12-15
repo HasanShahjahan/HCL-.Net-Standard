@@ -18,12 +18,12 @@ namespace HardwareControlModule.TestCaller
 
             var compartment = new Compartment("1234", "PANLOCKER-1", validCompartmentIds, true, jwtSecret, token, connectionString, databaseName, collectionName);
             
-            //var openCompartment = LockerManager.OpenCompartment(compartment);
+            var result = LockerManager.OpenCompartment(compartment);
 
-            var compartmentStatus = LockerManager.CompartmentStatus(compartment);
+            //var result = LockerManager.CompartmentStatus(compartment);
 
-            
-            Console.WriteLine(JsonSerializer.Serialize(compartmentStatus));
+
+            Console.WriteLine(JsonSerializer.Serialize(result));
             Console.ReadKey();
         }
     }

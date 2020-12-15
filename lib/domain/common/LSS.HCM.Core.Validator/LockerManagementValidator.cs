@@ -57,7 +57,7 @@ namespace LSS.HCM.Core.Validator
                         }
                         else if (compartmentIds.Length > 0)
                         {
-                            lockerConfiguration = Repository<LockerConfiguration>.Get(connectionString, databaseName, collectionName).Find(configuration => configuration.Id == "5fca3a252d8c3433f408558d").FirstOrDefault();
+                            lockerConfiguration = Repository<LockerConfiguration>.Get(connectionString, databaseName, collectionName).Find(configuration => configuration.LockerId == lockerId).FirstOrDefault();
                             if (lockerConfiguration != null && lockerConfiguration.LockerId != lockerId)
                             {
                                 statusCode = StatusCode.Status422UnprocessableEntity;
@@ -89,7 +89,7 @@ namespace LSS.HCM.Core.Validator
 
                     case PayloadTypes.CompartmentStatus:
 
-                        lockerConfiguration = Repository<LockerConfiguration>.Get(connectionString, databaseName, collectionName).Find(configuration => configuration.Id == "5fca3a252d8c3433f408558d").FirstOrDefault();
+                        lockerConfiguration = Repository<LockerConfiguration>.Get(connectionString, databaseName, collectionName).Find(configuration => configuration.LockerId == lockerId).FirstOrDefault();
                         if (string.IsNullOrEmpty(lockerId))
                         {
                             statusCode = StatusCode.Status422UnprocessableEntity;
@@ -132,7 +132,7 @@ namespace LSS.HCM.Core.Validator
                             result = new ApplicationException { Code = ApplicationErrorCodes.EmptyLockerId, Message = ApplicationErrorCodes.GetMessage(ApplicationErrorCodes.EmptyLockerId) };
                             return (statusCode, result);
                         }
-                        lockerConfiguration = Repository<LockerConfiguration>.Get(connectionString, databaseName, collectionName).Find(configuration => configuration.Id == "5fca3a252d8c3433f408558d").FirstOrDefault();
+                        lockerConfiguration = Repository<LockerConfiguration>.Get(connectionString, databaseName, collectionName).Find(configuration => configuration.LockerId == lockerId).FirstOrDefault();
                         if (lockerConfiguration != null && lockerConfiguration.LockerId != lockerId)
                         {
                             statusCode = StatusCode.Status422UnprocessableEntity;
@@ -143,7 +143,7 @@ namespace LSS.HCM.Core.Validator
 
                     case PayloadTypes.CaptureImage:
 
-                        lockerConfiguration = Repository<LockerConfiguration>.Get(connectionString, databaseName, collectionName).Find(configuration => configuration.Id == "5fca3a252d8c3433f408558d").FirstOrDefault();
+                        lockerConfiguration = Repository<LockerConfiguration>.Get(connectionString, databaseName, collectionName).Find(configuration => configuration.LockerId == lockerId).FirstOrDefault();
                         if (string.IsNullOrEmpty(lockerId))
                         {
                             statusCode = StatusCode.Status422UnprocessableEntity;
