@@ -113,7 +113,7 @@ namespace LSS.HCM.Core.Validator
                             result = new ApplicationException { Code = ApplicationErrorCodes.InvalidLockerId, Message = ApplicationErrorCodes.GetMessage(ApplicationErrorCodes.InvalidLockerId) };
                             return (statusCode, result, null);
                         }
-                        if (lockerConfiguration != null && lockerConfiguration.Compartments.Count() > 0)
+                        if (lockerConfiguration != null && lockerConfiguration.Compartments.Count() > 0 && !compartmentIds.Contains("All"))
                         {
                             foreach (string compartmentId in compartmentIds)
                             {

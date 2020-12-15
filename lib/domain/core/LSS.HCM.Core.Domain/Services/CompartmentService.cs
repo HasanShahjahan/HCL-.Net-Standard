@@ -66,17 +66,19 @@ namespace LSS.HCM.Core.Domain.Services
                 objectdetectStatusAry[moduleNo] = CompartmentHelper.GetStatusByModuleId(CommandType.ItemDetection ,moduleNo);
             }
 
-            foreach (CompartmentConfiguration compatment in compartments)
+            foreach (var compatmentId in model.CompartmentIds)
             {
-                Dictionary<string, byte> opendoorStatus = opendoorStatusAry[compatment.CompartmentCode.Lcbmod]; //[compatment.CompartmentCode.Lcbid];
-                Dictionary<string, byte> objectdetectStatus = objectdetectStatusAry[compatment.CompartmentCode.Odbmod]; //[compatment.CompartmentCode.Odbid];
+                var compartment = compartments.Find(c => c.CompartmentId == compatmentId);
+                
+                Dictionary<string, byte> opendoorStatus = opendoorStatusAry[compartment.CompartmentCode.Lcbmod]; //[compatment.CompartmentCode.Lcbid];
+                Dictionary<string, byte> objectdetectStatus = objectdetectStatusAry[compartment.CompartmentCode.Odbmod]; //[compatment.CompartmentCode.Odbid];
                 Compartment compartmentResult = new Compartment(lockerConfiguration.LockerId,
-                                                                 compatment.CompartmentId,
-                                                                 compatment.CompartmentSize,
-                                                                 opendoorStatus[compatment.CompartmentCode.Lcbid] == 0 ? true : false,
-                                                                 opendoorStatus[compatment.CompartmentCode.Lcbid] == 0 ? false : true,
-                                                                 objectdetectStatus[compatment.CompartmentCode.Odbid] == 1 ? true : false,
-                                                                 opendoorStatus[compatment.CompartmentCode.Lcbid] == 0 ? "ON" : "OFF");
+                                                                 compartment.CompartmentId,
+                                                                 compartment.CompartmentSize,
+                                                                 opendoorStatus[compartment.CompartmentCode.Lcbid] == 0 ? true : false,
+                                                                 opendoorStatus[compartment.CompartmentCode.Lcbid] == 0 ? false : true,
+                                                                 objectdetectStatus[compartment.CompartmentCode.Odbid] == 1 ? true : false,
+                                                                 opendoorStatus[compartment.CompartmentCode.Lcbid] == 0 ? "ON" : "OFF");
                 compartmentList.Add(compartmentResult);
             }
 

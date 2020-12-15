@@ -1,23 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Box24\\Project Execution\\Source Code\\HCM\\LockerStationSoftware\\lib\\infrastructure\\LSS.HCM.Core.Infrastructure\\LSS.HCM.Core.Infrastructure.csproj": {}
+    "D:\\Hardware Contol Library\\lib\\infrastructure\\LSS.HCM.Core.Infrastructure\\LSS.HCM.Core.Infrastructure.csproj": {}
   },
   "projects": {
-    "C:\\Box24\\Project Execution\\Source Code\\HCM\\LockerStationSoftware\\lib\\infrastructure\\LSS.HCM.Core.Infrastructure\\LSS.HCM.Core.Infrastructure.csproj": {
+    "D:\\Hardware Contol Library\\lib\\infrastructure\\LSS.HCM.Core.Infrastructure\\LSS.HCM.Core.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Box24\\Project Execution\\Source Code\\HCM\\LockerStationSoftware\\lib\\infrastructure\\LSS.HCM.Core.Infrastructure\\LSS.HCM.Core.Infrastructure.csproj",
+        "projectUniqueName": "D:\\Hardware Contol Library\\lib\\infrastructure\\LSS.HCM.Core.Infrastructure\\LSS.HCM.Core.Infrastructure.csproj",
         "projectName": "LSS.HCM.Core.Infrastructure",
-        "projectPath": "C:\\Box24\\Project Execution\\Source Code\\HCM\\LockerStationSoftware\\lib\\infrastructure\\LSS.HCM.Core.Infrastructure\\LSS.HCM.Core.Infrastructure.csproj",
-        "packagesPath": "C:\\Users\\Hasan\\.nuget\\packages\\",
-        "outputPath": "C:\\Box24\\Project Execution\\Source Code\\HCM\\LockerStationSoftware\\lib\\infrastructure\\LSS.HCM.Core.Infrastructure\\obj\\",
+        "projectPath": "D:\\Hardware Contol Library\\lib\\infrastructure\\LSS.HCM.Core.Infrastructure\\LSS.HCM.Core.Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\pc\\.nuget\\packages\\",
+        "outputPath": "D:\\Hardware Contol Library\\lib\\infrastructure\\LSS.HCM.Core.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Hasan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\pc\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -29,6 +26,7 @@
         },
         "frameworks": {
           "netstandard2.0": {
+            "targetAlias": "netstandard2.0",
             "projectReferences": {}
           }
         },
@@ -40,6 +38,7 @@
       },
       "frameworks": {
         "netstandard2.0": {
+          "targetAlias": "netstandard2.0",
           "dependencies": {
             "MongoDB.Driver": {
               "target": "Package",
@@ -62,7 +61,7 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     }

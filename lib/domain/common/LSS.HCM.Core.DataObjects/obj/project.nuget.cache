@@ -1,20 +1,20 @@
 {
   "version": 2,
-  "dgSpecHash": "iSyg/ZCaSlGJUUBGSB7vj4cho3eocg0IaaF9CsTqteq+rjTaRr1qSb4UsK4NfkKCVgAkdj9H42wZGVUJ6YW0JQ==",
+  "dgSpecHash": "XWjSkRunrO/WF0YJ+BBj6VR1BUGUaxyvMGGjTYVzEC7eeF3i2dtu5BY4nR5QBEg+x4Yxi41XCe/JZjhtamhlXg==",
   "success": true,
-  "projectFilePath": "C:\\Box24\\Project Execution\\Source Code\\HCM\\LockerStationSoftware\\lib\\domain\\common\\LSS.HCM.Core.DataObjects\\LSS.HCM.Core.DataObjects.csproj",
+  "projectFilePath": "D:\\Hardware Contol Library\\lib\\domain\\common\\LSS.HCM.Core.DataObjects\\LSS.HCM.Core.DataObjects.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Hasan\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\5.0.0\\microsoft.bcl.asyncinterfaces.5.0.0.nupkg.sha512",
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
-    "C:\\Users\\Hasan\\.nuget\\packages\\mongodb.bson\\2.11.5\\mongodb.bson.2.11.5.nupkg.sha512",
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512",
-    "C:\\Users\\Hasan\\.nuget\\packages\\system.buffers\\4.5.1\\system.buffers.4.5.1.nupkg.sha512",
-    "C:\\Users\\Hasan\\.nuget\\packages\\system.memory\\4.5.4\\system.memory.4.5.4.nupkg.sha512",
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\system.numerics.vectors\\4.5.0\\system.numerics.vectors.4.5.0.nupkg.sha512",
-    "C:\\Users\\Hasan\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\5.0.0\\system.runtime.compilerservices.unsafe.5.0.0.nupkg.sha512",
-    "C:\\Users\\Hasan\\.nuget\\packages\\system.text.encodings.web\\5.0.0\\system.text.encodings.web.5.0.0.nupkg.sha512",
-    "C:\\Users\\Hasan\\.nuget\\packages\\system.text.json\\5.0.0\\system.text.json.5.0.0.nupkg.sha512",
-    "C:\\Users\\Hasan\\.nuget\\packages\\system.threading.tasks.extensions\\4.5.4\\system.threading.tasks.extensions.4.5.4.nupkg.sha512"
+    "C:\\Users\\pc\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\5.0.0\\microsoft.bcl.asyncinterfaces.5.0.0.nupkg.sha512",
+    "C:\\Users\\pc\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\pc\\.nuget\\packages\\mongodb.bson\\2.11.5\\mongodb.bson.2.11.5.nupkg.sha512",
+    "C:\\Users\\pc\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512",
+    "C:\\Users\\pc\\.nuget\\packages\\system.buffers\\4.5.1\\system.buffers.4.5.1.nupkg.sha512",
+    "C:\\Users\\pc\\.nuget\\packages\\system.memory\\4.5.4\\system.memory.4.5.4.nupkg.sha512",
+    "C:\\Users\\pc\\.nuget\\packages\\system.numerics.vectors\\4.5.0\\system.numerics.vectors.4.5.0.nupkg.sha512",
+    "C:\\Users\\pc\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\5.0.0\\system.runtime.compilerservices.unsafe.5.0.0.nupkg.sha512",
+    "C:\\Users\\pc\\.nuget\\packages\\system.text.encodings.web\\5.0.0\\system.text.encodings.web.5.0.0.nupkg.sha512",
+    "C:\\Users\\pc\\.nuget\\packages\\system.text.json\\5.0.0\\system.text.json.5.0.0.nupkg.sha512",
+    "C:\\Users\\pc\\.nuget\\packages\\system.threading.tasks.extensions\\4.5.4\\system.threading.tasks.extensions.4.5.4.nupkg.sha512"
   ],
   "logs": []
 }

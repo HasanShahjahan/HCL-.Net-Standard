@@ -6,3 +6,12 @@ C:\Box24\Project Execution\Source Code\HCM\LockerStationSoftware\lib\infrastruct
 C:\Box24\Project Execution\Source Code\HCM\LockerStationSoftware\lib\infrastructure\LSS.HCM.Core.Infrastructure\obj\Debug\netstandard2.0\LSS.HCM.Core.Infrastructure.AssemblyInfo.cs
 C:\Box24\Project Execution\Source Code\HCM\LockerStationSoftware\lib\infrastructure\LSS.HCM.Core.Infrastructure\obj\Debug\netstandard2.0\LSS.HCM.Core.Infrastructure.dll
 C:\Box24\Project Execution\Source Code\HCM\LockerStationSoftware\lib\infrastructure\LSS.HCM.Core.Infrastructure\obj\Debug\netstandard2.0\LSS.HCM.Core.Infrastructure.pdb
+D:\Hardware Contol Library\lib\infrastructure\LSS.HCM.Core.Infrastructure\bin\Debug\netstandard2.0\LSS.HCM.Core.Infrastructure.deps.json
+D:\Hardware Contol Library\lib\infrastructure\LSS.HCM.Core.Infrastructure\bin\Debug\netstandard2.0\LSS.HCM.Core.Infrastructure.dll
+D:\Hardware Contol Library\lib\infrastructure\LSS.HCM.Core.Infrastructure\bin\Debug\netstandard2.0\LSS.HCM.Core.Infrastructure.pdb
+D:\Hardware Contol Library\lib\infrastructure\LSS.HCM.Core.Infrastructure\obj\Debug\netstandard2.0\LSS.HCM.Core.Infrastructure.AssemblyInfoInputs.cache
+D:\Hardware Contol Library\lib\infrastructure\LSS.HCM.Core.Infrastructure\obj\Debug\netstandard2.0\LSS.HCM.Core.Infrastructure.AssemblyInfo.cs
+D:\Hardware Contol Library\lib\infrastructure\LSS.HCM.Core.Infrastructure\obj\Debug\netstandard2.0\LSS.HCM.Core.Infrastructure.csproj.CoreCompileInputs.cache
+D:\Hardware Contol Library\lib\infrastructure\LSS.HCM.Core.Infrastructure\obj\Debug\netstandard2.0\LSS.HCM.Core.Infrastructure.dll
+D:\Hardware Contol Library\lib\infrastructure\LSS.HCM.Core.Infrastructure\obj\Debug\netstandard2.0\LSS.HCM.Core.Infrastructure.pdb
+D:\Hardware Contol Library\lib\infrastructure\LSS.HCM.Core.Infrastructure\obj\Debug\netstandard2.0\LSS.HCM.Core.Infrastructure.csprojAssemblyReference.cache

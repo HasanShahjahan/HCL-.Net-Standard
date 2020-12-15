@@ -12,9 +12,10 @@ namespace HardwareControlModule.TestCaller
             string connectionString = "mongodb://localhost:27017";
             string databaseName = "LssHwapiDb";
             string collectionName = "Lockers";
-            string[] validCompartmentIds = { "M0-1"};
+            //string[] validCompartmentIds = { "M0-1"};
+            //string[] validCompartmentIds = { "M0-1", "M0-2"};
             //string[] validCompartmentIds = { "M0-1", "M0-2", "M0-3" };
-           // string[] validCompartmentIds = { "All"};
+            string[] validCompartmentIds = { "All"};
             string token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MDkzNTU5MjEsInRyYW5zYWN0aW9uX2lkIjoiNzBiMzZjNDEtMDc4Yi00MTFiLTk4MmMtYzViNzc0YWFjNjZmIn0.ujOkQJUq5WY_tZJgKXqe_n4nql3cSAeHMfXGABZO3E4";
             string jwtSecret = "HWAPI_0BwRn5Bg4rJAe5eyWkRz";
 
