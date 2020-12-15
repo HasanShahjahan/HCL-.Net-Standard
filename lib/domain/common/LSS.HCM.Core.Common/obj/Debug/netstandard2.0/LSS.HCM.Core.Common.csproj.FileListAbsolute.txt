@@ -1,0 +1,8 @@
+C:\Box24\Project Execution\Source Code\HCM\LockerStationSoftware\lib\domain\common\LSS.HCM.Core.Common\bin\Debug\netstandard2.0\LSS.HCM.Core.Common.deps.json
+C:\Box24\Project Execution\Source Code\HCM\LockerStationSoftware\lib\domain\common\LSS.HCM.Core.Common\bin\Debug\netstandard2.0\LSS.HCM.Core.Common.dll
+C:\Box24\Project Execution\Source Code\HCM\LockerStationSoftware\lib\domain\common\LSS.HCM.Core.Common\bin\Debug\netstandard2.0\LSS.HCM.Core.Common.pdb
+C:\Box24\Project Execution\Source Code\HCM\LockerStationSoftware\lib\domain\common\LSS.HCM.Core.Common\obj\Debug\netstandard2.0\LSS.HCM.Core.Common.csproj.CoreCompileInputs.cache
+C:\Box24\Project Execution\Source Code\HCM\LockerStationSoftware\lib\domain\common\LSS.HCM.Core.Common\obj\Debug\netstandard2.0\LSS.HCM.Core.Common.AssemblyInfoInputs.cache
+C:\Box24\Project Execution\Source Code\HCM\LockerStationSoftware\lib\domain\common\LSS.HCM.Core.Common\obj\Debug\netstandard2.0\LSS.HCM.Core.Common.AssemblyInfo.cs
+C:\Box24\Project Execution\Source Code\HCM\LockerStationSoftware\lib\domain\common\LSS.HCM.Core.Common\obj\Debug\netstandard2.0\LSS.HCM.Core.Common.dll
+C:\Box24\Project Execution\Source Code\HCM\LockerStationSoftware\lib\domain\common\LSS.HCM.Core.Common\obj\Debug\netstandard2.0\LSS.HCM.Core.Common.pdb

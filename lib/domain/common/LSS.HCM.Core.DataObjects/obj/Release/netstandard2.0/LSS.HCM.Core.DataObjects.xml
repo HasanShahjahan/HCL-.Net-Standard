@@ -1,0 +1,176 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>LSS.HCM.Core.DataObjects</name>
+    </assembly>
+    <members>
+        <member name="T:LSS.HCM.Core.DataObjects.Models.Compartment">
+             <summary>
+               Represents compartment as a sequence of compartment units.
+            </summary>
+        </member>
+        <member name="M:LSS.HCM.Core.DataObjects.Models.Compartment.#ctor">
+            <summary>
+                Initializes a new instance of the Compartment class to the value indicated
+                by all members.
+            </summary>
+        </member>
+        <member name="M:LSS.HCM.Core.DataObjects.Models.Compartment.#ctor(System.String,System.String,System.String[],System.Boolean,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+               Initializes a new instance of the Compartment class to the value indicated by 
+               all members.
+            </summary>
+            Parameters.
+            <param name="transactionId"> An request Transaction Id.</param>
+            <param name="lockerId">An request Locker Id where compartment will be opened.</param>
+            <param name="compartmentIds"> List of compartment id's which will be opened.</param>
+            <param name="jwtEnabled">Jsone Web Token Flag.By default will be false, If you want to enable then specify this flag true.</param>
+            <param name="jwtSecret">Shared secret between middleware and Hardware Control Module, where HCM will decode JWT using provided secret key.</param>
+            <param name="jwtToken">Json web token with specified format which will contains JOSE Header Algoritm(HMAC SHA256 (Base64Url)),JWS Payload (Identity (Must Include Transaction Id))</param>
+            <param name="connectionString"> MongoDB connection string</param>
+            <param name="databaseName">MongoDB database name where specific collection is available.</param>
+            <param name="collectionName">MongoDB collection name.</param>
+        </member>
+        <member name="M:LSS.HCM.Core.DataObjects.Models.Compartment.#ctor(System.String,System.String,System.String[],LSS.HCM.Core.DataObjects.Settings.JsonWebTokens,LSS.HCM.Core.DataObjects.Settings.DatabaseSettings)">
+            <summary>
+               Initializes a new instance of the Compartment class to the value indicated by all members.
+            </summary>
+            Parameters.
+            <param name="transactionId"> An request Transaction Id.</param>
+            <param name="lockerId">An request Locker Id where compartment will be opened.</param>
+            <param name="compartmentIds"> List of compartment id's which will be opened.</param>
+            <param name="jwtCredentials">Jsone Web Token credentials receive Flag, shared key and Token.</param>
+            <param name="dataBaseCredentials">Database credentials receive connection string name, database name and collection name of MongoDB.</param>
+        </member>
+        <member name="P:LSS.HCM.Core.DataObjects.Models.Compartment.TransactionId">
+             <summary>
+                 Gets and sets the transaction Id in the current Compartment object.
+             </summary>
+             <returns>
+                 The Transaction Id in the current Compartment.
+            </returns>
+        </member>
+        <member name="P:LSS.HCM.Core.DataObjects.Models.Compartment.LockerId">
+             <summary>
+                 Gets and sets the Locker Id in the current Compartment object.
+             </summary>
+             <returns>
+                 The Locker Id in the current Compartment.
+            </returns>
+        </member>
+        <member name="P:LSS.HCM.Core.DataObjects.Models.Compartment.CompartmentIds">
+             <summary>
+                 Gets and sets the list of Compartment Id in the current Compartment object.
+             </summary>
+             <returns>
+                 The Compartment Ids in the current Compartment.
+            </returns>
+        </member>
+        <member name="P:LSS.HCM.Core.DataObjects.Models.Compartment.JwtCredentials">
+             <summary>
+                 Gets and sets the Jwt Credentials in the current Compartment object.
+             </summary>
+             <returns>
+                 The Jwt Credentials in the current Compartment.
+            </returns>
+        </member>
+        <member name="P:LSS.HCM.Core.DataObjects.Models.Compartment.DataBaseCredentials">
+             <summary>
+                 Gets and sets the Data BaseCredentials in the current Compartment object.
+             </summary>
+             <returns>
+                The Data BaseCredentials in the current Compartment.
+            </returns>
+        </member>
+        <member name="T:LSS.HCM.Core.DataObjects.Settings.DatabaseSettings">
+             <summary>
+               Represents settings as a sequence of Database Settings units.
+            </summary>
+        </member>
+        <member name="M:LSS.HCM.Core.DataObjects.Settings.DatabaseSettings.#ctor">
+            <summary>
+                Initializes a new instance of the Database Settings class to the value indicated
+                by all members.
+            </summary>
+        </member>
+        <member name="M:LSS.HCM.Core.DataObjects.Settings.DatabaseSettings.#ctor(System.String,System.String,System.String)">
+            <summary>
+               Initializes a new instance of the Compartment class to the value indicated by 
+               all members.
+            </summary>
+            Parameters.
+            <param name="connectionString"> MongoDB connection string</param>
+            <param name="databaseName">MongoDB database name where specific collection is available.</param>
+            <param name="collectionName">MongoDB collection name.</param>
+        </member>
+        <member name="P:LSS.HCM.Core.DataObjects.Settings.DatabaseSettings.CollectionName">
+             <summary>
+                 Gets and sets the Database Credentials collection name in the current Database Settings object.
+             </summary>
+             <returns>
+                The Database Credentials Collection Name in the current Database Settings.
+            </returns>
+        </member>
+        <member name="P:LSS.HCM.Core.DataObjects.Settings.DatabaseSettings.ConnectionString">
+             <summary>
+                 Gets and sets the Data BaseCredentials connection string name in the current Database Settings object.
+             </summary>
+             <returns>
+                The Database Credentials Connection String in the current Database Settings.
+            </returns>
+        </member>
+        <member name="P:LSS.HCM.Core.DataObjects.Settings.DatabaseSettings.DatabaseName">
+             <summary>
+                 Gets and sets the Database Credentials Database Name in the current Database Settings object.
+             </summary>
+             <returns>
+                The Database Credentials DatabaseName in the current Database Settings.
+            </returns>
+        </member>
+        <member name="T:LSS.HCM.Core.DataObjects.Settings.JsonWebTokens">
+             <summary>
+               Represents JsonWebTokens as a sequence of token units.
+            </summary>
+        </member>
+        <member name="M:LSS.HCM.Core.DataObjects.Settings.JsonWebTokens.#ctor">
+            <summary>
+               Initializes a new instance of the Json Web Token class to the value indicated by 
+               all members.
+            </summary>
+        </member>
+        <member name="M:LSS.HCM.Core.DataObjects.Settings.JsonWebTokens.#ctor(System.Boolean,System.String,System.String)">
+            <summary>
+               Initializes a new instance of the Compartment class to the value indicated by 
+               all members.
+            </summary>
+            Parameters.
+            <param name="isEnabled"> Jsone Web Token Flag.By default will be false, If you want to enable then specify this flag true.</param>
+            <param name="secret">Shared secret between middleware and Hardware Control Module, where HCM will decode JWT using provided secret key.</param>
+            <param name="token">Json web token with specified format which will contains JOSE Header Algoritm(HMAC SHA256 (Base64Url)),JWS Payload (Identity (Must Include Transaction Id))</param>
+        </member>
+        <member name="P:LSS.HCM.Core.DataObjects.Settings.JsonWebTokens.IsEnabled">
+             <summary>
+                 Gets and sets the Jwt Credentials flag in the current JsonWebTokens object.
+             </summary>
+             <returns>
+                 The Jwt Credentials flag in the current JsonWebTokens.
+            </returns>
+        </member>
+        <member name="P:LSS.HCM.Core.DataObjects.Settings.JsonWebTokens.Secret">
+             <summary>
+                 Gets and sets the Jwt Credentials shared secret in the current JsonWebTokens object.
+             </summary>
+             <returns>
+                 The Jwt Credentials shared secret in the current JsonWebTokens.
+            </returns>
+        </member>
+        <member name="P:LSS.HCM.Core.DataObjects.Settings.JsonWebTokens.Token">
+             <summary>
+                 Gets and sets the Jwt Credentials token in the current JsonWebTokens object.
+             </summary>
+             <returns>
+                 The Jwt Credentials token in the current JsonWebTokens.
+            </returns>
+        </member>
+    </members>
+</doc>

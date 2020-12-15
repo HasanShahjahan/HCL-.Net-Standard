@@ -4,6 +4,7 @@ using LSS.HCM.Core.DataObjects.Dtos;
 using LSS.HCM.Core.DataObjects.Mappers;
 using LSS.HCM.Core.DataObjects.Models;
 using LSS.HCM.Core.Validator;
+using System;
 using System.Collections.Generic;
 
 namespace LSS.HCM.Core.Domain.Managers
@@ -24,11 +25,19 @@ namespace LSS.HCM.Core.Domain.Managers
         /// </returns>
         public static LockerDto OpenCompartment(Compartment model)
         {
-           
-            var (statusCode, errorResult) = LockerManagementValidator.PayloadValidator(model.JwtCredentials.IsEnabled, model.JwtCredentials.Secret, model.JwtCredentials.Token,PayloadTypes.OpenCompartment, model.DataBaseCredentials.ConnectionString, model.DataBaseCredentials.DatabaseName, model.DataBaseCredentials.CollectionName, model.LockerId, model.TransactionId, model.CompartmentIds, null);
-            if (statusCode != StatusCode.Status200OK) return OpenCompartmentMapper.ToError(new LockerDto { StatusCode = statusCode, Error = errorResult});
-            var result = CompartmentManager.CompartmentOpen(model);
-            return OpenCompartmentMapper.ToObject(result);
+            var lockerDto = new LockerDto();
+            try {
+                var (statusCode, errorResult, configuration) = LockerManagementValidator.PayloadValidator(model.JwtCredentials.IsEnabled, model.JwtCredentials.Secret, model.JwtCredentials.Token, PayloadTypes.OpenCompartment, model.DataBaseCredentials.ConnectionString, model.DataBaseCredentials.DatabaseName, model.DataBaseCredentials.CollectionName, model.LockerId, model.TransactionId, model.CompartmentIds, null);
+                if (statusCode != StatusCode.Status200OK) return OpenCompartmentMapper.ToError(new LockerDto { StatusCode = statusCode, Error = errorResult });
+                var result = CompartmentManager.CompartmentOpen(model, configuration);
+                lockerDto = OpenCompartmentMapper.ToObject(result);
+            }
+            catch (Exception ex)
+            {
+                return OpenCompartmentMapper.ToError(new LockerDto { StatusCode = StatusCode.Status500InternalServerError, Error = new Common.Exceptions.ApplicationException(ApplicationErrorCodes.InternalServerError, ex.Message) });
+            }
+
+            return lockerDto;
         }
 
         /// <summary>
@@ -41,9 +50,9 @@ namespace LSS.HCM.Core.Domain.Managers
         /// </returns>
         public static CompartmentStatusDto CompartmentStatus(Compartment model)
         {
-            var (statusCode, errorResult) = LockerManagementValidator.PayloadValidator(model.JwtCredentials.IsEnabled, model.JwtCredentials.Secret, model.JwtCredentials.Token, PayloadTypes.CompartmentStatus, model.DataBaseCredentials.ConnectionString, model.DataBaseCredentials.DatabaseName, model.DataBaseCredentials.CollectionName, model.LockerId, model.TransactionId, model.CompartmentIds, null);
+            var (statusCode, errorResult, configuration) = LockerManagementValidator.PayloadValidator(model.JwtCredentials.IsEnabled, model.JwtCredentials.Secret, model.JwtCredentials.Token, PayloadTypes.CompartmentStatus, model.DataBaseCredentials.ConnectionString, model.DataBaseCredentials.DatabaseName, model.DataBaseCredentials.CollectionName, model.LockerId, model.TransactionId, model.CompartmentIds, null);
             if (statusCode != StatusCode.Status200OK) return CompartmentStatusMapper.ToError(new CompartmentStatusDto { StatusCode = statusCode, Error = errorResult });
-            var result = CompartmentManager.CompartmentStatus(model);
+            var result = CompartmentManager.CompartmentStatus(model, configuration);
             return CompartmentStatusMapper.ToObject(result);
         }
     }
