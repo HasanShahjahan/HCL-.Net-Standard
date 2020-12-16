@@ -1,9 +1,0 @@
-C:\Box24\Project Execution\Source Code\HCM\LockerStationSoftware\lib\infrastructure\LSS.HCM.Core.Infrastructure\bin\Release\netstandard2.0\LSS.HCM.Core.Infrastructure.deps.json
-C:\Box24\Project Execution\Source Code\HCM\LockerStationSoftware\lib\infrastructure\LSS.HCM.Core.Infrastructure\bin\Release\netstandard2.0\LSS.HCM.Core.Infrastructure.dll
-C:\Box24\Project Execution\Source Code\HCM\LockerStationSoftware\lib\infrastructure\LSS.HCM.Core.Infrastructure\bin\Release\netstandard2.0\LSS.HCM.Core.Infrastructure.pdb
-C:\Box24\Project Execution\Source Code\HCM\LockerStationSoftware\lib\infrastructure\LSS.HCM.Core.Infrastructure\obj\Release\netstandard2.0\LSS.HCM.Core.Infrastructure.csproj.CoreCompileInputs.cache
-C:\Box24\Project Execution\Source Code\HCM\LockerStationSoftware\lib\infrastructure\LSS.HCM.Core.Infrastructure\obj\Release\netstandard2.0\LSS.HCM.Core.Infrastructure.AssemblyInfoInputs.cache
-C:\Box24\Project Execution\Source Code\HCM\LockerStationSoftware\lib\infrastructure\LSS.HCM.Core.Infrastructure\obj\Release\netstandard2.0\LSS.HCM.Core.Infrastructure.AssemblyInfo.cs
-C:\Box24\Project Execution\Source Code\HCM\LockerStationSoftware\lib\infrastructure\LSS.HCM.Core.Infrastructure\obj\Release\netstandard2.0\LSS.HCM.Core.Infrastructure.dll
-C:\Box24\Project Execution\Source Code\HCM\LockerStationSoftware\lib\infrastructure\LSS.HCM.Core.Infrastructure\obj\Release\netstandard2.0\LSS.HCM.Core.Infrastructure.pdb
-C:\Box24\Project Execution\Source Code\HCM\LockerStationSoftware\lib\infrastructure\LSS.HCM.Core.Infrastructure\obj\Release\netstandard2.0\LSS.HCM.Core.Infrastructure.csprojAssemblyReference.cache
