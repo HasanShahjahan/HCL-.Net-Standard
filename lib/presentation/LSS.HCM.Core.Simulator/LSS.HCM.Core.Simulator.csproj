@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\domain\common\LSS.HCM.Core.DataObjects\LSS.HCM.Core.DataObjects.csproj" />
+    <ProjectReference Include="..\..\domain\core\LSS.HCM.Core.Domain\LSS.HCM.Core.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
