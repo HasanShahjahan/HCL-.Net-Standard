@@ -3487,19 +3487,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\pc\\.nuget\\packages\\": {}
+    "C:\\Users\\Hasan\\.nuget\\packages\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Hardware Contol Library\\test\\unit\\LSS.HCM.Core.Validator.UnitTest\\LSS.HCM.Core.Validator.UnitTest.csproj",
+      "projectUniqueName": "C:\\Box24\\Project Execution\\Source Code\\LockerHardwareControlLibrary\\test\\unit\\LSS.HCM.Core.Validator.UnitTest\\LSS.HCM.Core.Validator.UnitTest.csproj",
       "projectName": "LSS.HCM.Core.Validator.UnitTest",
-      "projectPath": "D:\\Hardware Contol Library\\test\\unit\\LSS.HCM.Core.Validator.UnitTest\\LSS.HCM.Core.Validator.UnitTest.csproj",
-      "packagesPath": "C:\\Users\\pc\\.nuget\\packages\\",
-      "outputPath": "D:\\Hardware Contol Library\\test\\unit\\LSS.HCM.Core.Validator.UnitTest\\obj\\",
+      "projectPath": "C:\\Box24\\Project Execution\\Source Code\\LockerHardwareControlLibrary\\test\\unit\\LSS.HCM.Core.Validator.UnitTest\\LSS.HCM.Core.Validator.UnitTest.csproj",
+      "packagesPath": "C:\\Users\\Hasan\\.nuget\\packages\\",
+      "outputPath": "C:\\Box24\\Project Execution\\Source Code\\LockerHardwareControlLibrary\\test\\unit\\LSS.HCM.Core.Validator.UnitTest\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+      ],
       "configFilePaths": [
-        "C:\\Users\\pc\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Hasan\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -3511,10 +3515,9 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
-          "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "D:\\Hardware Contol Library\\lib\\domain\\common\\LSS.HCM.Core.Validator\\LSS.HCM.Core.Validator.csproj": {
-              "projectPath": "D:\\Hardware Contol Library\\lib\\domain\\common\\LSS.HCM.Core.Validator\\LSS.HCM.Core.Validator.csproj"
+            "C:\\Box24\\Project Execution\\Source Code\\LockerHardwareControlLibrary\\lib\\domain\\common\\LSS.HCM.Core.Validator\\LSS.HCM.Core.Validator.csproj": {
+              "projectPath": "C:\\Box24\\Project Execution\\Source Code\\LockerHardwareControlLibrary\\lib\\domain\\common\\LSS.HCM.Core.Validator\\LSS.HCM.Core.Validator.csproj"
             }
           }
         }
@@ -3527,7 +3530,6 @@
     },
     "frameworks": {
       "netcoreapp3.1": {
-        "targetAlias": "netcoreapp3.1",
         "dependencies": {
           "Microsoft.AspNetCore": {
             "target": "Package",
@@ -3569,7 +3571,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.101\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
       }
     }
   }
