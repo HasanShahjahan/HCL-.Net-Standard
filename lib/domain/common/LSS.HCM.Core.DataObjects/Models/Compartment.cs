@@ -18,7 +18,6 @@ namespace LSS.HCM.Core.DataObjects.Models
             LockerId = string.Empty;
             CompartmentIds = null;
             JwtCredentials = new JsonWebTokens();
-            DataBaseCredentials = new DatabaseSettings();
         }
 
         /// <summary>
@@ -32,16 +31,12 @@ namespace LSS.HCM.Core.DataObjects.Models
         /// <param name="jwtEnabled">Jsone Web Token Flag.By default will be false, If you want to enable then specify this flag true.</param>
         /// <param name="jwtSecret">Shared secret between middleware and Hardware Control Module, where HCM will decode JWT using provided secret key.</param>
         /// <param name="jwtToken">Json web token with specified format which will contains JOSE Header Algoritm(HMAC SHA256 (Base64Url)),JWS Payload (Identity (Must Include Transaction Id))</param>
-        /// <param name="connectionString"> MongoDB connection string</param>
-        /// <param name="databaseName">MongoDB database name where specific collection is available.</param>
-        /// <param name="collectionName">MongoDB collection name.</param>
-        public Compartment(string transactionId, string lockerId, string[] compartmentIds, bool jwtEnabled, string jwtSecret, string jwtToken, string connectionString, string databaseName, string collectionName)
+        public Compartment(string transactionId, string lockerId, string[] compartmentIds, bool jwtEnabled, string jwtSecret, string jwtToken)
         {
             TransactionId = transactionId;
             LockerId = lockerId;
             CompartmentIds = compartmentIds;
             JwtCredentials = new JsonWebTokens(jwtEnabled, jwtSecret, jwtToken);
-            DataBaseCredentials = new DatabaseSettings(connectionString, databaseName, collectionName);
         }
 
 
@@ -54,13 +49,12 @@ namespace LSS.HCM.Core.DataObjects.Models
         /// <param name="compartmentIds"> List of compartment id's which will be opened.</param>
         /// <param name="jwtCredentials">Jsone Web Token credentials receive Flag, shared key and Token.</param>
         /// <param name="dataBaseCredentials">Database credentials receive connection string name, database name and collection name of MongoDB.</param>
-        public Compartment(string transactionId, string lockerId, string[] compartmentIds, JsonWebTokens jwtCredentials, DatabaseSettings dataBaseCredentials)
+        public Compartment(string transactionId, string lockerId, string[] compartmentIds, JsonWebTokens jwtCredentials)
         {
             TransactionId = transactionId;
             LockerId = lockerId;
             CompartmentIds = compartmentIds;
             JwtCredentials = jwtCredentials;
-            DataBaseCredentials = dataBaseCredentials;
         }
 
 

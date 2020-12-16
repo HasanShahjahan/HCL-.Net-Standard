@@ -1,12 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using LSS.HCM.Core.DataObjects.Models;
 using LSS.HCM.Core.Domain.Managers;
@@ -44,15 +37,17 @@ namespace LSS.HCM.Core.Simulator
                 string[] validCompartmentIds = txtCompartmentId.Text.Split(',');
                 bool flag = jwtEnable.Checked;
 
-                var compartment = new Compartment(transactionId, lockerId, validCompartmentIds, flag, jwtSecret, token, connectionString, databaseName, collectionName);
+                var compartment = new Compartment(transactionId, lockerId, validCompartmentIds, flag, jwtSecret, token);
                 if (radioOpenCompartment.Checked)
                 {
-                    var result = LockerManager.OpenCompartment(compartment);
+                    var lockerManager = new LockerManager(null);
+                    var result = lockerManager.OpenCompartment(compartment);
                     txtResult.Text = JsonConvert.SerializeObject(result, Formatting.Indented);
                 }
                 if (radioCompartmentStatus.Checked)
                 {
-                    var result = LockerManager.CompartmentStatus(compartment);
+                    var lockerManager = new LockerManager(null);
+                    var result = lockerManager.CompartmentStatus(compartment);
                     txtResult.Text = JsonConvert.SerializeObject(result, Formatting.Indented);
                 }
             }

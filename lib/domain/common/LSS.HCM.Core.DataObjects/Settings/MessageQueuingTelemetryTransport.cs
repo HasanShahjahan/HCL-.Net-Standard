@@ -1,5 +1,8 @@
-﻿namespace LSS.HCM.Core.DataObjects.Settings
+﻿using System;
+
+namespace LSS.HCM.Core.DataObjects.Settings
 {
+    [Serializable]
     public class MessageQueuingTelemetryTransport
     {
         public string Server { get; set; }

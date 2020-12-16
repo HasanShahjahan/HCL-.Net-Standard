@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\lib\domain\common\LSS.HCM.Core.Validator\LSS.HCM.Core.Validator.csproj" />
+    <ProjectReference Include="..\..\..\lib\domain\core\LSS.HCM.Core.Domain\LSS.HCM.Core.Domain.csproj" />
   </ItemGroup>
 
 </Project>
