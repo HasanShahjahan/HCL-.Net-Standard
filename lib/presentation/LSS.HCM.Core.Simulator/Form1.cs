@@ -1,24 +1,22 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Windows.Forms;
-using LSS.HCM.Core.DataObjects.Models;
 using LSS.HCM.Core.Domain.Managers;
 using Newtonsoft.Json;
+using Compartment = LSS.HCM.Core.DataObjects.Models.Compartment;
 
 namespace LSS.HCM.Core.Simulator
 {
     public partial class Form1 : Form
     {
+        string configurationPath = @"C:\Box24\Project Execution\Hasan.txt";
         public Form1()
         {
             InitializeComponent();
             txtTransactionId.Text = "70b36c41-078b-411b-982c-c5b774aac66f";
             txtLockerId.Text = "PANLOCKER-1";
-            txtConnectionString.Text = "mongodb://localhost:27017";
             txtJwtToken.Text = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MDkzNTU5MjEsInRyYW5zYWN0aW9uX2lkIjoiNzBiMzZjNDEtMDc4Yi00MTFiLTk4MmMtYzViNzc0YWFjNjZmIn0.ujOkQJUq5WY_tZJgKXqe_n4nql3cSAeHMfXGABZO3E4";
             txtJwtSecret.Text = "HWAPI_0BwRn5Bg4rJAe5eyWkRz";
-            txtDatabaseName.Text = "LssHwapiDb";
-            txtCollectionName.Text = "Lockers";
             txtCompartmentId.Text = "M0-1,M0-3";
         }
 
@@ -29,9 +27,6 @@ namespace LSS.HCM.Core.Simulator
                 txtResult.Text = "";
                 string transactionId = txtTransactionId.Text;
                 string lockerId = txtLockerId.Text;
-                string connectionString = txtConnectionString.Text;
-                string databaseName = txtDatabaseName.Text;
-                string collectionName = txtCollectionName.Text;
                 string token = txtJwtToken.Text;
                 string jwtSecret = txtJwtSecret.Text;
                 string[] validCompartmentIds = txtCompartmentId.Text.Split(',');
@@ -40,34 +35,20 @@ namespace LSS.HCM.Core.Simulator
                 var compartment = new Compartment(transactionId, lockerId, validCompartmentIds, flag, jwtSecret, token);
                 if (radioOpenCompartment.Checked)
                 {
-                    var lockerManager = new LockerManager(null);
+                    var lockerManager = new LockerManager(configurationPath);
                     var result = lockerManager.OpenCompartment(compartment);
                     txtResult.Text = JsonConvert.SerializeObject(result, Formatting.Indented);
                 }
-                if (radioCompartmentStatus.Checked)
+                else if (radioCompartmentStatus.Checked)
                 {
-                    var lockerManager = new LockerManager(null);
+                    var lockerManager = new LockerManager(configurationPath);
                     var result = lockerManager.CompartmentStatus(compartment);
                     txtResult.Text = JsonConvert.SerializeObject(result, Formatting.Indented);
                 }
             }
             catch (Exception ex)
             {
-                // Get stack trace for the exception with source file information
-                var st = new StackTrace(ex, true);
-                // Get the top stack frame
-                var frame = st.GetFrame(0);
-                // Get the line number from the stack frame
-                var filename = frame.GetFileName();
-                var line = frame.GetFileLineNumber();
-                var method = frame.GetMethod();
-
                 txtResult.Text = ex.ToString();
-                /*
-                txtResult.Text = "ERR File: " + filename + "\r\n" +
-                    "    Method: " + method + "\r\n" +
-                    "    Line: " + line + "\r\n" +
-                    "    Msg: " + ex.Message;*/
             }
 
         }

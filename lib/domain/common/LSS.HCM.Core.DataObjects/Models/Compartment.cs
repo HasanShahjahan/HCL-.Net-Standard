@@ -92,14 +92,5 @@ namespace LSS.HCM.Core.DataObjects.Models
         ///     The Jwt Credentials in the current Compartment.
         ///</returns>
         public JsonWebTokens JwtCredentials { get; set; }
-
-
-        /// <summary>
-        ///     Gets and sets the Data BaseCredentials in the current Compartment object.
-        /// </summary>
-        /// <returns>
-        ///    The Data BaseCredentials in the current Compartment.
-        ///</returns>
-        public DatabaseSettings DataBaseCredentials { get; set; }
     }
 }
