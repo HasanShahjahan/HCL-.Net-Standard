@@ -1,6 +1,6 @@
 ﻿using LSS.HCM.Core.Common.Enums;
 using LSS.HCM.Core.Common.Utiles;
-using LSS.HCM.Core.Domain.Core.Commands;
+using LSS.HCM.Core.DataObjects.Settings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,22 +34,22 @@ namespace LSS.HCM.Core.Domain.Services
             }
             return compiledData;
         }
-        public static List<byte> GenerateCommand(string commandName, List<byte> commandData)
+        public static List<byte> GenerateCommand(string commandName, List<byte> commandData, AppSettings lockerConfiguration)
         {
-            List<byte> commandHeader = Utiles.ToByteList(Microcontroller.CommandHeader);
+            List<byte> commandHeader = Utiles.ToByteList(lockerConfiguration.Microcontroller.CommandHeader);
             var commandByte = new List<byte>();
             switch (commandName)
             {
                 case CommandType.DoorOpen:
-                    commandByte = Utiles.GetByteCommand(DoorOpen.Length, DoorOpen.Code, commandHeader, commandData);
+                    commandByte = Utiles.GetByteCommand(lockerConfiguration.Microcontroller.Commands.OpenDoor.Length, lockerConfiguration.Microcontroller.Commands.OpenDoor.Code, commandHeader, commandData);
                     break;
 
                 case CommandType.DoorStatus:
-                    commandByte = Utiles.GetByteCommand(DoorStatus.Length, DoorStatus.Code, commandHeader, commandData);
+                    commandByte = Utiles.GetByteCommand(lockerConfiguration.Microcontroller.Commands.DoorStatus.Length, lockerConfiguration.Microcontroller.Commands.DoorStatus.Code, commandHeader, commandData);
                     break;
 
                 case CommandType.ItemDetection:
-                    commandByte = Utiles.GetByteCommand(ItemDetection.Length, ItemDetection.Code, commandHeader, commandData);
+                    commandByte = Utiles.GetByteCommand(lockerConfiguration.Microcontroller.Commands.DetectItem.Length, lockerConfiguration.Microcontroller.Commands.DetectItem.Code, commandHeader, commandData);
                     break;
             }
             

@@ -4,6 +4,7 @@ using System.Text;
 
 namespace LSS.HCM.Core.DataObjects.Settings
 {
+    [Serializable]
     public class SerialInterface
     {
         public string Name { get; set; }

@@ -11,15 +11,15 @@ namespace LSS.HCM.Core.Domain.Services
 {
     public class CompartmentService
     {
-        public static Compartment CompartmentOpen(string compartmentId, LockerConfiguration lockerConfiguration)
+        public static Compartment CompartmentOpen(string compartmentId, AppSettings lockerConfiguration)
         {
             // Find the target compartment
-            var target_compartment = lockerConfiguration.Compartments.Find(compartment => compartment.CompartmentId.Contains(compartmentId));
+            var target_compartment = lockerConfiguration.Locker.Compartments.Find(compartment => compartment.CompartmentId.Contains(compartmentId));
 
             // Commanding
-            var DoorOpenResult = CommunicationPortControlService.SendCommand(CommandType.DoorOpen, CompartmentHelper.MapModuleId(target_compartment));
+            var DoorOpenResult = CommunicationPortControlService.SendCommand(CommandType.DoorOpen, CompartmentHelper.MapModuleId(target_compartment), lockerConfiguration);
             
-            Compartment compartmentResult = new Compartment(lockerConfiguration.LockerId,
+            Compartment compartmentResult = new Compartment(lockerConfiguration.Locker.LockerId,
                                                              target_compartment.CompartmentId,
                                                              target_compartment.CompartmentSize,
                                                              Convert.ToBoolean(DoorOpenResult["DoorOpen"]),
@@ -29,14 +29,14 @@ namespace LSS.HCM.Core.Domain.Services
             return compartmentResult;
         }
 
-        public static List<Compartment> CompartmentStatus(DataObjects.Models.Compartment model, LockerConfiguration lockerConfiguration)
+        public static List<Compartment> CompartmentStatus(DataObjects.Models.Compartment model, AppSettings lockerConfiguration)
         {
             // Find locker controller board module id and object detection module id list
             var lcbModuleList = new List<string> { };
             var odbModuleList = new List<string> { };
-            List<CompartmentConfiguration> compartments = lockerConfiguration.Compartments;
+            List<CompartmentConfiguration> compartments = lockerConfiguration.Locker.Compartments;
            
-            if (model.CompartmentIds.Any(CompartmentId => CompartmentId == "All")) model.CompartmentIds = lockerConfiguration.Compartments.Select(compartment => compartment.CompartmentId).ToArray();
+            if (model.CompartmentIds.Any(CompartmentId => CompartmentId == "All")) model.CompartmentIds = lockerConfiguration.Locker.Compartments.Select(compartment => compartment.CompartmentId).ToArray();
            
             foreach (var compartmentId in model.CompartmentIds)
             {
@@ -58,12 +58,12 @@ namespace LSS.HCM.Core.Domain.Services
             var opendoorStatusAry = new Dictionary<string, Dictionary<string, byte>> { };
             foreach (string moduleNo in lcbModuleList)
             {
-                opendoorStatusAry[moduleNo] = CompartmentHelper.GetStatusByModuleId(CommandType.DoorStatus, moduleNo);
+                opendoorStatusAry[moduleNo] = CompartmentHelper.GetStatusByModuleId(CommandType.DoorStatus, moduleNo, lockerConfiguration);
             }
             var objectdetectStatusAry = new Dictionary<string, Dictionary<string, byte>> { };
             foreach (string moduleNo in odbModuleList)
             {
-                objectdetectStatusAry[moduleNo] = CompartmentHelper.GetStatusByModuleId(CommandType.ItemDetection ,moduleNo);
+                objectdetectStatusAry[moduleNo] = CompartmentHelper.GetStatusByModuleId(CommandType.ItemDetection ,moduleNo, lockerConfiguration);
             }
 
             foreach (var compatmentId in model.CompartmentIds)
@@ -72,7 +72,7 @@ namespace LSS.HCM.Core.Domain.Services
                 
                 Dictionary<string, byte> opendoorStatus = opendoorStatusAry[compartment.CompartmentCode.Lcbmod]; //[compatment.CompartmentCode.Lcbid];
                 Dictionary<string, byte> objectdetectStatus = objectdetectStatusAry[compartment.CompartmentCode.Odbmod]; //[compatment.CompartmentCode.Odbid];
-                Compartment compartmentResult = new Compartment(lockerConfiguration.LockerId,
+                Compartment compartmentResult = new Compartment(lockerConfiguration.Locker.LockerId,
                                                                  compartment.CompartmentId,
                                                                  compartment.CompartmentSize,
                                                                  opendoorStatus[compartment.CompartmentCode.Lcbid] == 0 ? true : false,

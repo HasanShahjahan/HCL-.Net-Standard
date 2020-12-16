@@ -7,6 +7,7 @@ namespace LSS.HCM.Core.DataObjects.Settings
     /// <summary>
     ///   Represents settings as a sequence of Database Settings units.
     ///</summary>
+    [Serializable]
     public class DatabaseSettings
     {
         /// <summary>

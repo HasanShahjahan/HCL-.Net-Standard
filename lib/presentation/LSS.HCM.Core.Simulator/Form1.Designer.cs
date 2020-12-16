@@ -37,7 +37,6 @@
             this.lblLockerId = new System.Windows.Forms.Label();
             this.txtResult = new System.Windows.Forms.RichTextBox();
             this.labelTransactionId = new System.Windows.Forms.Label();
-            this.txtConnectionString = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.jwtEnable = new System.Windows.Forms.CheckBox();
             this.txtJwtSecret = new System.Windows.Forms.TextBox();
@@ -46,10 +45,6 @@
             this.label5 = new System.Windows.Forms.Label();
             this.txtCompartmentId = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.txtDatabaseName = new System.Windows.Forms.TextBox();
-            this.labelCollectionName = new System.Windows.Forms.Label();
-            this.labelDatabaseName = new System.Windows.Forms.Label();
-            this.txtCollectionName = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // txtTransactionId
@@ -150,15 +145,6 @@
             this.labelTransactionId.Text = "TransactionId";
             this.labelTransactionId.Click += new System.EventHandler(this.label1_Click);
             // 
-            // txtConnectionString
-            // 
-            this.txtConnectionString.Location = new System.Drawing.Point(142, 188);
-            this.txtConnectionString.Margin = new System.Windows.Forms.Padding(2);
-            this.txtConnectionString.Name = "txtConnectionString";
-            this.txtConnectionString.Size = new System.Drawing.Size(213, 20);
-            this.txtConnectionString.TabIndex = 0;
-            this.txtConnectionString.TextChanged += new System.EventHandler(this.txtLockerId_TextChanged);
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -167,7 +153,6 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(91, 13);
             this.label2.TabIndex = 1;
-            this.label2.Text = "Connection String";
             this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // jwtEnable
@@ -242,52 +227,11 @@
             this.label6.TabIndex = 7;
             this.label6.Text = "Command";
             // 
-            // txtDatabaseName
-            // 
-            this.txtDatabaseName.Location = new System.Drawing.Point(142, 225);
-            this.txtDatabaseName.Margin = new System.Windows.Forms.Padding(2);
-            this.txtDatabaseName.Name = "txtDatabaseName";
-            this.txtDatabaseName.Size = new System.Drawing.Size(213, 20);
-            this.txtDatabaseName.TabIndex = 11;
-            // 
-            // labelCollectionName
-            // 
-            this.labelCollectionName.AutoSize = true;
-            this.labelCollectionName.Location = new System.Drawing.Point(37, 266);
-            this.labelCollectionName.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.labelCollectionName.Name = "labelCollectionName";
-            this.labelCollectionName.Size = new System.Drawing.Size(84, 13);
-            this.labelCollectionName.TabIndex = 9;
-            this.labelCollectionName.Text = "Collection Name";
-            // 
-            // labelDatabaseName
-            // 
-            this.labelDatabaseName.AutoSize = true;
-            this.labelDatabaseName.Location = new System.Drawing.Point(37, 228);
-            this.labelDatabaseName.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.labelDatabaseName.Name = "labelDatabaseName";
-            this.labelDatabaseName.Size = new System.Drawing.Size(84, 13);
-            this.labelDatabaseName.TabIndex = 10;
-            this.labelDatabaseName.Text = "Database Name";
-            // 
-            // txtCollectionName
-            // 
-            this.txtCollectionName.Location = new System.Drawing.Point(142, 263);
-            this.txtCollectionName.Margin = new System.Windows.Forms.Padding(2);
-            this.txtCollectionName.Name = "txtCollectionName";
-            this.txtCollectionName.Size = new System.Drawing.Size(213, 20);
-            this.txtCollectionName.TabIndex = 8;
-            this.txtCollectionName.TextChanged += new System.EventHandler(this.txtCollectionName_TextChanged);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(790, 502);
-            this.Controls.Add(this.txtDatabaseName);
-            this.Controls.Add(this.labelCollectionName);
-            this.Controls.Add(this.labelDatabaseName);
-            this.Controls.Add(this.txtCollectionName);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.txtCompartmentId);
             this.Controls.Add(this.jwtEnable);
@@ -303,7 +247,6 @@
             this.Controls.Add(this.lblCompartmentId);
             this.Controls.Add(this.txtJwtToken);
             this.Controls.Add(this.txtJwtSecret);
-            this.Controls.Add(this.txtConnectionString);
             this.Controls.Add(this.txtLockerId);
             this.Controls.Add(this.txtTransactionId);
             this.Margin = new System.Windows.Forms.Padding(2);
@@ -326,7 +269,6 @@
         private System.Windows.Forms.Label lblLockerId;
         private System.Windows.Forms.RichTextBox txtResult;
         private System.Windows.Forms.Label labelTransactionId;
-        private System.Windows.Forms.TextBox txtConnectionString;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.CheckBox jwtEnable;
         private System.Windows.Forms.TextBox txtJwtSecret;
@@ -335,10 +277,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox txtCompartmentId;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox txtDatabaseName;
-        private System.Windows.Forms.Label labelCollectionName;
-        private System.Windows.Forms.Label labelDatabaseName;
-        private System.Windows.Forms.TextBox txtCollectionName;
     }
 }
 

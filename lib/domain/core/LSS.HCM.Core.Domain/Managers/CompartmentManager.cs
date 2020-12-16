@@ -12,12 +12,12 @@ namespace LSS.HCM.Core.Domain.Managers
 {
     public sealed class CompartmentManager
     {
-        public static Locker CompartmentOpen(DataObjects.Models.Compartment model, LockerConfiguration lockerConfiguration) 
+        public static Locker CompartmentOpen(DataObjects.Models.Compartment model, AppSettings lockerConfiguration) 
         {
             var odbModuleList = new List<string> { }; // Find  object detection module id list by input list of compartment
-            List<CompartmentConfiguration> compartments = lockerConfiguration.Compartments;
+            List<CompartmentConfiguration> compartments = lockerConfiguration.Locker.Compartments;
 
-            if (model.CompartmentIds.Any(CompartmentId => CompartmentId == "All")) model.CompartmentIds = lockerConfiguration.Compartments.Select(compartment => compartment.CompartmentId).ToArray();
+            if (model.CompartmentIds.Any(CompartmentId => CompartmentId == "All")) model.CompartmentIds = lockerConfiguration.Locker.Compartments.Select(compartment => compartment.CompartmentId).ToArray();
             foreach (var compartmentId in model.CompartmentIds) 
             {
                 var compartment = compartments.Find(c => c.CompartmentId == compartmentId);
@@ -31,7 +31,7 @@ namespace LSS.HCM.Core.Domain.Managers
             var objectdetectStatusAry = new Dictionary<string, Dictionary<string, byte>> { };
             foreach (string moduleNo in odbModuleList)
             {
-                objectdetectStatusAry[moduleNo] = CompartmentHelper.GetStatusByModuleId(CommandType.ItemDetection, moduleNo);
+                objectdetectStatusAry[moduleNo] = CompartmentHelper.GetStatusByModuleId(CommandType.ItemDetection, moduleNo, lockerConfiguration);
             }
 
             var result = new Locker();
@@ -48,7 +48,7 @@ namespace LSS.HCM.Core.Domain.Managers
             result.TransactionId = model.TransactionId;
             return result;
         }
-        public static List<Entities.Locker.Compartment> CompartmentStatus(DataObjects.Models.Compartment model, LockerConfiguration lockerConfiguration)
+        public static List<Entities.Locker.Compartment> CompartmentStatus(DataObjects.Models.Compartment model, AppSettings lockerConfiguration)
         {
             // Find  object detection module id list by input list of compartment
             var compartments = CompartmentService.CompartmentStatus(model, lockerConfiguration);
