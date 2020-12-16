@@ -7,3 +7,12 @@ C:\Box24\Project Execution\Source Code\HCM\LockerStationSoftware\lib\infrastruct
 C:\Box24\Project Execution\Source Code\HCM\LockerStationSoftware\lib\infrastructure\LSS.HCM.Core.Infrastructure\obj\Debug\netstandard2.0\LSS.HCM.Core.Infrastructure.dll
 C:\Box24\Project Execution\Source Code\HCM\LockerStationSoftware\lib\infrastructure\LSS.HCM.Core.Infrastructure\obj\Debug\netstandard2.0\LSS.HCM.Core.Infrastructure.pdb
 C:\Box24\Project Execution\Source Code\HCM\LockerStationSoftware\lib\infrastructure\LSS.HCM.Core.Infrastructure\obj\Debug\netstandard2.0\LSS.HCM.Core.Infrastructure.csprojAssemblyReference.cache
+C:\Box24\Project Execution\Source Code\LockerHardwareControlLibrary\lib\infrastructure\LSS.HCM.Core.Infrastructure\bin\Debug\netstandard2.0\LSS.HCM.Core.Infrastructure.deps.json
+C:\Box24\Project Execution\Source Code\LockerHardwareControlLibrary\lib\infrastructure\LSS.HCM.Core.Infrastructure\bin\Debug\netstandard2.0\LSS.HCM.Core.Infrastructure.dll
+C:\Box24\Project Execution\Source Code\LockerHardwareControlLibrary\lib\infrastructure\LSS.HCM.Core.Infrastructure\bin\Debug\netstandard2.0\LSS.HCM.Core.Infrastructure.pdb
+C:\Box24\Project Execution\Source Code\LockerHardwareControlLibrary\lib\infrastructure\LSS.HCM.Core.Infrastructure\obj\Debug\netstandard2.0\LSS.HCM.Core.Infrastructure.csprojAssemblyReference.cache
+C:\Box24\Project Execution\Source Code\LockerHardwareControlLibrary\lib\infrastructure\LSS.HCM.Core.Infrastructure\obj\Debug\netstandard2.0\LSS.HCM.Core.Infrastructure.csproj.CoreCompileInputs.cache
+C:\Box24\Project Execution\Source Code\LockerHardwareControlLibrary\lib\infrastructure\LSS.HCM.Core.Infrastructure\obj\Debug\netstandard2.0\LSS.HCM.Core.Infrastructure.AssemblyInfoInputs.cache
+C:\Box24\Project Execution\Source Code\LockerHardwareControlLibrary\lib\infrastructure\LSS.HCM.Core.Infrastructure\obj\Debug\netstandard2.0\LSS.HCM.Core.Infrastructure.AssemblyInfo.cs
+C:\Box24\Project Execution\Source Code\LockerHardwareControlLibrary\lib\infrastructure\LSS.HCM.Core.Infrastructure\obj\Debug\netstandard2.0\LSS.HCM.Core.Infrastructure.dll
+C:\Box24\Project Execution\Source Code\LockerHardwareControlLibrary\lib\infrastructure\LSS.HCM.Core.Infrastructure\obj\Debug\netstandard2.0\LSS.HCM.Core.Infrastructure.pdb
