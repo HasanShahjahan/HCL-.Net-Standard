@@ -14,7 +14,7 @@ namespace LSS.HCM.Core.Common.Utiles
             {
                 string subStringInput = strInput.Substring(i, chunkSize);
                 hexByteArray.Add((byte)Convert.ToInt16(subStringInput, 16));
-                stringLength -= 2;
+                stringLength -= chunkSize;
             }
             return hexByteArray;
         }
@@ -72,7 +72,7 @@ namespace LSS.HCM.Core.Common.Utiles
             {
                 string subStringInput = strInput.Substring(i, chunkSize);
                 statusList[i.ToString("X2")] = (byte)Convert.ToInt16(subStringInput); // Convert int to hex string
-                stringLength -= 2;
+                stringLength -= chunkSize;
             }
             return statusList;
         }

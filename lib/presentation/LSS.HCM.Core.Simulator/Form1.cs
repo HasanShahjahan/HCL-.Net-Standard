@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -30,26 +31,48 @@ namespace LSS.HCM.Core.Simulator
 
         private void btnSubmit_Click(object sender, EventArgs e)
         {
-            string transactionId = txtTransactionId.Text;
-            string lockerId = txtLockerId.Text;
-            string connectionString = txtConnectionString.Text;
-            string databaseName = txtDatabaseName.Text;
-            string collectionName = txtCollectionName.Text;
-            string token = txtJwtToken.Text;
-            string jwtSecret = txtJwtSecret.Text;
-            string[] validCompartmentIds = txtCompartmentId.Text.Split(',');
-            bool flag = jwtEnable.Checked;
+            try
+            {
+                txtResult.Text = "";
+                string transactionId = txtTransactionId.Text;
+                string lockerId = txtLockerId.Text;
+                string connectionString = txtConnectionString.Text;
+                string databaseName = txtDatabaseName.Text;
+                string collectionName = txtCollectionName.Text;
+                string token = txtJwtToken.Text;
+                string jwtSecret = txtJwtSecret.Text;
+                string[] validCompartmentIds = txtCompartmentId.Text.Split(',');
+                bool flag = jwtEnable.Checked;
 
-            var compartment = new Compartment(transactionId, lockerId, validCompartmentIds, flag, jwtSecret, token, connectionString, databaseName, collectionName);
-            if (radioOpenCompartment.Checked)
-            {
-                var result = LockerManager.OpenCompartment(compartment);
-                txtResult.Text = JsonConvert.SerializeObject(result, Formatting.Indented);
+                var compartment = new Compartment(transactionId, lockerId, validCompartmentIds, flag, jwtSecret, token, connectionString, databaseName, collectionName);
+                if (radioOpenCompartment.Checked)
+                {
+                    var result = LockerManager.OpenCompartment(compartment);
+                    txtResult.Text = JsonConvert.SerializeObject(result, Formatting.Indented);
+                }
+                if (radioCompartmentStatus.Checked)
+                {
+                    var result = LockerManager.CompartmentStatus(compartment);
+                    txtResult.Text = JsonConvert.SerializeObject(result, Formatting.Indented);
+                }
             }
-            if (radioCompartmentStatus.Checked)
+            catch (Exception ex)
             {
-                var result = LockerManager.CompartmentStatus(compartment);
-                txtResult.Text = JsonConvert.SerializeObject(result, Formatting.Indented);
+                // Get stack trace for the exception with source file information
+                var st = new StackTrace(ex, true);
+                // Get the top stack frame
+                var frame = st.GetFrame(0);
+                // Get the line number from the stack frame
+                var filename = frame.GetFileName();
+                var line = frame.GetFileLineNumber();
+                var method = frame.GetMethod();
+
+                txtResult.Text = ex.ToString();
+                /*
+                txtResult.Text = "ERR File: " + filename + "\r\n" +
+                    "    Method: " + method + "\r\n" +
+                    "    Line: " + line + "\r\n" +
+                    "    Msg: " + ex.Message;*/
             }
 
         }
