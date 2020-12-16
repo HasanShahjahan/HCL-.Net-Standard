@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace LSS.HCM.Core.DataObjects.Settings
 {
+    [Serializable]
     public class Code
     {
         public string Odbmod { get; set; }

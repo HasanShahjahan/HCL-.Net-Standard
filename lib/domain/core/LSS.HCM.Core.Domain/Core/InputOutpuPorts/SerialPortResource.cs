@@ -6,14 +6,6 @@ namespace LSS.HCM.Core.Domain.Core.InputOutpuPorts
 {
     public class SerialPortResource
     {
-        public SerialPortResource()
-        {
-            PortName = SerialPortLockValue.PortName;
-            Baudrate = SerialPortLockValue.Baudrate;
-            DataBits = SerialPortLockValue.DataBits;
-            ReadTimeout = SerialPortLockValue.ReadTimeout;
-            WriteTimeout = SerialPortLockValue.WriteTimeout;
-        }
         public SerialPortResource(string portName, int baudrate, int dataBits, int readTimeout, int writeTimeout)
         {
             PortName = portName;

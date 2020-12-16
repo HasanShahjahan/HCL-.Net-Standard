@@ -1,12 +1,8 @@
-﻿//using MongoDB.Bson;
-//using MongoDB.Bson.Serialization.Attributes;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Text;
+﻿using System;
 
 namespace LSS.HCM.Core.DataObjects.Settings
 {
+    [Serializable]
     public class Compartment
     {
         public string CompartmentId { get; set; }
