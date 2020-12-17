@@ -10,8 +10,17 @@ using CompartmentConfiguration = LSS.HCM.Core.DataObjects.Settings.Compartment;
 
 namespace LSS.HCM.Core.Domain.Managers
 {
+    /// <summary>
+    ///   Represents Compartment Mangement for open compartment and compartment status.
+    ///</summary>
     public sealed class CompartmentManager
     {
+        /// <summary>
+        /// Manage open compartment by requested object and based on locker configuration.
+        /// </summary>
+        /// <returns>
+        ///  The compartment object mapped from locker configuration.
+        /// </returns>
         public static Locker CompartmentOpen(DataObjects.Models.Compartment model, AppSettings lockerConfiguration) 
         {
             var odbModuleList = new List<string> { }; // Find  object detection module id list by input list of compartment
@@ -48,6 +57,13 @@ namespace LSS.HCM.Core.Domain.Managers
             result.TransactionId = model.TransactionId;
             return result;
         }
+
+        /// <summary>
+        /// Manage compartment status by requested object and based on locker configuration.
+        /// </summary>
+        /// <returns>
+        ///  List of compartment status object mapped from locker configuration.
+        /// </returns>
         public static List<Entities.Locker.Compartment> CompartmentStatus(DataObjects.Models.Compartment model, AppSettings lockerConfiguration)
         {
             // Find  object detection module id list by input list of compartment

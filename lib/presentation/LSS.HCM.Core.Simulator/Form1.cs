@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Windows.Forms;
 using LSS.HCM.Core.Domain.Managers;
 using Newtonsoft.Json;
@@ -46,6 +45,18 @@ namespace LSS.HCM.Core.Simulator
                     var result = lockerManager.CompartmentStatus(compartment);
                     txtResult.Text = JsonConvert.SerializeObject(result, Formatting.Indented);
                 }
+            }
+            catch (System.IO.FileNotFoundException)
+            {
+                txtResult.Text = "Please ensure valid configuration file path.";
+            }
+            catch (ArgumentException)
+            {
+                txtResult.Text = "Please ensure valid configuration file path.";
+            }
+            catch (System.IO.DirectoryNotFoundException) 
+            {
+                txtResult.Text = "Please ensure valid configuration file path.";
             }
             catch (Exception ex)
             {

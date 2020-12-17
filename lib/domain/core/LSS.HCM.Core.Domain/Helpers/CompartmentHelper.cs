@@ -7,13 +7,29 @@ using System.Collections.Generic;
 
 namespace LSS.HCM.Core.Domain.Helpers
 {
+    /// <summary>
+    ///   Represents Compartment Manager helper class.
+    ///</summary>
     public sealed class CompartmentHelper
     {
+        /// <summary>
+        /// Map compartment from locker configuration by requested compartment Id.
+        /// </summary>
+        /// <returns>
+        ///  The compartment object mapped from locker configuration.
+        /// </returns>
         public static Compartment MapCompartment(string compartmentId, AppSettings lockerConfiguration)
         {
             var target_compartment = lockerConfiguration.Locker.Compartments.Find(compartment => compartment.CompartmentId.Contains(compartmentId));
             return target_compartment;
         }
+
+        /// <summary>
+        /// Get any status by compartment module id with comparing locker cofiguration.
+        /// </summary>
+        /// <returns>
+        ///  Return dictionary by getting value from communication port service.
+        /// </returns>
         public static Dictionary<string, byte> GetStatusByModuleId(string commandType, string compartmentModuleId, AppSettings lockerConfiguration)
         {
             var commandPinCode = new List<byte>()
@@ -31,6 +47,13 @@ namespace LSS.HCM.Core.Domain.Helpers
 
             return list;
         }
+
+        /// <summary>
+        /// Get compartment pin code by requested compartment object.
+        /// </summary>
+        /// <returns>
+        ///  List of byte of compartment pin. 
+        /// </returns>
         public static List<byte> MapModuleId(Compartment compartment)
         {
             List<byte> compartmentPinCode = new List<byte>() {
