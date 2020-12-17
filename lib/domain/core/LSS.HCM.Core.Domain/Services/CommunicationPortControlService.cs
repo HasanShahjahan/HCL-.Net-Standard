@@ -5,8 +5,17 @@ using System.Collections.Generic;
 
 namespace LSS.HCM.Core.Domain.Services
 {
+    /// <summary>
+    ///   Represents communication protocol of com service.
+    ///</summary>
     public sealed class CommunicationPortControlService
     {
+        /// <summary>
+        /// Send command by command name, command data with comparing locker configuration. 
+        /// </summary>
+        /// <returns>
+        ///  Command result by initializing serial port for each command type. 
+        /// </returns>
         public static Dictionary<string, string> SendCommand(string commandName, List<byte> commandData, AppSettings lockerConfiguration)
         {
             List<byte> commandString = BoardInitializationService.GenerateCommand(commandName, commandData, lockerConfiguration);

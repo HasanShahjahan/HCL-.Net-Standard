@@ -9,8 +9,17 @@ using System.Linq;
 
 namespace LSS.HCM.Core.Domain.Services
 {
+    /// <summary>
+    ///   Represents locker compartment service for open comparment and it's status.
+    ///</summary>
     public class CompartmentService
     {
+        /// <summary>
+        /// Prepare open compartment object by communicating command to communication port service. 
+        /// </summary>
+        /// <returns>
+        ///  Open compartment actual result with status. 
+        /// </returns>
         public static Compartment CompartmentOpen(string compartmentId, AppSettings lockerConfiguration)
         {
             // Find the target compartment
@@ -29,6 +38,12 @@ namespace LSS.HCM.Core.Domain.Services
             return compartmentResult;
         }
 
+        /// <summary>
+        /// Prepare compartment status object by communicating command to communication port service. 
+        /// </summary>
+        /// <returns>
+        ///  Compartment status actual result including real hardware status. 
+        /// </returns>
         public static List<Compartment> CompartmentStatus(DataObjects.Models.Compartment model, AppSettings lockerConfiguration)
         {
             // Find locker controller board module id and object detection module id list

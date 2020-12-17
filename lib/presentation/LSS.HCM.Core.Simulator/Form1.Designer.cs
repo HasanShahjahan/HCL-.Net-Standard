@@ -301,8 +301,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox txtCompartmentId;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label lblConfigurationPath;
-        private System.Windows.Forms.Label lblConfiguration;
         private System.Windows.Forms.Label configurationFile;
         private System.Windows.Forms.TextBox txtConfigurationFile;
     }

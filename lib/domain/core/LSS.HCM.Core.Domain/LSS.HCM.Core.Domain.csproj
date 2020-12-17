@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -7,7 +7,7 @@
     <Product>Hardware Control Module</Product>
     <Description>Hardware Control API (HWAPI) brings hardware communication and collaboration into one place so you can get all the hardware status from one place, whether you belong to a large enterprise or a small project.</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <Version>1.0.1</Version>
   </PropertyGroup>
 
