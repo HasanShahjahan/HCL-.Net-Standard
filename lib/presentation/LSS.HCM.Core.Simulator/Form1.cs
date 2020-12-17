@@ -9,7 +9,6 @@ namespace LSS.HCM.Core.Simulator
 {
     public partial class Form1 : Form
     {
-        string configurationPath = @"C:\Box24\Project Execution\Hasan.txt";
         public Form1()
         {
             InitializeComponent();
@@ -18,6 +17,7 @@ namespace LSS.HCM.Core.Simulator
             txtJwtToken.Text = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MDkzNTU5MjEsInRyYW5zYWN0aW9uX2lkIjoiNzBiMzZjNDEtMDc4Yi00MTFiLTk4MmMtYzViNzc0YWFjNjZmIn0.ujOkQJUq5WY_tZJgKXqe_n4nql3cSAeHMfXGABZO3E4";
             txtJwtSecret.Text = "HWAPI_0BwRn5Bg4rJAe5eyWkRz";
             txtCompartmentId.Text = "M0-1,M0-3";
+            txtConfigurationFile.Text = @"C:\Box24\Project Execution\Hasan.txt";
         }
 
         private void btnSubmit_Click(object sender, EventArgs e)
@@ -31,6 +31,7 @@ namespace LSS.HCM.Core.Simulator
                 string jwtSecret = txtJwtSecret.Text;
                 string[] validCompartmentIds = txtCompartmentId.Text.Split(',');
                 bool flag = jwtEnable.Checked;
+                string configurationPath = txtConfigurationFile.Text;
 
                 var compartment = new Compartment(transactionId, lockerId, validCompartmentIds, flag, jwtSecret, token);
                 if (radioOpenCompartment.Checked)
@@ -131,6 +132,11 @@ namespace LSS.HCM.Core.Simulator
         }
 
         private void txtCollectionName_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click_1(object sender, EventArgs e)
         {
 
         }
