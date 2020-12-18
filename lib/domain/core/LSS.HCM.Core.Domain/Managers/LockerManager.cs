@@ -3,6 +3,7 @@ using LSS.HCM.Core.Common.Exceptions;
 using LSS.HCM.Core.DataObjects.Dtos;
 using LSS.HCM.Core.DataObjects.Mappers;
 using LSS.HCM.Core.DataObjects.Settings;
+using LSS.HCM.Core.Domain.Services;
 using LSS.HCM.Core.Validator;
 using System;
 using System.IO;
@@ -29,6 +30,8 @@ namespace LSS.HCM.Core.Domain.Managers
         {
             var content = File.ReadAllText(configurationFilePath);
             lockerConfiguration = JsonSerializer.Deserialize<AppSettings>(content);
+
+            CommunicationPortControlService.SerialScannerInputHandler(lockerConfiguration);
         }
 
         /// <summary>
@@ -80,5 +83,6 @@ namespace LSS.HCM.Core.Domain.Managers
             
             return compartmentStatusDto;
         }
+
     }
 }

@@ -47,6 +47,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.configurationFile = new System.Windows.Forms.Label();
             this.txtConfigurationFile = new System.Windows.Forms.TextBox();
+            this.buttonConfigLocker = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // txtTransactionId
@@ -73,7 +74,7 @@
             // 
             this.radioOpenCompartment.AutoSize = true;
             this.radioOpenCompartment.Checked = true;
-            this.radioOpenCompartment.Location = new System.Drawing.Point(166, 23);
+            this.radioOpenCompartment.Location = new System.Drawing.Point(166, 57);
             this.radioOpenCompartment.Margin = new System.Windows.Forms.Padding(2);
             this.radioOpenCompartment.Name = "radioOpenCompartment";
             this.radioOpenCompartment.Size = new System.Drawing.Size(132, 19);
@@ -86,7 +87,7 @@
             // radioCompartmentStatus
             // 
             this.radioCompartmentStatus.AutoSize = true;
-            this.radioCompartmentStatus.Location = new System.Drawing.Point(166, 47);
+            this.radioCompartmentStatus.Location = new System.Drawing.Point(166, 81);
             this.radioCompartmentStatus.Margin = new System.Windows.Forms.Padding(2);
             this.radioCompartmentStatus.Name = "radioCompartmentStatus";
             this.radioCompartmentStatus.Size = new System.Drawing.Size(135, 19);
@@ -223,7 +224,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(35, 37);
+            this.label6.Location = new System.Drawing.Point(35, 71);
             this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(64, 15);
@@ -233,7 +234,7 @@
             // configurationFile
             // 
             this.configurationFile.AutoSize = true;
-            this.configurationFile.Location = new System.Drawing.Point(35, 87);
+            this.configurationFile.Location = new System.Drawing.Point(35, 25);
             this.configurationFile.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.configurationFile.Name = "configurationFile";
             this.configurationFile.Size = new System.Drawing.Size(102, 15);
@@ -243,17 +244,28 @@
             // 
             // txtConfigurationFile
             // 
-            this.txtConfigurationFile.Location = new System.Drawing.Point(166, 84);
+            this.txtConfigurationFile.Location = new System.Drawing.Point(166, 22);
             this.txtConfigurationFile.Margin = new System.Windows.Forms.Padding(2);
             this.txtConfigurationFile.Name = "txtConfigurationFile";
-            this.txtConfigurationFile.Size = new System.Drawing.Size(248, 23);
+            this.txtConfigurationFile.Size = new System.Drawing.Size(174, 23);
             this.txtConfigurationFile.TabIndex = 8;
+            // 
+            // buttonConfigLocker
+            // 
+            this.buttonConfigLocker.Location = new System.Drawing.Point(358, 22);
+            this.buttonConfigLocker.Name = "buttonConfigLocker";
+            this.buttonConfigLocker.Size = new System.Drawing.Size(56, 23);
+            this.buttonConfigLocker.TabIndex = 10;
+            this.buttonConfigLocker.Text = "Config";
+            this.buttonConfigLocker.UseVisualStyleBackColor = true;
+            this.buttonConfigLocker.Click += new System.EventHandler(this.buttonConfigLocker_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(922, 370);
+            this.Controls.Add(this.buttonConfigLocker);
             this.Controls.Add(this.configurationFile);
             this.Controls.Add(this.txtConfigurationFile);
             this.Controls.Add(this.label6);
@@ -305,6 +317,7 @@
         private System.Windows.Forms.Label lblConfiguration;
         private System.Windows.Forms.Label configurationFile;
         private System.Windows.Forms.TextBox txtConfigurationFile;
+        private System.Windows.Forms.Button buttonConfigLocker;
     }
 }
 

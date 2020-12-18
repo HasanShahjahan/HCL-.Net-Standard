@@ -9,6 +9,8 @@ namespace LSS.HCM.Core.Simulator
 {
     public partial class Form1 : Form
     {
+        private LockerManager _lockerManager;
+        private bool _isConfigured = false;
         public Form1()
         {
             InitializeComponent();
@@ -17,35 +19,46 @@ namespace LSS.HCM.Core.Simulator
             txtJwtToken.Text = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MDkzNTU5MjEsInRyYW5zYWN0aW9uX2lkIjoiNzBiMzZjNDEtMDc4Yi00MTFiLTk4MmMtYzViNzc0YWFjNjZmIn0.ujOkQJUq5WY_tZJgKXqe_n4nql3cSAeHMfXGABZO3E4";
             txtJwtSecret.Text = "HWAPI_0BwRn5Bg4rJAe5eyWkRz";
             txtCompartmentId.Text = "M0-1,M0-3";
-            txtConfigurationFile.Text = @"C:\Box24\Project Execution\Hasan.txt";
+            txtConfigurationFile.Text = @"D:\Hardware Contol Library\config.txt";
+            btnSubmit.Enabled = false;
         }
 
+        private void buttonConfigLocker_Click(object sender, EventArgs e)
+        {
+            string configurationPath = txtConfigurationFile.Text;
+
+            _lockerManager = new LockerManager(configurationPath);
+
+            _isConfigured = true;
+            btnSubmit.Enabled = true;
+
+        }
         private void btnSubmit_Click(object sender, EventArgs e)
         {
             try
             {
-                txtResult.Text = "";
-                string transactionId = txtTransactionId.Text;
-                string lockerId = txtLockerId.Text;
-                string token = txtJwtToken.Text;
-                string jwtSecret = txtJwtSecret.Text;
-                string[] validCompartmentIds = txtCompartmentId.Text.Split(',');
-                bool flag = jwtEnable.Checked;
-                string configurationPath = txtConfigurationFile.Text;
+                if(_isConfigured) {
+                    txtResult.Text = "";
+                    string transactionId = txtTransactionId.Text;
+                    string lockerId = txtLockerId.Text;
+                    string token = txtJwtToken.Text;
+                    string jwtSecret = txtJwtSecret.Text;
+                    string[] validCompartmentIds = txtCompartmentId.Text.Split(',');
+                    bool flag = jwtEnable.Checked;
 
-                var compartment = new Compartment(transactionId, lockerId, validCompartmentIds, flag, jwtSecret, token);
-                if (radioOpenCompartment.Checked)
-                {
-                    var lockerManager = new LockerManager(configurationPath);
-                    var result = lockerManager.OpenCompartment(compartment);
-                    txtResult.Text = JsonConvert.SerializeObject(result, Formatting.Indented);
+                    var compartment = new Compartment(transactionId, lockerId, validCompartmentIds, flag, jwtSecret, token);
+                    if (radioOpenCompartment.Checked)
+                    {
+                        var result = _lockerManager.OpenCompartment(compartment);
+                        txtResult.Text = JsonConvert.SerializeObject(result, Formatting.Indented);
+                    }
+                    else if (radioCompartmentStatus.Checked)
+                    {
+                        var result = _lockerManager.CompartmentStatus(compartment);
+                        txtResult.Text = JsonConvert.SerializeObject(result, Formatting.Indented);
+                    }
                 }
-                else if (radioCompartmentStatus.Checked)
-                {
-                    var lockerManager = new LockerManager(configurationPath);
-                    var result = lockerManager.CompartmentStatus(compartment);
-                    txtResult.Text = JsonConvert.SerializeObject(result, Formatting.Indented);
-                }
+
             }
             catch (Exception ex)
             {
@@ -140,5 +153,6 @@ namespace LSS.HCM.Core.Simulator
         {
 
         }
+
     }
 }
