@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Windows.Forms;
+using LSS.HCM.Core.DataObjects.Models;
 using LSS.HCM.Core.Domain.Managers;
 using Newtonsoft.Json;
 using Compartment = LSS.HCM.Core.DataObjects.Models.Compartment;
@@ -46,6 +47,9 @@ namespace LSS.HCM.Core.Simulator
                     string[] validCompartmentIds = txtCompartmentId.Text.Split(',');
                     bool flag = jwtEnable.Checked;
 
+                    string imageExtension = "jpeg";//txtImagExtension.Text;
+                    byte[] imageData = null;
+
                     var compartment = new Compartment(transactionId, lockerId, validCompartmentIds, flag, jwtSecret, token);
                     if (radioOpenCompartment.Checked)
                     {
@@ -57,6 +61,13 @@ namespace LSS.HCM.Core.Simulator
                         var result = _lockerManager.CompartmentStatus(compartment);
                         txtResult.Text = JsonConvert.SerializeObject(result, Formatting.Indented);
                     }
+                    else if (radioCaptureImage.Checked)
+                    {
+                        var requestCapture = new Capture(transactionId, lockerId, imageExtension, imageData, flag, jwtSecret, token);
+                        var result = _lockerManager.CaptureImage(requestCapture);
+                        txtResult.Text = JsonConvert.SerializeObject(result, Formatting.Indented);
+                    }
+                    
                 }
 
             }
@@ -82,6 +93,13 @@ namespace LSS.HCM.Core.Simulator
         {
             labelTransactionId.Hide();
             txtTransactionId.Hide();
+        }
+
+        private void radioCaptureImage_CheckedChanged(object sender, EventArgs e)
+        {
+            lblCompartmentId.Hide();
+            txtCompartmentId.Hide();
+
         }
 
         private void txtCompartmentId_TextChanged(object sender, EventArgs e)
