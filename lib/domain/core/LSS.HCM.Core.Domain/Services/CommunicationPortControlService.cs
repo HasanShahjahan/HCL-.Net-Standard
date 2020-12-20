@@ -44,5 +44,14 @@ namespace LSS.HCM.Core.Domain.Services
             commandResult.Add("Command", commandName);
             return commandResult;
         }
+
+        public static void SerialScannerInputHandler(AppSettings lockerConfiguration)
+        {
+            SerialInterface controllerConfig =  lockerConfiguration.Microcontroller.Scanner;
+            SerialPortControlService scanner = new SerialPortControlService(new SerialPortResource(controllerConfig.Port, controllerConfig.Baudrate, controllerConfig.DataBits, 500, 500));
+
+            scanner.SetReadToPublishHandler(lockerConfiguration.Locker.LockerId, lockerConfiguration.Microcontroller.Scanner.Name);
+        }
+
     }
 }
