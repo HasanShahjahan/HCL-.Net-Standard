@@ -1,7 +1,7 @@
+using LSS.BE.Core.Common.Base;
 using LSS.BE.Core.Domain.Handlers;
-using System;
+using Newtonsoft.Json;
 using System.Net;
-using System.Text.Json;
 using Xunit;
 
 namespace LSS.BE.Core.Domain.UnitTest
@@ -16,19 +16,27 @@ namespace LSS.BE.Core.Domain.UnitTest
         [Fact]
         public void GetTokenUnauthorized()
         {
-            var response = HttpHandler.PostRequestResolver(string.Empty, uriString, version, "token", clientId, clientSecret);
-
+            var response = HttpHandler.GetTokenAsync(uriString, version, "token", clientId, clientSecret);
+            var content = response.Content.ReadAsStringAsync().Result;
             if (response.StatusCode != HttpStatusCode.OK)
             {
-                var content = response.Content.ReadAsStringAsync().Result;
-                var hasan  = JsonSerializer.Deserialize<LSS.BE.Core.Common.Exceptions.ApplicationException>(content);
+                var tokenError = JsonConvert.DeserializeObject<Common.Exceptions.TokenError>(content);
+                Assert.Equal("invalid_client", tokenError.Error);
             }
         }
 
         [Fact]
         public void GetToken()
         {
-            var result = HttpHandler.PostRequestResolver(string.Empty, uriString, version, "token", clientId, clientSecret);
+            var response = HttpHandler.GetTokenAsync(uriString, version, "token", clientId, clientSecret);
+            var content = response.Content.ReadAsStringAsync().Result;
+            if (response.StatusCode != HttpStatusCode.OK)
+            {
+                var tokenError = JsonConvert.DeserializeObject<Common.Exceptions.TokenError>(content);
+                Assert.Equal("invalid_client", tokenError.Error);
+            }
+            var result = JsonConvert.DeserializeObject<AccessToken>(content);
+            Assert.Equal(200, (int)response.StatusCode);
         }
     }
 }

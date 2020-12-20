@@ -9,7 +9,7 @@ namespace LSS.BE.Core.Domain.Handlers
 {
     public class HttpHandler
     {
-        public static HttpResponseMessage PostRequestResolver(string request, string uriString, string version, string uriPath, string clientId, string clientSecret)
+        public static HttpResponseMessage GetTokenAsync(string uriString, string version, string uriPath, string clientId, string clientSecret)
         {
 
             HttpClient client = new HttpClient();
@@ -29,17 +29,28 @@ namespace LSS.BE.Core.Domain.Handlers
             var requestMessage = new HttpRequestMessage(HttpMethod.Post, "/" + version + "/" + uriPath);
             requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Basic", base64EncodedAuthenticationString);
             requestMessage.Content = content;
-
-            //make the request
+            
             var task = client.SendAsync(requestMessage);
             var response = task.Result;
             return response;
+        }
+        public static HttpResponseMessage PostAsync(string request, string uriString, string version, string uriPath, string type, string token)
+        {
 
-            //if (response.StatusCode != HttpStatusCode.OK) return response.StatusCode.ToString();
-            //response.EnsureSuccessStatusCode();
-            //string responseBody = response.Content.ReadAsStringAsync().Result;
-            //return responseBody;
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri(uriString);
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            
+            string mediaType = "application/json";
+            var content = new StringContent(request, Encoding.UTF8, mediaType);
+            var requestMessage = new HttpRequestMessage(HttpMethod.Post, "/" + version + "/" + uriPath);
+            requestMessage.Headers.Authorization = new AuthenticationHeaderValue(type, token);
+            requestMessage.Content = content;
 
+            var task = client.SendAsync(requestMessage);
+            var response = task.Result;
+            return response;
         }
     }
 }

@@ -57,13 +57,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "core", "core", "{D20FB573-7
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "security", "security", "{50433C87-6F48-4590-94CB-9F121AF5938A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LSS.BE.Core.Entities", "backend\domain\core\LSS.BE.Core.Entities\LSS.BE.Core.Entities.csproj", "{767CD5DA-7A75-4960-BEB7-AC03A536F443}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LSS.BE.Core.Entities", "backend\domain\core\LSS.BE.Core.Entities\LSS.BE.Core.Entities.csproj", "{767CD5DA-7A75-4960-BEB7-AC03A536F443}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LSS.BE.Core.Domain", "backend\domain\core\LSS.BE.Core.Domain\LSS.BE.Core.Domain.csproj", "{A6D17A25-F470-417A-A4AE-1C91A25D5AB0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LSS.BE.Core.Domain", "backend\domain\core\LSS.BE.Core.Domain\LSS.BE.Core.Domain.csproj", "{A6D17A25-F470-417A-A4AE-1C91A25D5AB0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LSS.BE.Core.Domain.UnitTest", "test\unit\LSS.BE.Core.Domain.UnitTest\LSS.BE.Core.Domain.UnitTest.csproj", "{A3DB64FF-FBC2-412F-97CE-D01AC38BAAA5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LSS.BE.Core.Domain.UnitTest", "test\unit\LSS.BE.Core.Domain.UnitTest\LSS.BE.Core.Domain.UnitTest.csproj", "{A3DB64FF-FBC2-412F-97CE-D01AC38BAAA5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LSS.BE.Core.Common", "backend\domain\common\LSS.BE.Core.Common\LSS.BE.Core.Common.csproj", "{5A0D1143-50C1-419E-90BA-72CCB54EEE5E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LSS.BE.Core.Common", "backend\domain\common\LSS.BE.Core.Common\LSS.BE.Core.Common.csproj", "{5A0D1143-50C1-419E-90BA-72CCB54EEE5E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

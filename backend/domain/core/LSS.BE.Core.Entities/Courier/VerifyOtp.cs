@@ -19,7 +19,7 @@ namespace LSS.BE.Core.Entities.Courier
         [JsonProperty("lsp_id")]
         public string LspId { get; set; }
 
-        [JsonProperty("booking_id")]
-        public string BookingId { get; set; }
+        [JsonProperty("phone_number")]
+        public string PhoneNumber { get; set; }
     }
 }
