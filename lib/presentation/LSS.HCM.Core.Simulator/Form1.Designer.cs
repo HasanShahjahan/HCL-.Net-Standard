@@ -48,11 +48,12 @@
             this.configurationFile = new System.Windows.Forms.Label();
             this.txtConfigurationFile = new System.Windows.Forms.TextBox();
             this.buttonConfigLocker = new System.Windows.Forms.Button();
+            this.radioCaptureImage = new System.Windows.Forms.RadioButton();
             this.SuspendLayout();
             // 
             // txtTransactionId
             // 
-            this.txtTransactionId.Location = new System.Drawing.Point(166, 111);
+            this.txtTransactionId.Location = new System.Drawing.Point(166, 145);
             this.txtTransactionId.Margin = new System.Windows.Forms.Padding(2);
             this.txtTransactionId.Name = "txtTransactionId";
             this.txtTransactionId.Size = new System.Drawing.Size(248, 23);
@@ -62,7 +63,7 @@
             // lblCompartmentId
             // 
             this.lblCompartmentId.AutoSize = true;
-            this.lblCompartmentId.Location = new System.Drawing.Point(35, 169);
+            this.lblCompartmentId.Location = new System.Drawing.Point(35, 203);
             this.lblCompartmentId.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblCompartmentId.Name = "lblCompartmentId";
             this.lblCompartmentId.Size = new System.Drawing.Size(95, 15);
@@ -74,7 +75,7 @@
             // 
             this.radioOpenCompartment.AutoSize = true;
             this.radioOpenCompartment.Checked = true;
-            this.radioOpenCompartment.Location = new System.Drawing.Point(166, 57);
+            this.radioOpenCompartment.Location = new System.Drawing.Point(166, 62);
             this.radioOpenCompartment.Margin = new System.Windows.Forms.Padding(2);
             this.radioOpenCompartment.Name = "radioOpenCompartment";
             this.radioOpenCompartment.Size = new System.Drawing.Size(132, 19);
@@ -87,7 +88,7 @@
             // radioCompartmentStatus
             // 
             this.radioCompartmentStatus.AutoSize = true;
-            this.radioCompartmentStatus.Location = new System.Drawing.Point(166, 81);
+            this.radioCompartmentStatus.Location = new System.Drawing.Point(166, 85);
             this.radioCompartmentStatus.Margin = new System.Windows.Forms.Padding(2);
             this.radioCompartmentStatus.Name = "radioCompartmentStatus";
             this.radioCompartmentStatus.Size = new System.Drawing.Size(135, 19);
@@ -98,7 +99,7 @@
             // 
             // btnSubmit
             // 
-            this.btnSubmit.Location = new System.Drawing.Point(35, 297);
+            this.btnSubmit.Location = new System.Drawing.Point(35, 331);
             this.btnSubmit.Margin = new System.Windows.Forms.Padding(2);
             this.btnSubmit.Name = "btnSubmit";
             this.btnSubmit.Size = new System.Drawing.Size(379, 50);
@@ -109,7 +110,7 @@
             // 
             // txtLockerId
             // 
-            this.txtLockerId.Location = new System.Drawing.Point(166, 138);
+            this.txtLockerId.Location = new System.Drawing.Point(166, 172);
             this.txtLockerId.Margin = new System.Windows.Forms.Padding(2);
             this.txtLockerId.Name = "txtLockerId";
             this.txtLockerId.Size = new System.Drawing.Size(248, 23);
@@ -119,12 +120,12 @@
             // lblLockerId
             // 
             this.lblLockerId.AutoSize = true;
-            this.lblLockerId.Location = new System.Drawing.Point(35, 142);
+            this.lblLockerId.Location = new System.Drawing.Point(35, 176);
             this.lblLockerId.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblLockerId.Name = "lblLockerId";
-            this.lblLockerId.Size = new System.Drawing.Size(49, 15);
+            this.lblLockerId.Size = new System.Drawing.Size(55, 15);
             this.lblLockerId.TabIndex = 1;
-            this.lblLockerId.Text = "Loker Id";
+            this.lblLockerId.Text = "Locker Id";
             this.lblLockerId.Click += new System.EventHandler(this.lblLockerId_Click);
             // 
             // txtResult
@@ -132,7 +133,7 @@
             this.txtResult.Location = new System.Drawing.Point(443, 22);
             this.txtResult.Margin = new System.Windows.Forms.Padding(2);
             this.txtResult.Name = "txtResult";
-            this.txtResult.Size = new System.Drawing.Size(455, 325);
+            this.txtResult.Size = new System.Drawing.Size(455, 359);
             this.txtResult.TabIndex = 4;
             this.txtResult.Text = "";
             this.txtResult.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
@@ -140,7 +141,7 @@
             // labelTransactionId
             // 
             this.labelTransactionId.AutoSize = true;
-            this.labelTransactionId.Location = new System.Drawing.Point(35, 115);
+            this.labelTransactionId.Location = new System.Drawing.Point(35, 149);
             this.labelTransactionId.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelTransactionId.Name = "labelTransactionId";
             this.labelTransactionId.Size = new System.Drawing.Size(78, 15);
@@ -151,7 +152,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(35, 220);
+            this.label2.Location = new System.Drawing.Point(35, 224);
             this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(0, 15);
@@ -163,7 +164,7 @@
             this.jwtEnable.AutoSize = true;
             this.jwtEnable.Checked = true;
             this.jwtEnable.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.jwtEnable.Location = new System.Drawing.Point(166, 208);
+            this.jwtEnable.Location = new System.Drawing.Point(166, 242);
             this.jwtEnable.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.jwtEnable.Name = "jwtEnable";
             this.jwtEnable.Size = new System.Drawing.Size(86, 19);
@@ -174,7 +175,7 @@
             // 
             // txtJwtSecret
             // 
-            this.txtJwtSecret.Location = new System.Drawing.Point(166, 232);
+            this.txtJwtSecret.Location = new System.Drawing.Point(166, 266);
             this.txtJwtSecret.Margin = new System.Windows.Forms.Padding(2);
             this.txtJwtSecret.Name = "txtJwtSecret";
             this.txtJwtSecret.Size = new System.Drawing.Size(248, 23);
@@ -184,7 +185,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(35, 236);
+            this.label4.Location = new System.Drawing.Point(35, 270);
             this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(39, 15);
@@ -194,7 +195,7 @@
             // 
             // txtJwtToken
             // 
-            this.txtJwtToken.Location = new System.Drawing.Point(166, 259);
+            this.txtJwtToken.Location = new System.Drawing.Point(166, 293);
             this.txtJwtToken.Margin = new System.Windows.Forms.Padding(2);
             this.txtJwtToken.Name = "txtJwtToken";
             this.txtJwtToken.Size = new System.Drawing.Size(248, 23);
@@ -204,7 +205,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(35, 262);
+            this.label5.Location = new System.Drawing.Point(35, 296);
             this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(39, 15);
@@ -214,7 +215,7 @@
             // 
             // txtCompartmentId
             // 
-            this.txtCompartmentId.Location = new System.Drawing.Point(166, 165);
+            this.txtCompartmentId.Location = new System.Drawing.Point(166, 199);
             this.txtCompartmentId.Margin = new System.Windows.Forms.Padding(2);
             this.txtCompartmentId.Name = "txtCompartmentId";
             this.txtCompartmentId.Size = new System.Drawing.Size(248, 23);
@@ -224,7 +225,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(35, 71);
+            this.label6.Location = new System.Drawing.Point(35, 75);
             this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(64, 15);
@@ -260,11 +261,24 @@
             this.buttonConfigLocker.UseVisualStyleBackColor = true;
             this.buttonConfigLocker.Click += new System.EventHandler(this.buttonConfigLocker_Click);
             // 
+            // radioCaptureImage
+            // 
+            this.radioCaptureImage.AutoSize = true;
+            this.radioCaptureImage.Location = new System.Drawing.Point(166, 109);
+            this.radioCaptureImage.Name = "radioCaptureImage";
+            this.radioCaptureImage.Size = new System.Drawing.Size(103, 19);
+            this.radioCaptureImage.TabIndex = 11;
+            this.radioCaptureImage.TabStop = true;
+            this.radioCaptureImage.Text = "Capture Image";
+            this.radioCaptureImage.UseVisualStyleBackColor = true;
+            this.radioCaptureImage.CheckedChanged += new System.EventHandler(this.radioCaptureImage_CheckedChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(922, 370);
+            this.ClientSize = new System.Drawing.Size(922, 404);
+            this.Controls.Add(this.radioCaptureImage);
             this.Controls.Add(this.buttonConfigLocker);
             this.Controls.Add(this.configurationFile);
             this.Controls.Add(this.txtConfigurationFile);
@@ -318,6 +332,7 @@
         private System.Windows.Forms.Label configurationFile;
         private System.Windows.Forms.TextBox txtConfigurationFile;
         private System.Windows.Forms.Button buttonConfigLocker;
+        private System.Windows.Forms.RadioButton radioCaptureImage;
     }
 }
 
