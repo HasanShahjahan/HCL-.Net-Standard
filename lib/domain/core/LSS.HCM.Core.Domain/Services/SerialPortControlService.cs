@@ -11,14 +11,27 @@ using LSS.HCM.Core.DataObjects.Settings;
 
 namespace LSS.HCM.Core.Domain.Services
 {
+    /// <summary>
+    ///   Represents actual serial port service of system input and output ports.
+    ///</summary>
     public sealed class SerialPortControlService
     {
+
+        /// <summary>
+        /// Initialization of serial port control service by seting serial port resouce. 
+        /// </summary>
+        /// <returns>
+        ///  Open compartment actual result with status. 
+        /// </returns>
         private readonly SerialPort _serialPort = new SerialPort();
+        
         private string _lockerId = string.Empty;
         private string _SerialPortName = string.Empty;
         public SerialPortControlService()
         {
+            
         }
+        
         public SerialPortControlService(SerialPortResource serialPortResource)
         {
             _serialPort.PortName = serialPortResource.PortName;
@@ -46,7 +59,13 @@ namespace LSS.HCM.Core.Domain.Services
 
             return true;
         }
-
+        
+        /// <summary>
+        /// Writes a specified number of bytes to the serial port using data from a buffer.
+        /// </summary>
+        /// <returns>
+        ///  Get list of byte as command response.
+        /// </returns>
         public List<byte> Write(List<byte> inputBuffer, int dataLength)
         {
             if(_serialPort.IsOpen)
