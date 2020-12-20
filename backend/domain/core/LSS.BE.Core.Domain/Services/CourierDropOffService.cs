@@ -2,7 +2,6 @@
 using LSS.BE.Core.Common.UriPath;
 using LSS.BE.Core.Domain.Helpers;
 using LSS.BE.Core.Entities.Courier;
-using Newtonsoft.Json;
 using System;
 
 namespace LSS.BE.Core.Domain.Services

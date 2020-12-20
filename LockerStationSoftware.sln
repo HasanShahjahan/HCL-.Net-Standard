@@ -70,6 +70,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LSS.BE.Core.Common", "backe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LSS.BE.Core.Security", "backend\domain\security\LSS.BE.Core.Security\LSS.BE.Core.Security.csproj", "{10C14B13-AAE9-4CC8-9375-B263858430EB}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "presentation", "presentation", "{AAA818F6-C518-4EE1-87D9-530E8C741F5E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LSS.BE.Core.TestCaller", "backend\presentation\LSS.BE.Core.TestCaller\LSS.BE.Core.TestCaller.csproj", "{91795A8B-EFC8-4EE4-967B-2D66771EC6E8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -140,6 +144,10 @@ Global
 		{10C14B13-AAE9-4CC8-9375-B263858430EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{10C14B13-AAE9-4CC8-9375-B263858430EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{10C14B13-AAE9-4CC8-9375-B263858430EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91795A8B-EFC8-4EE4-967B-2D66771EC6E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91795A8B-EFC8-4EE4-967B-2D66771EC6E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91795A8B-EFC8-4EE4-967B-2D66771EC6E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91795A8B-EFC8-4EE4-967B-2D66771EC6E8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -173,6 +181,8 @@ Global
 		{A3DB64FF-FBC2-412F-97CE-D01AC38BAAA5} = {B2D56088-66E0-410D-8A67-D212F4703771}
 		{5A0D1143-50C1-419E-90BA-72CCB54EEE5E} = {FE3A2040-3FCA-48BA-B1F4-B603BA438F48}
 		{10C14B13-AAE9-4CC8-9375-B263858430EB} = {50433C87-6F48-4590-94CB-9F121AF5938A}
+		{AAA818F6-C518-4EE1-87D9-530E8C741F5E} = {8318878F-FA8D-4D8D-B38D-08E80A1577BB}
+		{91795A8B-EFC8-4EE4-967B-2D66771EC6E8} = {AAA818F6-C518-4EE1-87D9-530E8C741F5E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {099DAEE2-BDA0-4F64-958A-D13257999892}

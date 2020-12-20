@@ -2,7 +2,7 @@
 
 namespace LSS.BE.Core.Common.Base
 {
-    public class AccessToken
+    public class AccessToken 
     {
         [JsonProperty("token_type")]
         public string Type { get; set; }
@@ -12,6 +12,5 @@ namespace LSS.BE.Core.Common.Base
 
         [JsonProperty("access_token")]
         public string Token { get; set; }
-
     }
 }
