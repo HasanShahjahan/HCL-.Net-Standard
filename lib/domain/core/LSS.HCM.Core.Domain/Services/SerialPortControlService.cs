@@ -4,10 +4,8 @@ using System.Collections.Generic;
 using System.IO.Ports;
 using MQTTnet;
 using MQTTnet.Client;
-using MQTTnet.Client.Connecting;
 using MQTTnet.Client.Options;
 using System.Threading;
-using LSS.HCM.Core.DataObjects.Settings;
 
 namespace LSS.HCM.Core.Domain.Services
 {
@@ -24,14 +22,12 @@ namespace LSS.HCM.Core.Domain.Services
         ///  Open compartment actual result with status. 
         /// </returns>
         private readonly SerialPort _serialPort = new SerialPort();
-        
         private string _lockerId = string.Empty;
         private string _SerialPortName = string.Empty;
-        public SerialPortControlService()
-        {
-            
-        }
-        
+
+        /// <summary>
+        /// Initialization of serial port with multiple resources. 
+        /// </summary>
         public SerialPortControlService(SerialPortResource serialPortResource)
         {
             _serialPort.PortName = serialPortResource.PortName;
@@ -45,13 +41,19 @@ namespace LSS.HCM.Core.Domain.Services
             InitialSerialPort();
         }
 
+        /// <summary>
+        /// Open serial port.
+        /// </summary>
+        /// <returns>
+        ///  Get boolen result of serial port open or not.
+        /// </returns>
         public bool InitialSerialPort()
         {
             try
             {
                 _serialPort.Open();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine("SerialportError: " + ex.ToString());
                 return false;
@@ -59,7 +61,7 @@ namespace LSS.HCM.Core.Domain.Services
 
             return true;
         }
-        
+
         /// <summary>
         /// Writes a specified number of bytes to the serial port using data from a buffer.
         /// </summary>
@@ -68,7 +70,7 @@ namespace LSS.HCM.Core.Domain.Services
         /// </returns>
         public List<byte> Write(List<byte> inputBuffer, int dataLength)
         {
-            if(_serialPort.IsOpen)
+            if (_serialPort.IsOpen)
             {
                 List<byte> commandResponseByte = new List<byte>();
                 _serialPort.Write(inputBuffer.ToArray(), 0, inputBuffer.Count);
@@ -104,6 +106,9 @@ namespace LSS.HCM.Core.Domain.Services
             return new List<byte>(); // return empty byte cause of error serialPort
         }
 
+        /// <summary>
+        /// Reads a specified number of bytes to the serial port using data from a buffer.
+        /// </summary>
         public void Read(object sender, SerialDataReceivedEventArgs e)
         {
             List<byte> responseByte = new List<byte>();
@@ -125,6 +130,12 @@ namespace LSS.HCM.Core.Domain.Services
             catch (TimeoutException) { }
         }
 
+        /// <summary>
+        /// Reads to set locker and name.
+        /// </summary>
+        /// <returns>
+        ///  Get list of byte.
+        /// </returns>
         public List<byte> SetReadToPublishHandler(string lockerId, string controllerName)
         {
             List<byte> responseByte = new List<byte>();
@@ -136,10 +147,12 @@ namespace LSS.HCM.Core.Domain.Services
             }
             catch (TimeoutException) { }
 
-            //_serialPort.Close();
             return responseByte;
         }
-        
+
+        /// <summary>
+        /// Reads to publish to the MQTT broker.
+        /// </summary>
         public void ReadToPublish(object sender, SerialDataReceivedEventArgs e)
         {
             try
@@ -162,12 +175,7 @@ namespace LSS.HCM.Core.Domain.Services
                             .Build();
                         mqttClient.ConnectAsync(options, CancellationToken.None);
 
-                        while (!mqttClient.IsConnected);
-                        //if (!mqttClient.IsConnected)
-                        //{
-                            //mqttClient.ConnectAsync(options, CancellationToken.None);
-                            //mqttClient.DisconnectAsync();
-                        //}
+                        while (!mqttClient.IsConnected) ;
                         mqttClient.PublishAsync(_lockerId + "/event/" + _SerialPortName, indata);
                         _serialPort.DiscardInBuffer();
                     }

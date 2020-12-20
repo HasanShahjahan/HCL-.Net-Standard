@@ -19,7 +19,6 @@ namespace LSS.HCM.Core.Common.Utiles
             return hexByteArray;
         }
 
-        // Caculate checksum CRC16 MODBUS
         public static List<byte> Crc16CheckSum(List<byte> byteCommand)
         {
             uint crc16 = 0xffff;
