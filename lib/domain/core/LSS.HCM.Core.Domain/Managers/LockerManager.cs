@@ -101,7 +101,7 @@ namespace LSS.HCM.Core.Domain.Managers
             {
                 var (statusCode, errorResult) = LockerManagementValidator.PayloadValidator(lockerConfiguration, model.JwtCredentials.IsEnabled, model.JwtCredentials.Secret, model.JwtCredentials.Token, PayloadTypes.CaptureImage, model.LockerId, model.TransactionId, null, Common.Enums.CaptureType.Photo);
                 if (statusCode != StatusCode.Status200OK) return CaptureMapper.ToError(new CaptureDto { StatusCode = statusCode, Error = errorResult });
-                var result = TestMethod(model, lockerConfiguration);
+                var result = CapturePhoto(model, lockerConfiguration);
                 photoDto = CaptureMapper.ToObject(result);
             }
             catch (Exception ex)
@@ -113,13 +113,13 @@ namespace LSS.HCM.Core.Domain.Managers
             return photoDto;
         }
 
-        private static CaptureDto TestMethod(DataObjects.Models.Capture model, AppSettings lockerConfiguration)
+        private static CaptureDto CapturePhoto(DataObjects.Models.Capture model, AppSettings lockerConfiguration)
         {
             VideoCapture capture;
             Mat frame;
             Bitmap imageBitmapData;
             byte[] imageBytes = null;
-            bool isCameraRunning = false;
+            //bool isCameraRunning = false;
 
             frame = new Mat();
             capture = new VideoCapture(0);
@@ -127,22 +127,24 @@ namespace LSS.HCM.Core.Domain.Managers
 
             if (capture.IsOpened())
             {
-                if(isCameraRunning)
-                {
-                    capture.Read(frame);
-                    imageBitmapData = BitmapConverter.ToBitmap(frame);
-                    Bitmap snapshot = new Bitmap(imageBitmapData);
+                capture.Read(frame);
+                imageBitmapData = BitmapConverter.ToBitmap(frame);
+                Bitmap snapshot = new Bitmap(imageBitmapData);
 
-                    snapshot.Save(string.Format(@"{0}.jpeg", Guid.NewGuid()), ImageFormat.Jpeg);
-                    imageBytes = ToByteArray(imageBitmapData, ImageFormat.Jpeg);
-                }
-                else
-                {
-                    Console.WriteLine("Cannot take picture if the camera isn't capturing image!");
-                }
+                snapshot.Save(string.Format(@"D:\{0}.jpeg", Guid.NewGuid()), ImageFormat.Jpeg);
+                imageBytes = ToByteArray(snapshot, ImageFormat.Jpeg);
+            }
+            else
+            {
+                Console.WriteLine("Cannot take picture if the camera isn't capturing image!");
             }
             ImageEnt captureImage = new ImageEnt(model.Image.ImageExtension, imageBytes);
+
             CaptureDto captureResponse = new CaptureDto(model.TransactionId, model.LockerId, captureImage);
+
+            // End using camera
+            capture.Release();
+
             return captureResponse;
         }
         public static byte[] ToByteArray(Image image, ImageFormat format)

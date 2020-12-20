@@ -20,7 +20,7 @@ namespace LSS.HCM.Core.Simulator
             txtJwtToken.Text = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MDkzNTU5MjEsInRyYW5zYWN0aW9uX2lkIjoiNzBiMzZjNDEtMDc4Yi00MTFiLTk4MmMtYzViNzc0YWFjNjZmIn0.ujOkQJUq5WY_tZJgKXqe_n4nql3cSAeHMfXGABZO3E4";
             txtJwtSecret.Text = "HWAPI_0BwRn5Bg4rJAe5eyWkRz";
             txtCompartmentId.Text = "M0-1,M0-3";
-            txtConfigurationFile.Text = @"D:\Hardware Contol Library\config.txt";
+            txtConfigurationFile.Text = @"D:\config.txt";
             btnSubmit.Enabled = false;
         }
 
@@ -29,10 +29,11 @@ namespace LSS.HCM.Core.Simulator
             string configurationPath = txtConfigurationFile.Text;
 
             _lockerManager = new LockerManager(configurationPath);
-
-            _isConfigured = true;
-            btnSubmit.Enabled = true;
-
+            if (_lockerManager != null) 
+            {
+                _isConfigured = true;
+                btnSubmit.Enabled = true;
+            }
         }
         private void btnSubmit_Click(object sender, EventArgs e)
         {
@@ -87,16 +88,22 @@ namespace LSS.HCM.Core.Simulator
         {
             labelTransactionId.Show();
             txtTransactionId.Show();
+            lblCompartmentId.Show();
+            txtCompartmentId.Show();
         }
 
         private void radioButtonCompartmentStatus_CheckedChanged(object sender, EventArgs e)
         {
             labelTransactionId.Hide();
             txtTransactionId.Hide();
+            lblCompartmentId.Show();
+            txtCompartmentId.Show();
         }
 
         private void radioCaptureImage_CheckedChanged(object sender, EventArgs e)
         {
+            labelTransactionId.Show();
+            txtTransactionId.Show();
             lblCompartmentId.Hide();
             txtCompartmentId.Hide();
 
