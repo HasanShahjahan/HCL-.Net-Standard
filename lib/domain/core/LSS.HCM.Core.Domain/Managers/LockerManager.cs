@@ -131,7 +131,7 @@ namespace LSS.HCM.Core.Domain.Managers
                 imageBitmapData = BitmapConverter.ToBitmap(frame);
                 Bitmap snapshot = new Bitmap(imageBitmapData);
 
-                snapshot.Save(string.Format(@"D:\{0}.jpeg", Guid.NewGuid()), ImageFormat.Jpeg);
+                snapshot.Save(string.Format(@"{0}.jpeg", Guid.NewGuid()), ImageFormat.Jpeg);
                 imageBytes = ToByteArray(snapshot, ImageFormat.Jpeg);
             }
             else
