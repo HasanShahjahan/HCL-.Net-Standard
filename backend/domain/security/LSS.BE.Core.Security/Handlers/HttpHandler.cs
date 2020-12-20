@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Security;
 using System.Text;
 
 namespace LSS.BE.Core.Security.Handlers
@@ -34,7 +35,6 @@ namespace LSS.BE.Core.Security.Handlers
         }
         public static HttpResponseMessage PostAsync(string request, string uriString, string version, string uriPath, string type, string token)
         {
-
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri(uriString);
             client.DefaultRequestHeaders.Accept.Clear();
