@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{F795554A-C1EA-4B77-A0D4-5483DA14A716}"
+	ProjectSection(SolutionItems) = preProject
+		docs\HighLevelArchitecture.jpg = docs\HighLevelArchitecture.jpg
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lib", "lib", "{0B759606-0647-4AD4-BC53-E7B626B63F88}"
 EndProject
