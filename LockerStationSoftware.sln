@@ -65,6 +65,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LSS.BE.Core.Domain.UnitTest
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LSS.BE.Core.Common", "backend\domain\common\LSS.BE.Core.Common\LSS.BE.Core.Common.csproj", "{5A0D1143-50C1-419E-90BA-72CCB54EEE5E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LSS.BE.Core.Security", "backend\domain\security\LSS.BE.Core.Security\LSS.BE.Core.Security.csproj", "{10C14B13-AAE9-4CC8-9375-B263858430EB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -131,6 +133,10 @@ Global
 		{5A0D1143-50C1-419E-90BA-72CCB54EEE5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5A0D1143-50C1-419E-90BA-72CCB54EEE5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5A0D1143-50C1-419E-90BA-72CCB54EEE5E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10C14B13-AAE9-4CC8-9375-B263858430EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10C14B13-AAE9-4CC8-9375-B263858430EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10C14B13-AAE9-4CC8-9375-B263858430EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10C14B13-AAE9-4CC8-9375-B263858430EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -163,6 +169,7 @@ Global
 		{A6D17A25-F470-417A-A4AE-1C91A25D5AB0} = {D20FB573-78E5-4C6A-B31F-A73ACFA427AF}
 		{A3DB64FF-FBC2-412F-97CE-D01AC38BAAA5} = {B2D56088-66E0-410D-8A67-D212F4703771}
 		{5A0D1143-50C1-419E-90BA-72CCB54EEE5E} = {FE3A2040-3FCA-48BA-B1F4-B603BA438F48}
+		{10C14B13-AAE9-4CC8-9375-B263858430EB} = {50433C87-6F48-4590-94CB-9F121AF5938A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {099DAEE2-BDA0-4F64-958A-D13257999892}

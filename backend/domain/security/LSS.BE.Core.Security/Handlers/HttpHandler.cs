@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 
-namespace LSS.BE.Core.Domain.Handlers
+namespace LSS.BE.Core.Security.Handlers
 {
     public class HttpHandler
     {
@@ -18,7 +17,6 @@ namespace LSS.BE.Core.Domain.Handlers
             client.DefaultRequestHeaders.Clear();
             client.DefaultRequestHeaders.ConnectionClose = true;
 
-            //Post body content
             var values = new List<KeyValuePair<string, string>>();
             values.Add(new KeyValuePair<string, string>("grant_type", "client_credentials"));
             var content = new FormUrlEncodedContent(values);
@@ -29,7 +27,7 @@ namespace LSS.BE.Core.Domain.Handlers
             var requestMessage = new HttpRequestMessage(HttpMethod.Post, "/" + version + "/" + uriPath);
             requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Basic", base64EncodedAuthenticationString);
             requestMessage.Content = content;
-            
+
             var task = client.SendAsync(requestMessage);
             var response = task.Result;
             return response;
@@ -41,7 +39,7 @@ namespace LSS.BE.Core.Domain.Handlers
             client.BaseAddress = new Uri(uriString);
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            
+
             string mediaType = "application/json";
             var content = new StringContent(request, Encoding.UTF8, mediaType);
             var requestMessage = new HttpRequestMessage(HttpMethod.Post, "/" + version + "/" + uriPath);

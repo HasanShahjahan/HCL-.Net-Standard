@@ -16,6 +16,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\backend\domain\common\LSS.BE.Core.Common\LSS.BE.Core.Common.csproj" />
     <ProjectReference Include="..\..\..\backend\domain\core\LSS.BE.Core.Domain\LSS.BE.Core.Domain.csproj" />
+    <ProjectReference Include="..\..\..\backend\domain\security\LSS.BE.Core.Security\LSS.BE.Core.Security.csproj" />
   </ItemGroup>
 
 </Project>
