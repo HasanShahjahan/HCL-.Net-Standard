@@ -45,12 +45,16 @@ namespace LSS.HCM.Core.Domain.Services
             return commandResult;
         }
 
-        public static void SerialScannerInputHandler(AppSettings lockerConfiguration)
+        /// <summary>
+        /// Initializes scanner from communication port to serial port by providing locker configuration. 
+        /// </summary>
+        /// <returns>
+        ///  Publish scanning value to MQTT Broker
+        /// </returns>
+        public static void InitializeScanner(AppSettings lockerConfiguration)
         {
-            SerialInterface controllerConfig =  lockerConfiguration.Microcontroller.Scanner;
-            SerialPortControlService scanner = new SerialPortControlService(new SerialPortResource(controllerConfig.Port, controllerConfig.Baudrate, controllerConfig.DataBits, 500, 500));
-
-            scanner.SetReadToPublishHandler(lockerConfiguration.Locker.LockerId, lockerConfiguration.Microcontroller.Scanner.Name);
+            SerialPortControlService scanner = new SerialPortControlService(new SerialPortResource(lockerConfiguration.Microcontroller.Scanner.Port, lockerConfiguration.Microcontroller.Scanner.Baudrate, lockerConfiguration.Microcontroller.Scanner.DataBits, 500, 500));
+            scanner.SetReadToPublishHandler(lockerConfiguration);
         }
 
     }
