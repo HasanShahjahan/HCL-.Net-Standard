@@ -1,7 +1,6 @@
 using LSS.BE.Core.Entities.Courier;
 using LSS.BE.Core.Security.Handlers;
 using Newtonsoft.Json;
-using System.Net;
 using Xunit;
 
 namespace LSS.BE.Core.Domain.UnitTest
@@ -30,12 +29,6 @@ namespace LSS.BE.Core.Domain.UnitTest
 
             var json = JsonConvert.SerializeObject(request, new JsonSerializerSettings() { DefaultValueHandling = DefaultValueHandling.Ignore });
             var response = HttpHandler.PostAsync(json, uriString, version, uriPath, type, token);
-
-            if (response.StatusCode != HttpStatusCode.OK)
-            {
-                var content = response.Content.ReadAsStringAsync().Result;
-                var applicationError = JsonConvert.DeserializeObject<Common.Exceptions.ApplicationError>(content);
-            }
         }
     }
 }

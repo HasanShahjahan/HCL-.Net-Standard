@@ -1,15 +1,10 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using LSS.BE.Core.Common.Exceptions;
+using Newtonsoft.Json;
 
 namespace LSS.BE.Core.Entities.Courier
 {
-    public class LspUserAccessResponse
+    public class LspUserAccessResponse : ValidationError
     {
-        [JsonProperty("is_request_success")]
-        public bool IsRequestSuccess { get; set; }
-
         [JsonProperty("LspId")]
         public string LspId { get; set; }
 
@@ -18,11 +13,5 @@ namespace LSS.BE.Core.Entities.Courier
 
         [JsonProperty("expired_at")]
         public string ExpiredAt { get; set; }
-
-        [JsonProperty("error_message")]
-        public string ErrorMessage { get; set; }
-
-        [JsonProperty("error_details")]
-        public string ErrorDetails { get; set; }
     }
 }

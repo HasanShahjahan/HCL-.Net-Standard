@@ -5,7 +5,7 @@ using System.Text;
 
 namespace LSS.BE.Core.Common.Exceptions
 {
-    public class ApplicationError
+    public class UnauthenticatedError
     {
         [JsonProperty("success")]
         public bool Success { get; set; }

@@ -1,4 +1,5 @@
 ﻿using LSS.BE.Core.Common.Base;
+using LSS.BE.Core.Common.Exceptions;
 using LSS.BE.Core.Common.UriPath;
 using LSS.BE.Core.Security.Handlers;
 using Newtonsoft.Json;
@@ -9,31 +10,26 @@ namespace LSS.BE.Core.Domain.Helpers
 {
     public class HttpHandlerHelper
     {
-        public static T GetToken<T>(string uriString, string version, string clientId, string clientSecret)
+        public static TokenResponse GetToken(string uriString, string version, string clientId, string clientSecret)
         {
+            var tokenResponse = new TokenResponse();
             var response = HttpHandler.GetTokenAsync(uriString, version, UriAbsolutePath.GetToken, clientId, clientSecret);
             var content = response.Content.ReadAsStringAsync().Result;
-            if (response.StatusCode != HttpStatusCode.OK)
-            {
-                var tokenError = JsonConvert.DeserializeObject<Common.Exceptions.TokenError>(content);
-            }
-            var result = JsonConvert.DeserializeObject<T>(content);
-            return result;
+
+            tokenResponse.StatusCode = (int)response.StatusCode;
+            if (response.StatusCode != HttpStatusCode.OK) tokenResponse.Error = JsonConvert.DeserializeObject<TokenError>(content);
+            tokenResponse.AccessToken = JsonConvert.DeserializeObject<AccessToken>(content);
+            return tokenResponse;
         }
 
-        public static T PostRequestResolver<T>(string request, string uriString, string version, string clientId, string clientSecret, string uriPath, AccessToken accessToken, DateTime dateTime)
+        public static string PostRequestResolver(string request, string uriString, string version, string clientId, string clientSecret, string uriPath, AccessToken accessToken, DateTime dateTime)
         {
-            int time = Convert.ToInt32(dateTime);
-            if (time >= accessToken.ExpiresIn) accessToken = GetToken<AccessToken>(uriString, version, clientId, clientSecret);
-            
+            //int time = Convert.ToInt32(dateTime);
+            //if (time >= accessToken.ExpiresIn) accessToken = GetToken<AccessToken>(uriString, version, clientId, clientSecret);
+
             var response = HttpHandler.PostAsync(request, uriString, version, uriPath, accessToken.Type, accessToken.Token);
             var content = response.Content.ReadAsStringAsync().Result;
-            if (response.StatusCode != HttpStatusCode.OK)
-            {
-                var tokenError = JsonConvert.DeserializeObject<Common.Exceptions.ApplicationError>(content);
-            }
-            var result = JsonConvert.DeserializeObject<T>(content);
-            return result;
+            return content;
         }
     }
 }

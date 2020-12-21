@@ -1,12 +1,10 @@
 ﻿using LSS.HCM.Core.DataObjects.Dtos;
-using LSS.HCM.Core.DataObjects.Settings;
 using OpenCvSharp;
 using OpenCvSharp.Extensions;
 using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using ImageEnt = LSS.HCM.Core.Entities.Locker.Image;
 
 namespace LSS.HCM.Core.Domain.Helpers
 {
@@ -36,7 +34,7 @@ namespace LSS.HCM.Core.Domain.Helpers
                     Bitmap imageBitmapData = BitmapConverter.ToBitmap(frame);
                     Bitmap snapshot = new Bitmap(imageBitmapData);
 
-                    snapshot.Save(string.Format(@"{0}.jpeg", Guid.NewGuid()), ImageFormat.Jpeg);
+                    snapshot.Save(string.Format(@"{0}.jpeg", Guid.NewGuid()), ImageFormat.Jpeg); //This saved real picture to physical location. 
                     imageBytes = ToByteArray(snapshot, ImageFormat.Jpeg);
                 }
                 else
