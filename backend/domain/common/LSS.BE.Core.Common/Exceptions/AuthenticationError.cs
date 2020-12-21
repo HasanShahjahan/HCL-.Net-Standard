@@ -5,8 +5,14 @@ using System.Text;
 
 namespace LSS.BE.Core.Common.Exceptions
 {
-    public class UnauthenticatedError
+    public class AuthenticationError
     {
+        public AuthenticationError()
+        {
+            Success = false;
+            Status = string.Empty;
+            Message = string.Empty;
+        }
         [JsonProperty("success")]
         public bool Success { get; set; }
 

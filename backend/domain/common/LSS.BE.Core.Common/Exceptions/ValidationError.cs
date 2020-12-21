@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace LSS.BE.Core.Common.Exceptions
 {
-    public class ValidationError : UnauthenticatedError
+    public class ValidationError : AuthenticationError
     {
         public ValidationError()
         {

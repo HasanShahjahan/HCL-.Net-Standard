@@ -8,7 +8,7 @@ namespace LSS.BE.Core.DataObjects.BaseDtos
     {
         public AuthenticatedErrorDto()
         {
-            Success = false;
+            Success = true;
             Status = string.Empty;
             Message = string.Empty;
         }

@@ -1,14 +1,11 @@
-﻿using Newtonsoft.Json;
+﻿using LSS.BE.Core.Common.Exceptions;
+using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace LSS.BE.Core.Entities.Courier
 {
-    public class AssignSimilarSizeLockerResponse
+    public class AssignSimilarSizeLockerResponse : ValidationError
     {
-        [JsonProperty("is_request_success")]
-        public bool IsRequestSuccess { get; set; }
 
         [JsonProperty("booking_id")]
         public int BookingId { get; set; }
@@ -18,11 +15,5 @@ namespace LSS.BE.Core.Entities.Courier
 
         [JsonProperty("locker_preview")]
         public Array LockerPreview { get; set; }
-
-        [JsonProperty("error_message")]
-        public string ErrorMessage { get; set; }
-
-        [JsonProperty("error_details")]
-        public string ErrorDetails { get; set; }
     }
 }

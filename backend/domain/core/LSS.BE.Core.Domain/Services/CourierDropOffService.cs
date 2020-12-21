@@ -6,6 +6,7 @@ using LSS.BE.Core.Domain.Helpers;
 using LSS.BE.Core.Entities.Courier;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 
 namespace LSS.BE.Core.Domain.Services
 {
@@ -35,44 +36,74 @@ namespace LSS.BE.Core.Domain.Services
             return LspUserAccessMapper.ToObject(result);
         }
 
-        public LockerStationDetailsResponse LockerStationDetails(string lockerStationId)
-        {
-            return new LockerStationDetailsResponse();
-        }
-
-        public VerifyOtpResponse VerifyOtp(VerifyOtp model)
+        public VerifyOtpDto VerifyOtp(VerifyOtp model)
         {
             var request = SerializerHelper<VerifyOtp>.SerializeObject(model);
             var response = HttpHandlerHelper.PostRequestResolver(request, _uriString, _version, _clientId, _clientSecret, UriAbsolutePath.VerifyOtp, _tokenResponse.AccessToken, _dateTime);
 
             var settings = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
             var result = JsonConvert.DeserializeObject<VerifyOtpResponse>(response, settings);
-            return result;
+            return new VerifyOtpDto();
         }
 
-        public LockerResponse FindBooking(string trackingNumber, string lockerStationId, string lspId) 
+        public LockerStationDetailsResponse LockerStationDetails(string lockerStationId)
         {
-            return new LockerResponse();
+            return new LockerStationDetailsResponse();
         }
 
-        public AssignSimilarSizeLockerResponse AssignSimilarSizeLocker(string lockerStationId, int bookingId, string reason) 
+        public FindBookingDto FindBooking(string trackingNumber, string lockerStationId, string lspId)
         {
-            return new AssignSimilarSizeLockerResponse();
+            var queryString = new Dictionary<string, string>()
+            {
+                { "locker_station_id", lockerStationId },
+                { "tracking_number", trackingNumber }
+            };
+            var response = HttpHandlerHelper.GetRequestResolver(_uriString, queryString, _version, _clientId, _clientSecret, UriAbsolutePath.FindBooking, _tokenResponse.AccessToken, _dateTime);
+            var settings = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
+            var result = JsonConvert.DeserializeObject<FindBookingResponse>(response, settings);
+            return FindBookingMapper.ToObject(result);
         }
 
-        public AvailableSizesResponse GetAvailableSizes(string lockerStationId, int bookingId)
+        public AssignSimilarSizeLockerDto AssignSimilarSizeLocker(AssignSimilarSizeLocker model)
         {
-            return new AvailableSizesResponse();
+            var request = SerializerHelper<AssignSimilarSizeLocker>.SerializeObject(model);
+            var response = HttpHandlerHelper.PostRequestResolver(request, _uriString, _version, _clientId, _clientSecret, UriAbsolutePath.AssignSimilarSizeLocker, _tokenResponse.AccessToken, _dateTime);
+
+            var settings = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
+            var result = JsonConvert.DeserializeObject<AssignSimilarSizeLockerResponse>(response, settings);
+            return new AssignSimilarSizeLockerDto();
+        }
+
+        public AvailableSizesDto GetAvailableSizes(string lockerStationId, int bookingId)
+        {
+            var queryString = new Dictionary<string, string>()
+            {
+                { "locker_station_id", lockerStationId }
+            };
+            var response = HttpHandlerHelper.GetRequestResolver(_uriString, queryString, _version, _clientId, _clientSecret, UriAbsolutePath.AvailableSizes, _tokenResponse.AccessToken, _dateTime);
+            var settings = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
+            var result = JsonConvert.DeserializeObject<AvailableSizesResponse>(response, settings);
+            return AvailableSizesMapper.ToObject(result);
         }
 
         public ChangeLockerSizeResponse ChangeLockerSize(ChangeLockerSize model)
         {
-            return new ChangeLockerSizeResponse();
+            var request = SerializerHelper<ChangeLockerSize>.SerializeObject(model);
+            var response = HttpHandlerHelper.PostRequestResolver(request, _uriString, _version, _clientId, _clientSecret, UriAbsolutePath.ChangeLockerSize, _tokenResponse.AccessToken, _dateTime);
+
+            var settings = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
+            var result = JsonConvert.DeserializeObject<ChangeLockerSizeResponse>(response, settings);
+            return result;
         }
 
-        public BookingStatusResponse UpdateBookingStatus(BookingStatus bookingStatus) 
+        public BookingStatusResponse UpdateBookingStatus(BookingStatus model)
         {
-            return new BookingStatusResponse();
+            var request = SerializerHelper<BookingStatus>.SerializeObject(model);
+            var response = HttpHandlerHelper.PostRequestResolver(request, _uriString, _version, _clientId, _clientSecret, UriAbsolutePath.UpdateBookingStatus, _tokenResponse.AccessToken, _dateTime);
+
+            var settings = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
+            var result = JsonConvert.DeserializeObject<BookingStatusResponse>(response, settings);
+            return result;
         }
     }
 }

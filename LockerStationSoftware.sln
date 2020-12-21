@@ -76,6 +76,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LSS.BE.Core.TestCaller", "b
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LSS.BE.Core.DataObjects", "backend\domain\common\LSS.BE.Core.DataObjects\LSS.BE.Core.DataObjects.csproj", "{B4F6DB49-8DCF-495C-99D0-E8B511156118}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LSS.BE.IntegrationTest", "test\integration\LSS.BE.IntegrationTest\LSS.BE.IntegrationTest.csproj", "{C4F7162C-4E21-4436-8E01-BB32D8693D0B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -154,6 +156,10 @@ Global
 		{B4F6DB49-8DCF-495C-99D0-E8B511156118}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B4F6DB49-8DCF-495C-99D0-E8B511156118}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B4F6DB49-8DCF-495C-99D0-E8B511156118}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4F7162C-4E21-4436-8E01-BB32D8693D0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4F7162C-4E21-4436-8E01-BB32D8693D0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4F7162C-4E21-4436-8E01-BB32D8693D0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4F7162C-4E21-4436-8E01-BB32D8693D0B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -190,6 +196,7 @@ Global
 		{AAA818F6-C518-4EE1-87D9-530E8C741F5E} = {8318878F-FA8D-4D8D-B38D-08E80A1577BB}
 		{91795A8B-EFC8-4EE4-967B-2D66771EC6E8} = {AAA818F6-C518-4EE1-87D9-530E8C741F5E}
 		{B4F6DB49-8DCF-495C-99D0-E8B511156118} = {FE3A2040-3FCA-48BA-B1F4-B603BA438F48}
+		{C4F7162C-4E21-4436-8E01-BB32D8693D0B} = {5E8D796A-C64A-41AC-B0A0-9E1096309939}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {099DAEE2-BDA0-4F64-958A-D13257999892}
