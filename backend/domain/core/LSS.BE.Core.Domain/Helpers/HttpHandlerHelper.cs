@@ -24,8 +24,16 @@ namespace LSS.BE.Core.Domain.Helpers
 
         public static string PostRequestResolver(string request, string uriString, string version, string clientId, string clientSecret, string uriPath, AccessToken accessToken, DateTime dateTime)
         {
-            //int time = Convert.ToInt32(dateTime);
-            //if (time >= accessToken.ExpiresIn) accessToken = GetToken<AccessToken>(uriString, version, clientId, clientSecret);
+            DateTime currentDateTime = DateTime.Now;
+            TimeSpan ts = currentDateTime - dateTime;
+            int total = ts.Hours * 60 * 60 + ts.Minutes * 60 + ts.Seconds;
+
+            if (total >= accessToken.ExpiresIn)
+            {
+                var tokenResponse = GetToken(uriString, version, clientId, clientSecret);
+                accessToken.Type = tokenResponse.AccessToken.Type;
+                accessToken.Token = tokenResponse.AccessToken.Token;
+            }
 
             var response = HttpHandler.PostAsync(request, uriString, version, uriPath, accessToken.Type, accessToken.Token);
             var content = response.Content.ReadAsStringAsync().Result;

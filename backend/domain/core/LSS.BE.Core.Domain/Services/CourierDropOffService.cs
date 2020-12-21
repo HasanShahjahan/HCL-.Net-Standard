@@ -1,5 +1,7 @@
 ﻿using LSS.BE.Core.Common.Base;
 using LSS.BE.Core.Common.UriPath;
+using LSS.BE.Core.DataObjects.Dtos;
+using LSS.BE.Core.DataObjects.Mappers;
 using LSS.BE.Core.Domain.Helpers;
 using LSS.BE.Core.Entities.Courier;
 using Newtonsoft.Json;
@@ -23,14 +25,14 @@ namespace LSS.BE.Core.Domain.Services
             _dateTime = DateTime.Now;
         }
 
-        public LspUserAccessResponse LspVerification(LspUserAccess model)
+        public LspUserAccessDto LspVerification(LspUserAccess model)
         {
             var request = SerializerHelper<LspUserAccess>.SerializeObject(model);
             var response = HttpHandlerHelper.PostRequestResolver(request, _uriString, _version, _clientId, _clientSecret, UriAbsolutePath.CheckAccess, _tokenResponse.AccessToken, _dateTime);
 
             var settings = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
             var result = JsonConvert.DeserializeObject<LspUserAccessResponse>(response, settings);
-            return result;
+            return LspUserAccessMapper.ToObject(result);
         }
 
         public LockerStationDetailsResponse LockerStationDetails(string lockerStationId)

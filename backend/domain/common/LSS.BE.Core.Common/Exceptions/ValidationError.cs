@@ -7,6 +7,12 @@ namespace LSS.BE.Core.Common.Exceptions
 {
     public class ValidationError : UnauthenticatedError
     {
+        public ValidationError()
+        {
+            IsRequestSuccess = false;
+            ErrorMessage = string.Empty;
+            ErrorDetails = new ErrorDetails();
+        }
         [JsonProperty("is_request_success")]
         public bool IsRequestSuccess { get; set; }
 

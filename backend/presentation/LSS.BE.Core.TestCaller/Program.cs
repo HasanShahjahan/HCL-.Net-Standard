@@ -1,5 +1,6 @@
 ﻿using LSS.BE.Core.Domain.Services;
 using LSS.BE.Core.Entities.Courier;
+using Newtonsoft.Json;
 using System;
 
 namespace LSS.BE.Core.TestCaller
@@ -15,22 +16,14 @@ namespace LSS.BE.Core.TestCaller
 
             var courierDropOffService = new CourierDropOffService(uriString, version, clientId, clientSecret);
 
-            //var model = new VerifyOtp
-            //{
-            //    LockerStationid = "87471edc-37d6-41ef-8521-b96116e707a5",
-            //    Code = "123456",
-            //    LspId = "123456",
-            //    RefCode = "123456",
-            //    PhoneNumber = "123456"
-            //};
-
-            var model = new LspUserAccess();
-            model.LockerStationid = "87471edc-37d6-41ef-8521-b96116e707a5";
-            model.Key = "865054858188";
-            model.Pin = "123456";
-            courierDropOffService.LspVerification(model);
-
-            Console.WriteLine("Hello World!");
+            var model = new LspUserAccess
+            {
+                LockerStationid = "c17fb923-70f9-4d3c-b081-4226096d6905",
+                Key = "865054858188",
+                Pin = "123456"
+            };
+            var result = courierDropOffService.LspVerification(model);
+            Console.WriteLine(JsonConvert.SerializeObject(result,Formatting.Indented));
             Console.ReadKey();
         }
     }
