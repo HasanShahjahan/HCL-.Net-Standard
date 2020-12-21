@@ -8,7 +8,7 @@ namespace LSS.BE.Core.Entities.Courier
     public class VerifyOtp
     {
         [JsonProperty("locker_station_id")]
-        public string LockerStationid { get; set; }
+        public string LockerStationId { get; set; }
 
         [JsonProperty("code")]
         public string Code { get; set; }

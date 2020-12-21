@@ -24,7 +24,7 @@ namespace LSS.BE.Core.Domain.UnitTest
                 Code = "321252",
                 LspId = "0add4ba4-2e62-417b-984f-183f3d11baf7",
                 RefCode = "AOAX",
-                LockerStationid = "87471edc-37d6-41ef-8521-b96116e707a5"
+                LockerStationId = "87471edc-37d6-41ef-8521-b96116e707a5"
             };
 
             var json = JsonConvert.SerializeObject(request, new JsonSerializerSettings() { DefaultValueHandling = DefaultValueHandling.Ignore });

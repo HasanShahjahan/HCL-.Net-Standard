@@ -5,8 +5,11 @@ namespace LSS.BE.Core.Entities.Courier
 {
     public class LspUserAccessResponse : ValidationError
     {
-        [JsonProperty("LspId")]
+        [JsonProperty("lsp_id")]
         public string LspId { get; set; }
+
+        [JsonProperty("lsp_user_id")]
+        public string LspUserId { get; set; }
 
         [JsonProperty("ref_code")]
         public string RefCode { get; set; }

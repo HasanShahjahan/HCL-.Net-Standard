@@ -1,8 +1,5 @@
 ﻿using LSS.HCM.Core.Common.Exceptions;
 using LSS.HCM.Core.DataObjects.Dtos;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace LSS.HCM.Core.DataObjects.Mappers
 {

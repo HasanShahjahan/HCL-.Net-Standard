@@ -10,9 +10,6 @@ namespace LSS.BE.Core.Entities.Courier
         [JsonProperty("locker_station_id")]
         public string LockerStationLd { get; set; }
 
-        [JsonProperty("lsp_id")]
-        public string LspId { get; set; }
-
         [JsonProperty("booking_id")]
         public string BookingId { get; set; }
 

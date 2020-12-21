@@ -7,13 +7,20 @@ namespace LSS.BE.Core.Common.Base
 {
     public class ErrorDetails
     {
-        //[JsonProperty("locker_station_id")]
-        //public string[] LockerStationId { get; set; }
+        public ErrorDetails() 
+        {
+            LockerStationId = null;
+            LspId = null;
+            BookingId = null;
+        }
 
-        //[JsonProperty("LspId")]
-        //public string[] LspId { get; set; }
+        [JsonProperty("locker_station_id")]
+        public string[] LockerStationId { get; set; }
 
-        //[JsonProperty("booking_id")]
-        //public string[] BookingId { get; set; }
+        [JsonProperty("LspId")]
+        public string[] LspId { get; set; }
+
+        [JsonProperty("booking_id")]
+        public string[] BookingId { get; set; }
     }
 }
