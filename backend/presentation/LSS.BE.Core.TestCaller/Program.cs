@@ -22,7 +22,9 @@ namespace LSS.BE.Core.TestCaller
             string mobileNumber = "+6597398077"; 
 
 
-            var courierDropOffService = new CourierDropOffService(uriString, version, clientId, clientSecret);
+            string loggerPath = @"C:\Box24\Project Execution\appsettings.json";
+
+            var courierDropOffService = new CourierDropOffService(uriString, version, clientId, clientSecret, loggerPath);
 
             //LSP Verification
             var model = new LspUserAccess

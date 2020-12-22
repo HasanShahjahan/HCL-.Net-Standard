@@ -74,9 +74,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "presentation", "presentatio
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LSS.BE.Core.TestCaller", "backend\presentation\LSS.BE.Core.TestCaller\LSS.BE.Core.TestCaller.csproj", "{91795A8B-EFC8-4EE4-967B-2D66771EC6E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LSS.BE.Core.DataObjects", "backend\domain\common\LSS.BE.Core.DataObjects\LSS.BE.Core.DataObjects.csproj", "{B4F6DB49-8DCF-495C-99D0-E8B511156118}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LSS.BE.Core.DataObjects", "backend\domain\common\LSS.BE.Core.DataObjects\LSS.BE.Core.DataObjects.csproj", "{B4F6DB49-8DCF-495C-99D0-E8B511156118}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LSS.BE.IntegrationTest", "test\integration\LSS.BE.IntegrationTest\LSS.BE.IntegrationTest.csproj", "{C4F7162C-4E21-4436-8E01-BB32D8693D0B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LSS.BE.IntegrationTest", "test\integration\LSS.BE.IntegrationTest\LSS.BE.IntegrationTest.csproj", "{C4F7162C-4E21-4436-8E01-BB32D8693D0B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
