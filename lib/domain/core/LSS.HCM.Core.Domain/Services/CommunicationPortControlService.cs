@@ -27,18 +27,21 @@ namespace LSS.HCM.Core.Domain.Services
                 controlModule = new SerialPortControlService(new SerialPortResource(lockerConfiguration.Microcontroller.LockControl.Port, lockerConfiguration.Microcontroller.LockControl.Baudrate, lockerConfiguration.Microcontroller.LockControl.DataBits, 500, 500));
                 responseData = controlModule.Write(commandString, lockerConfiguration.Microcontroller.Commands.OpenDoor.ResLen);
                 result = BoardInitializationService.ExecuteCommand(CommandType.DoorOpen, responseData);
+                controlModule.End();
             }
             else if (commandName == CommandType.DoorStatus)
             {
                 controlModule = new SerialPortControlService(new SerialPortResource(lockerConfiguration.Microcontroller.LockControl.Port, lockerConfiguration.Microcontroller.LockControl.Baudrate, lockerConfiguration.Microcontroller.LockControl.DataBits, 500, 500));
                 responseData = controlModule.Write(commandString, lockerConfiguration.Microcontroller.Commands.DoorStatus.ResLen);
                 result = BoardInitializationService.ExecuteCommand(CommandType.DoorStatus, responseData);
+                controlModule.End();
             }
             else if (commandName == CommandType.ItemDetection)
             {
                 controlModule = new SerialPortControlService(new SerialPortResource(lockerConfiguration.Microcontroller.ObjectDetection.Port, lockerConfiguration.Microcontroller.ObjectDetection.Baudrate, lockerConfiguration.Microcontroller.ObjectDetection.DataBits, 500, 500));
                 responseData = controlModule.Write(commandString, lockerConfiguration.Microcontroller.Commands.DetectItem.ResLen);
                 result = BoardInitializationService.ExecuteCommand(CommandType.ItemDetection, responseData);
+                controlModule.End();
             }
             Dictionary<string, string> commandResult = result;
             commandResult.Add("Command", commandName);

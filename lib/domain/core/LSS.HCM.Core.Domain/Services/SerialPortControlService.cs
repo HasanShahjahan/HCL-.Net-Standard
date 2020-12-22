@@ -41,7 +41,7 @@ namespace LSS.HCM.Core.Domain.Services
             _serialPort.ReadTimeout = serialPortResource.ReadTimeout;
             _serialPort.WriteTimeout = serialPortResource.WriteTimeout;
 
-            InitialSerialPort();
+            Begin();
         }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace LSS.HCM.Core.Domain.Services
         /// <returns>
         ///  Get boolen result of serial port open or not.
         /// </returns>
-        public bool InitialSerialPort()
+        public bool Begin()
         {
             try
             {
@@ -63,6 +63,34 @@ namespace LSS.HCM.Core.Domain.Services
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// Close serial port.
+        /// </summary>
+        /// <returns>
+        ///  Get boolen result of serial port close or not.
+        /// </returns>
+        public bool End()
+        {
+            try
+            {
+                if (_serialPort.IsOpen)
+                {
+                    _serialPort.Close();
+                    return true;
+                }
+                else
+                {
+                    return false;
+
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("SerialportError: " + ex.ToString());
+                return false;
+            }
         }
 
         /// <summary>
