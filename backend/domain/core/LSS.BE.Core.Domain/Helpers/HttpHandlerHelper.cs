@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Net.Http;
 
 namespace LSS.BE.Core.Domain.Helpers
 {
@@ -23,10 +24,10 @@ namespace LSS.BE.Core.Domain.Helpers
             return tokenResponse;
         }
 
-        public static string PostRequestResolver(string request, string uriString, string version, string clientId, string clientSecret, string uriPath, AccessToken accessToken, DateTime dateTime)
+        public static string PostRequestResolver(string request, HttpMethod httpMethod, string uriString, string version, string clientId, string clientSecret, string uriPath, AccessToken accessToken, DateTime dateTime)
         {
             GetRefreshToken(uriString, version, clientId, clientSecret, accessToken, dateTime);
-            var response = HttpHandler.PostAsync(request, uriString, version, uriPath, accessToken.Type, accessToken.Token);
+            var response = HttpHandler.PostAsync(request, httpMethod, uriString, version, uriPath, accessToken.Type, accessToken.Token);
             var content = response.Content.ReadAsStringAsync().Result;
             return content;
         }
