@@ -17,7 +17,9 @@ namespace LSS.BE.Core.TestCaller
             string trackingNumber = "TED2256553SGD";
             string lockerStationId = "c17fb923-70f9-4d3c-b081-4226096d6905";
 
-            var courierDropOffService = new CourierDropOffService(uriString, version, clientId, clientSecret);
+            string loggerPath = @"C:\Box24\Project Execution\appsettings.json";
+
+            var courierDropOffService = new CourierDropOffService(uriString, version, clientId, clientSecret, loggerPath);
 
             ////LSP Verification
             //var model = new LspUserAccess

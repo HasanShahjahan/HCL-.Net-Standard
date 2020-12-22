@@ -1,10 +1,13 @@
 ﻿using LSS.BE.Core.Common.Base;
+using LSS.BE.Core.Common.Logger;
 using LSS.BE.Core.Common.UriPath;
 using LSS.BE.Core.DataObjects.Dtos;
 using LSS.BE.Core.DataObjects.Mappers;
 using LSS.BE.Core.Domain.Helpers;
 using LSS.BE.Core.Entities.Courier;
+using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
+using Serilog;
 using System;
 using System.Collections.Generic;
 
@@ -16,7 +19,7 @@ namespace LSS.BE.Core.Domain.Services
         private readonly string _uriString, _version, _clientId, _clientSecret;
         private readonly DateTime _dateTime;
 
-        public CourierDropOffService(string uriString, string version, string clientId, string clientSecret)
+        public CourierDropOffService(string uriString, string version, string clientId, string clientSecret, string loggerConfigurationPath)
         {
             _tokenResponse = HttpHandlerHelper.GetToken(uriString, version, clientId, clientSecret);
             _uriString = uriString;
@@ -24,15 +27,21 @@ namespace LSS.BE.Core.Domain.Services
             _clientId = clientId;
             _clientSecret = clientSecret;
             _dateTime = DateTime.Now;
+
+            LoggerAbstractions.SetupStaticLogger(loggerConfigurationPath);
+            LoggerAbstractions.CreateHostBuilder().StartAsync();
+            Log.Fatal("Courier Drop Off sucessfully initialized with access token and logging.");
         }
 
         public LspUserAccessDto LspVerification(LspUserAccess model)
         {
             var request = SerializerHelper<LspUserAccess>.SerializeObject(model);
+            Log.Fatal("[Req]" + "[" + request +"]");
+            
             var response = HttpHandlerHelper.PostRequestResolver(request, _uriString, _version, _clientId, _clientSecret, UriAbsolutePath.CheckAccess, _tokenResponse.AccessToken, _dateTime);
-
-            var settings = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
-            var result = JsonConvert.DeserializeObject<LspUserAccessResponse>(response, settings);
+            var result = JsonConvert.DeserializeObject<LspUserAccessResponse>(response);
+            
+            Log.Fatal("[Res]" + "[" + response + "]");
             return LspUserAccessMapper.ToObject(result);
         }
 
@@ -76,13 +85,16 @@ namespace LSS.BE.Core.Domain.Services
 
         public AvailableSizesDto GetAvailableSizes(string lockerStationId, int bookingId)
         {
+            Log.Information("[Req]" + "[" + lockerStationId + "]" +"[" + bookingId + "]");
+            
             var queryString = new Dictionary<string, string>()
             {
                 { "locker_station_id", lockerStationId }
             };
             var response = HttpHandlerHelper.GetRequestResolver(_uriString, queryString, _version, _clientId, _clientSecret, UriAbsolutePath.AvailableSizes, _tokenResponse.AccessToken, _dateTime);
-            var settings = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
-            var result = JsonConvert.DeserializeObject<AvailableSizesResponse>(response, settings);
+            var result = JsonConvert.DeserializeObject<AvailableSizesResponse>(response);
+
+            Log.Information("[Res]" + "[" + response + "]");
             return AvailableSizesMapper.ToObject(result);
         }
 
