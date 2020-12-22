@@ -4,6 +4,7 @@ using LSS.BE.Core.DataObjects.Dtos;
 using LSS.BE.Core.DataObjects.Mappers;
 using LSS.BE.Core.Domain.Helpers;
 using LSS.BE.Core.Domain.Initialization;
+using LSS.BE.Core.Domain.Interfaces;
 using LSS.BE.Core.Entities.Courier;
 using Newtonsoft.Json;
 using Serilog;
@@ -13,7 +14,7 @@ using System.Net.Http;
 
 namespace LSS.BE.Core.Domain.Services
 {
-    public class CourierDropOffService
+    public class CourierDropOffService : FacadeService, ICourierDropOffService
     {
         private readonly TokenResponse _tokenResponse;
         private readonly string _uriString, _version, _clientId, _clientSecret;
@@ -29,7 +30,7 @@ namespace LSS.BE.Core.Domain.Services
             _tokenResponse = ServiceInvoke.InitAsync(uriString, version, clientId, clientSecret, loggerConfigurationPath);
         }
 
-        public LspUserAccessDto LspVerification(LspUserAccess model)
+        public override  LspUserAccessDto LspVerification(LspUserAccess model)
         {
             var request = SerializerHelper<LspUserAccess>.SerializeObject(model);
             Log.Information("[Lsp Verification][Req]" + "[" + request +"]");
@@ -41,7 +42,7 @@ namespace LSS.BE.Core.Domain.Services
             return LspUserAccessMapper.ToObject(result);
         }
 
-        public VerifyOtpDto VerifyOtp(VerifyOtp model)
+        public override  VerifyOtpDto VerifyOtp(VerifyOtp model)
         {
             var request = SerializerHelper<VerifyOtp>.SerializeObject(model);
             Log.Information("[Verify Otp][Req]" + "[" + request + "]");
