@@ -5,6 +5,10 @@ using LSS.HCM.Core.Domain.Services;
 using System;
 using System.Collections.Generic;
 
+using NAudio.Wave;
+using System.Timers;
+using System.Threading;
+
 namespace LSS.HCM.Core.Domain.Helpers
 {
     /// <summary>
@@ -12,6 +16,11 @@ namespace LSS.HCM.Core.Domain.Helpers
     ///</summary>
     public sealed class CompartmentHelper
     {
+        //private static System.Timers.Timer aTimer = new System.Timers.Timer();
+
+        private static string _audioFileName = string.Empty;
+        private static WaveOutEvent _outputDevice = new WaveOutEvent();
+
         /// <summary>
         /// Map compartment from locker configuration by requested compartment Id.
         /// </summary>
@@ -61,6 +70,66 @@ namespace LSS.HCM.Core.Domain.Helpers
                 Convert.ToByte(compartment.CompartmentCode.Lcbid, 16)
             };
             return compartmentPinCode;
+        }
+
+
+        /// <summary>
+        /// Setup door open timer to alert if time out.
+        /// <returns>
+        ///  Return nothing
+        /// </returns>
+        public static void SetDoorOpenTimer(double timeout)//, ElapsedEventHandler OnTimedEvent)
+        {
+            // Create a timer with a two second interval.
+            //aTimer = new System.Timers.Timer(timeout);
+            //aTimer.Interval = 5000;
+            System.Timers.Timer aTimer = new System.Timers.Timer(timeout);
+            // Hook up the Elapsed event for the timer. 
+            aTimer.Elapsed += OnTimedEvent;
+            aTimer.AutoReset = false;
+            aTimer.Enabled = true;
+        }
+
+        /// <summary>
+        /// End door open alert timer
+        /// </summary>
+        /// <returns>
+        ///  Return nothing
+        /// </returns>
+        public static void EndDoorOpenTimer()
+        {
+            //aTimer.Enabled = false;
+            //aTimer.Stop();
+            //aTimer.Dispose();
+        }
+
+        /// <summary>
+        /// Alert sound timer event.
+        /// </summary>
+        /// <returns>
+        ///  Return nothing
+        /// </returns>
+        private static void OnTimedEvent(object sender, ElapsedEventArgs e)
+        {
+            int playbackTime = 120000;
+            string audioFileName = @"C:/Windows/media/Ring08.wav"; // Give configuration from DB
+            // _audioFileName = audioFileName;
+            AudioFileReader _audioFile = new AudioFileReader(audioFileName); // "C:/Windows/media/Ring08.wav");
+            _outputDevice.Init(_audioFile);
+            _outputDevice.Play();
+
+            /*
+            // Update door status of all modules
+            var objectdetectStatusAry = new Dictionary<string, Dictionary<string, byte>> { };
+            bool compartmentDoorStatusAlert = false;
+            foreach (string moduleNo in odbModuleList)
+            {
+                objectdetectStatusAry[moduleNo] = CompartmentHelper.GetStatusByModuleId(CommandType.DoorStatus, moduleNo, lockerConfiguration);
+                compartmentDoorStatusAlert |= targetCompartment.CompartmentDoorOpen;
+            }*/
+            //while(_outputDevice.PlaybackState == PlaybackState.Playing) Thread.Sleep(playbackTime);
+            Thread.Sleep(playbackTime);
+            _outputDevice.Stop();
         }
     }
 }
