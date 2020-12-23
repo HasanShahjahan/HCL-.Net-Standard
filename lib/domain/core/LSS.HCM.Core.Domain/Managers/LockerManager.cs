@@ -11,7 +11,9 @@ using LSS.HCM.Core.Domain.Services;
 using LSS.HCM.Core.Validator;
 using LSS.HCM.Core.Domain.Helpers;
 using Compartment = LSS.HCM.Core.DataObjects.Models.Compartment;
-
+using LSS.Logging;
+using Serilog;
+using MongoDB.Bson.IO;
 
 namespace LSS.HCM.Core.Domain.Managers
 {
@@ -34,6 +36,11 @@ namespace LSS.HCM.Core.Domain.Managers
             var content = File.ReadAllText(configurationFilePath);
             lockerConfiguration = JsonSerializer.Deserialize<AppSettings>(content);
             CommunicationPortControlService.InitializeScanner(lockerConfiguration);
+
+            LoggerAbstractions.SetupStaticLogger(configurationFilePath);
+            LoggerAbstractions.CreateHostBuilder().Build();
+
+            Log.Information("[HCM][Locker Manager][Initiated][Service initiated with scanner and logging.]");
         }
 
         /// <summary>
@@ -46,16 +53,20 @@ namespace LSS.HCM.Core.Domain.Managers
         public LockerDto OpenCompartment(Compartment model)
         {
             var lockerDto = new LockerDto();
+            Log.Information("[HCM][Open Compartment][Req]" + "[" + JsonSerializer.Serialize(model) + "]");
 
             try {
                 var (statusCode, errorResult) = LockerManagementValidator.PayloadValidator(lockerConfiguration, model.JwtCredentials.IsEnabled, model.JwtCredentials.Secret, model.JwtCredentials.Token, PayloadTypes.OpenCompartment, model.LockerId, model.TransactionId, model.CompartmentIds, null);
                 if (statusCode != StatusCode.Status200OK) return OpenCompartmentMapper.ToError(new LockerDto { StatusCode = statusCode, Error = errorResult });
                 var result = CompartmentManager.CompartmentOpen(model, lockerConfiguration);
                 lockerDto = OpenCompartmentMapper.ToObject(result);
+                Log.Information("[HCM][Open Compartment][Res]" + "[" + JsonSerializer.Serialize(result) + "]");
             }
             catch (Exception ex)
             {
+                Log.Error("[HCM][Open Compartment]" + "[" + ex + "]");
                 return OpenCompartmentMapper.ToError(new LockerDto { StatusCode = StatusCode.Status500InternalServerError, Error = new Common.Exceptions.ApplicationException(ApplicationErrorCodes.InternalServerError, ex.Message) });
+                
             }
 
             return lockerDto;
@@ -71,15 +82,19 @@ namespace LSS.HCM.Core.Domain.Managers
         public CompartmentStatusDto CompartmentStatus(Compartment model)
         {
             var compartmentStatusDto = new CompartmentStatusDto();
+            Log.Information("[HCM][Compartment Status][Req]" + "[" + JsonSerializer.Serialize(model) + "]");
+
             try
             {
                 var (statusCode, errorResult) = LockerManagementValidator.PayloadValidator(lockerConfiguration, model.JwtCredentials.IsEnabled, model.JwtCredentials.Secret, model.JwtCredentials.Token, PayloadTypes.CompartmentStatus, model.LockerId, model.TransactionId, model.CompartmentIds, null);
                 if (statusCode != StatusCode.Status200OK) return CompartmentStatusMapper.ToError(new CompartmentStatusDto { StatusCode = statusCode, Error = errorResult });
                 var result = CompartmentManager.CompartmentStatus(model, lockerConfiguration);
                 compartmentStatusDto = CompartmentStatusMapper.ToObject(result);
+                Log.Information("[HCM][Compartment Status][Res]" + "[" + JsonSerializer.Serialize(result) + "]");
             }
             catch (Exception ex)
             {
+                Log.Error("[HCM][Compartment Status]" + "[" + ex + "]");
                 return CompartmentStatusMapper.ToError(new CompartmentStatusDto { StatusCode = StatusCode.Status500InternalServerError, Error = new Common.Exceptions.ApplicationException(ApplicationErrorCodes.InternalServerError, ex.Message) });
             }
 
@@ -96,15 +111,19 @@ namespace LSS.HCM.Core.Domain.Managers
         public CaptureDto CaptureImage(Capture model)
         {
             var captureDto = new CaptureDto();
+            Log.Information("[HCM][Capture Image][Req]" + "[" + JsonSerializer.Serialize(model) + "]");
+
             try
             {
                 var (statusCode, errorResult) = LockerManagementValidator.PayloadValidator(lockerConfiguration, model.JwtCredentials.IsEnabled, model.JwtCredentials.Secret, model.JwtCredentials.Token, PayloadTypes.CaptureImage, model.LockerId, model.TransactionId, null, Common.Enums.CaptureType.Photo);
                 if (statusCode != StatusCode.Status200OK) return CaptureMapper.ToError(new CaptureDto { StatusCode = statusCode, Error = errorResult });
                 var result = LockerHelper.CapturePhoto(model);
                 captureDto = CaptureMapper.ToObject(result);
+                Log.Information("[HCM][Capture Image][Res]" + "[" + JsonSerializer.Serialize(result) + "]");
             }
             catch (Exception ex)
             {
+                Log.Error("[HCM][Capture Image]" + "[" + ex + "]");
                 return CaptureMapper.ToError(new CaptureDto { StatusCode = StatusCode.Status500InternalServerError, Error = new Common.Exceptions.ApplicationException(ApplicationErrorCodes.InternalServerError, ex.Message) });
             }
 

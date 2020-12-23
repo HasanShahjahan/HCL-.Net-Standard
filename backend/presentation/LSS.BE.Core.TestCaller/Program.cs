@@ -22,49 +22,97 @@ namespace LSS.BE.Core.TestCaller
             string mobileNumber = "+6597398077"; 
 
 
-            string loggerPath = @"C:\Box24\Project Execution\appsettings.json";
+            string configurationPath = @"C:\Box24\Project Execution\config.json";
 
-            var courierDropOffService = new CourierDropOffService(uriString, version, clientId, clientSecret, loggerPath);
+            var courierDropOffService = new CourierDropOffService(uriString, version, clientId, clientSecret, configurationPath);
 
             //LSP Verification
             var model = new LspUserAccess
             {
-                LockerStationid = "c17fb923-70f9-4d3c-b081-4226096d6905",
+                LockerStationid = lockerStationId,
                 Key = "865054858188",
                 Pin = "123456"
             };
-            var result = courierDropOffService.LspVerification(model);
+            var lspVerification = courierDropOffService.LspVerification(model);
 
 
-            ////Verify Otp
-            //var model = new VerifyOtp();
-            //model.LockerStationid = "c17fb923-70f9-4d3c-b081-4226096d6905";
-            //model.LspId = "0add4ba4-2e62-417b-984f-183f3d11baf7";
-            //model.RefCode = "GBDY";
-            //model.PhoneNumber = "+6597398077";
-            //model.Code = "041052";
-            //var result = courierDropOffService.VerifyOtp(model);
+            //Verify Otp
+            var verifyOtp = new VerifyOtp();
+            verifyOtp.LockerStationId = "c17fb923-70f9-4d3c-b081-4226096d6905";
+            verifyOtp.LspId = "0add4ba4-2e62-417b-984f-183f3d11baf7";
+            verifyOtp.RefCode = "GBDY";
+            verifyOtp.PhoneNumber = "+6597398077";
+            verifyOtp.Code = "041052";
+            var verifyOtpResult = courierDropOffService.VerifyOtp(verifyOtp);
 
-            ////Finiding Booking 
-            //var result = courierDropOffService.FindBooking(trackingNumber, lockerStationId, lspId);
-
-            ////Available Size
-            //var result = courierDropOffService.GetAvailableSizes(lockerStationId, 0);
-
-            ////update booking
-            //var model = new bookingstatus
-            //{
-            //    bookingid = 14,
-            //    lockerstationid = lockerstationid,
-            //    lspid = lspid,
-            //    mobilenumber = mobilenumber,
-            //    reason = "",
-            //    status = "courier_deposited"
-            //};
-            //var result = courierdropoffservice.updatebookingstatus(model);
+            //Finiding Booking 
+            var findingBookingResult = courierDropOffService.FindBooking(trackingNumber, lockerStationId, lspId);
 
 
+
+            //update booking
+            var bookingStatus = new BookingStatus
+            {
+                BookingId = 14,
+                LockerStationId = lockerStationId,
+                LspId = lspId,
+                MobileNumber = mobileNumber,
+                Reason = "",
+                Status = "courier_deposited"
+            };
+            var bookingStatusResult = courierDropOffService.UpdateBookingStatus(bookingStatus);
+
+            //Locker Station Details 
+            var lockerDetails = courierDropOffService.LockerStationDetails(lockerStationId);
+
+            //Available Size
+            var result = courierDropOffService.GetAvailableSizes(lockerStationId, 0);
+            var jObject = courierDropOffService.GetAvailableSizes(lockerStationId, 0, string.Empty);
+            var formattedString = courierDropOffService.GetAvailableSizes(lockerStationId, 0, string.Empty);
+
+            Console.WriteLine("C# standard mapped result: ");
+            Console.WriteLine("------------------------------------------");
             Console.WriteLine(JsonConvert.SerializeObject(result,Formatting.Indented));
+            Console.WriteLine("------------------------------------------");
+
+            Console.WriteLine("Actual Result : JObject");
+            Console.WriteLine("------------------------------------------");
+            Console.WriteLine(JsonConvert.SerializeObject(jObject, Formatting.Indented));
+            Console.WriteLine("------------------------------------------");
+
+            Console.WriteLine("Actual Result : Formatted string.");
+            Console.WriteLine("------------------------------------------");
+            Console.WriteLine(JsonConvert.SerializeObject(formattedString, Formatting.Indented));
+           
+
+            Console.WriteLine("Locker Station Details");
+            Console.WriteLine("------------------------------------------");
+            Console.WriteLine(JsonConvert.SerializeObject(lockerDetails, Formatting.Indented));
+            Console.WriteLine("------------------------------------------");
+
+
+            Console.WriteLine("Update Booking status");
+            Console.WriteLine("------------------------------------------");
+            Console.WriteLine(JsonConvert.SerializeObject(bookingStatusResult, Formatting.Indented));
+            Console.WriteLine("------------------------------------------");
+
+
+            Console.WriteLine("Finding Booking Result");
+            Console.WriteLine("------------------------------------------");
+            Console.WriteLine(JsonConvert.SerializeObject(findingBookingResult, Formatting.Indented));
+            Console.WriteLine("------------------------------------------");
+
+
+            Console.WriteLine("Verify Otp Result");
+            Console.WriteLine("------------------------------------------");
+            Console.WriteLine(JsonConvert.SerializeObject(verifyOtpResult, Formatting.Indented));
+            Console.WriteLine("------------------------------------------");
+
+            Console.WriteLine("Lsp Verification");
+            Console.WriteLine("------------------------------------------");
+            Console.WriteLine(JsonConvert.SerializeObject(lspVerification, Formatting.Indented));
+            Console.WriteLine("------------------------------------------");
+
             Console.ReadKey();
         }
     }
