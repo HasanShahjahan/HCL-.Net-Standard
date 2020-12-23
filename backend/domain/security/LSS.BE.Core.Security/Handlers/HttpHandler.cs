@@ -35,7 +35,7 @@ namespace LSS.BE.Core.Security.Handlers
             return response;
         }
         
-        public static HttpResponseMessage PostAsync(string request, string uriString, string version, string uriPath, string type, string token)
+        public static HttpResponseMessage PostAsync(string request, HttpMethod httpMethod, string uriString, string version, string uriPath, string type, string token)
         {
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri(uriString);
@@ -44,7 +44,7 @@ namespace LSS.BE.Core.Security.Handlers
 
             string mediaType = "application/json";
             var content = new StringContent(request, Encoding.UTF8, mediaType);
-            var requestMessage = new HttpRequestMessage(HttpMethod.Post, "/" + version + "/" + uriPath);
+            var requestMessage = new HttpRequestMessage(httpMethod, "/" + version + "/" + uriPath);
             requestMessage.Headers.Authorization = new AuthenticationHeaderValue(type, token);
             requestMessage.Content = content;
 
