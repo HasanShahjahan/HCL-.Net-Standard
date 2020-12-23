@@ -19,7 +19,7 @@ namespace LSS.HCM.Core.Simulator
             txtJwtToken.Text = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MDkzNTU5MjEsInRyYW5zYWN0aW9uX2lkIjoiNzBiMzZjNDEtMDc4Yi00MTFiLTk4MmMtYzViNzc0YWFjNjZmIn0.ujOkQJUq5WY_tZJgKXqe_n4nql3cSAeHMfXGABZO3E4";
             txtJwtSecret.Text = "HWAPI_0BwRn5Bg4rJAe5eyWkRz";
             txtCompartmentId.Text = "M0-1,M0-3";
-            txtConfigurationFile.Text = @"D:\config.txt";
+            txtConfigurationFile.Text = @"C:\Box24\Project Execution\Configuration and Log\config.json";
             btnSubmit.Enabled = false;
         }
 

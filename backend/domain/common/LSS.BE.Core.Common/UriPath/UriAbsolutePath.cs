@@ -14,5 +14,6 @@ namespace LSS.BE.Core.Common.UriPath
         public const string FindBooking = "booking/tracking-number";
         public const string AvailableSizes = "lockers/available-sizes"; 
         public const string UpdateBookingStatus = "booking/status";
+        public const string LockerStationDetails = "lockers";
     }
 }

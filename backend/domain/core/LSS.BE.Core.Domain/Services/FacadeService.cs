@@ -6,6 +6,6 @@ namespace LSS.BE.Core.Domain.Services
     public abstract class FacadeService
     {
         public abstract LspUserAccessDto LspVerification(LspUserAccess model);
-        public abstract VerifyOtpDto VerifyOtp(VerifyOtp model);
+        public abstract Newtonsoft.Json.Linq.JObject VerifyOtp(VerifyOtp model);
     }
 }

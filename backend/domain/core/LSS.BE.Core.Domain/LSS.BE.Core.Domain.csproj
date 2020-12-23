@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\common\LSS.Logging\LSS.Logging.csproj" />
     <ProjectReference Include="..\..\common\LSS.BE.Core.Common\LSS.BE.Core.Common.csproj" />
     <ProjectReference Include="..\..\common\LSS.BE.Core.DataObjects\LSS.BE.Core.DataObjects.csproj" />
     <ProjectReference Include="..\..\security\LSS.BE.Core.Security\LSS.BE.Core.Security.csproj" />
