@@ -7,6 +7,7 @@ namespace LSS.BE.Core.DataObjects.Dtos
 {
     public class VerifyOtpDto
     {
+        public bool IsRequestSuccess { get; set; }
         public AuthenticatedErrorDto AuthenticationError { get; set; }
         public ValidationErrorDto ValidationError { get; set; }
     }

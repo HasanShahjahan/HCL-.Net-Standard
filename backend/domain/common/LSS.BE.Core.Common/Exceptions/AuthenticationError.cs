@@ -13,6 +13,7 @@ namespace LSS.BE.Core.Common.Exceptions
             Status = string.Empty;
             Message = string.Empty;
         }
+
         [JsonProperty("success")]
         public bool Success { get; set; }
 

@@ -12,26 +12,23 @@ namespace LSS.HCM.Core.DataObjects.Models
         {
             TransactionId = string.Empty;
             LockerId = string.Empty;
-            Image = new Image();
+            JwtCredentials = null;
         }
-        public Capture(string transactionId, string lockerId, Image captureImage, JsonWebTokens jwtCredentials)
+        public Capture(string transactionId, string lockerId, JsonWebTokens jwtCredentials)
         {
             TransactionId = transactionId;
             LockerId = lockerId;
-            Image = captureImage;
             JwtCredentials = jwtCredentials;
         }
-        public Capture(string transactionId, string lockerId, string imageExtension, byte[] imageData, bool jwtEnabled, string jwtSecret, string jwtToken)
+        public Capture(string transactionId, string lockerId, bool jwtEnabled, string jwtSecret, string jwtToken)
         {
             TransactionId = transactionId;
             LockerId = lockerId;
-            Image = new Image(imageExtension, imageData);
             JwtCredentials = new JsonWebTokens(jwtEnabled, jwtSecret, jwtToken); ;
         }
 
         public string TransactionId { get; set; }
         public string LockerId { get; set; }
-        public Image Image { get; set; }
         public JsonWebTokens JwtCredentials { get; set; }
     }
 }

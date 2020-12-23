@@ -42,7 +42,7 @@ namespace LSS.HCM.Core.Domain.Helpers
                     Console.WriteLine("Cannot take picture if the camera isn't capturing image!");
                 }
 
-                var captureResponse = new CaptureDto(model.TransactionId, model.LockerId, model.Image.ImageExtension, imageBytes);
+                var captureResponse = new CaptureDto(model.TransactionId, model.LockerId, "jpeg", imageBytes);
 
                 // End using camera
                 capture.Release();

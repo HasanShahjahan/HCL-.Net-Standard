@@ -4,7 +4,6 @@ using LSS.BE.Core.DataObjects.Dtos;
 using LSS.BE.Core.DataObjects.Mappers;
 using LSS.BE.Core.Domain.Helpers;
 using LSS.BE.Core.Domain.Initialization;
-using LSS.BE.Core.Domain.Interfaces;
 using LSS.BE.Core.Entities.Courier;
 using Newtonsoft.Json;
 using Serilog;
@@ -14,13 +13,13 @@ using System.Net.Http;
 
 namespace LSS.BE.Core.Domain.Services
 {
-    public class CourierDropOffService : FacadeService, ICourierDropOffService
+    public class LmsGatewayService
     {
         private readonly TokenResponse _tokenResponse;
         private readonly string _uriString, _version, _clientId, _clientSecret;
         private readonly DateTime _dateTime;
 
-        public CourierDropOffService(string uriString, string version, string clientId, string clientSecret, string loggerConfigurationPath)
+        public LmsGatewayService(string uriString, string version, string clientId, string clientSecret, string loggerConfigurationPath)
         {
             _uriString = uriString;
             _version = version;
@@ -30,11 +29,11 @@ namespace LSS.BE.Core.Domain.Services
             _tokenResponse = ServiceInvoke.InitAsync(uriString, version, clientId, clientSecret, loggerConfigurationPath);
         }
 
-        public override  LspUserAccessDto LspVerification(LspUserAccess model)
+        public LspUserAccessDto LspVerification(LspUserAccess model)
         {
             var request = SerializerHelper<LspUserAccess>.SerializeObject(model);
-            Log.Information("[Lsp Verification][Req]" + "[" + request +"]");
-            
+            Log.Information("[Lsp Verification][Req]" + "[" + request + "]");
+
             var response = HttpHandlerHelper.PostRequestResolver(request, HttpMethod.Post, _uriString, _version, _clientId, _clientSecret, UriAbsolutePath.CheckAccess, _tokenResponse.AccessToken, _dateTime);
             var result = JsonConvert.DeserializeObject<LspUserAccessResponse>(response);
             Log.Information("[Lsp Verification][Res]" + "[" + response + "]");
@@ -54,7 +53,7 @@ namespace LSS.BE.Core.Domain.Services
         //    return new VerifyOtpDto();
         //}
 
-        public override Newtonsoft.Json.Linq.JObject VerifyOtp(VerifyOtp model)
+        public Newtonsoft.Json.Linq.JObject VerifyOtp(VerifyOtp model)
         {
             var request = SerializerHelper<VerifyOtp>.SerializeObject(model);
             Log.Information("[Verify Otp][Req]" + "[" + request + "]");
@@ -109,10 +108,8 @@ namespace LSS.BE.Core.Domain.Services
             Log.Information("[Find Booking][Res]" + "[" + response + "]");
             var result = Newtonsoft.Json.Linq.JObject.Parse(response);
             return result;
-            
+
         }
-
-
 
         public AssignSimilarSizeLockerDto AssignSimilarSizeLocker(AssignSimilarSizeLocker model)
         {
@@ -148,7 +145,7 @@ namespace LSS.BE.Core.Domain.Services
             var response = HttpHandlerHelper.GetRequestResolver(_uriString, queryString, _version, _clientId, _clientSecret, UriAbsolutePath.AvailableSizes, _tokenResponse.AccessToken, _dateTime);
             Log.Information("[Get Available Sizes][Res]" + "[" + response + "]");
 
-            var result = Newtonsoft.Json.Linq.JObject.Parse(response); 
+            var result = Newtonsoft.Json.Linq.JObject.Parse(response);
             return result;
         }
 

@@ -24,7 +24,7 @@ namespace LSS.BE.Core.TestCaller
 
             string configurationPath = @"C:\Box24\Project Execution\config.json";
 
-            var courierDropOffService = new CourierDropOffService(uriString, version, clientId, clientSecret, configurationPath);
+            var courierDropOffService = new GatewayService(uriString, version, clientId, clientSecret, configurationPath);
 
             //LSP Verification
             var model = new LspUserAccess
@@ -45,8 +45,8 @@ namespace LSS.BE.Core.TestCaller
             verifyOtp.Code = "041052";
             var verifyOtpResult = courierDropOffService.VerifyOtp(verifyOtp);
 
-            //Finiding Booking 
-            var findingBookingResult = courierDropOffService.FindBooking(trackingNumber, lockerStationId, lspId);
+            ////Finiding Booking 
+            //var findingBookingResult = courierDropOffService.FindBooking(trackingNumber, lockerStationId, lspId);
 
 
 
@@ -65,24 +65,24 @@ namespace LSS.BE.Core.TestCaller
             //Locker Station Details 
             var lockerDetails = courierDropOffService.LockerStationDetails(lockerStationId);
 
-            //Available Size
-            var result = courierDropOffService.GetAvailableSizes(lockerStationId, 0);
-            var jObject = courierDropOffService.GetAvailableSizes(lockerStationId, 0, string.Empty);
-            var formattedString = courierDropOffService.GetAvailableSizes(lockerStationId, 0, string.Empty);
+            ////Available Size
+            //var result = courierDropOffService.GetAvailableSizes(lockerStationId, 0);
+            //var jObject = courierDropOffService.GetAvailableSizes(lockerStationId, 0, string.Empty);
+            //var formattedString = courierDropOffService.GetAvailableSizes(lockerStationId, 0, string.Empty);
 
-            Console.WriteLine("C# standard mapped result: ");
-            Console.WriteLine("------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(result,Formatting.Indented));
-            Console.WriteLine("------------------------------------------");
+            //Console.WriteLine("C# standard mapped result: ");
+            //Console.WriteLine("------------------------------------------");
+            //Console.WriteLine(JsonConvert.SerializeObject(result,Formatting.Indented));
+            //Console.WriteLine("------------------------------------------");
 
-            Console.WriteLine("Actual Result : JObject");
-            Console.WriteLine("------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(jObject, Formatting.Indented));
-            Console.WriteLine("------------------------------------------");
+            //Console.WriteLine("Actual Result : JObject");
+            //Console.WriteLine("------------------------------------------");
+            //Console.WriteLine(JsonConvert.SerializeObject(jObject, Formatting.Indented));
+            //Console.WriteLine("------------------------------------------");
 
-            Console.WriteLine("Actual Result : Formatted string.");
-            Console.WriteLine("------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(formattedString, Formatting.Indented));
+            //Console.WriteLine("Actual Result : Formatted string.");
+            //Console.WriteLine("------------------------------------------");
+            //Console.WriteLine(JsonConvert.SerializeObject(formattedString, Formatting.Indented));
            
 
             Console.WriteLine("Locker Station Details");
@@ -91,27 +91,27 @@ namespace LSS.BE.Core.TestCaller
             Console.WriteLine("------------------------------------------");
 
 
-            Console.WriteLine("Update Booking status");
-            Console.WriteLine("------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(bookingStatusResult, Formatting.Indented));
-            Console.WriteLine("------------------------------------------");
+            //Console.WriteLine("Update Booking status");
+            //Console.WriteLine("------------------------------------------");
+            //Console.WriteLine(JsonConvert.SerializeObject(bookingStatusResult, Formatting.Indented));
+            //Console.WriteLine("------------------------------------------");
 
 
-            Console.WriteLine("Finding Booking Result");
-            Console.WriteLine("------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(findingBookingResult, Formatting.Indented));
-            Console.WriteLine("------------------------------------------");
+            //Console.WriteLine("Finding Booking Result");
+            //Console.WriteLine("------------------------------------------");
+            //Console.WriteLine(JsonConvert.SerializeObject(findingBookingResult, Formatting.Indented));
+            //Console.WriteLine("------------------------------------------");
 
 
-            Console.WriteLine("Verify Otp Result");
-            Console.WriteLine("------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(verifyOtpResult, Formatting.Indented));
-            Console.WriteLine("------------------------------------------");
+            //Console.WriteLine("Verify Otp Result");
+            //Console.WriteLine("------------------------------------------");
+            //Console.WriteLine(JsonConvert.SerializeObject(verifyOtpResult, Formatting.Indented));
+            //Console.WriteLine("------------------------------------------");
 
-            Console.WriteLine("Lsp Verification");
-            Console.WriteLine("------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(lspVerification, Formatting.Indented));
-            Console.WriteLine("------------------------------------------");
+            //Console.WriteLine("Lsp Verification");
+            //Console.WriteLine("------------------------------------------");
+            //Console.WriteLine(JsonConvert.SerializeObject(lspVerification, Formatting.Indented));
+            //Console.WriteLine("------------------------------------------");
 
             Console.ReadKey();
         }

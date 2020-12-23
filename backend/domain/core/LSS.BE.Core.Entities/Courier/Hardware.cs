@@ -7,6 +7,9 @@ namespace LSS.BE.Core.Entities.Courier
 {
     public class Hardware
     {
+        [JsonProperty("mqtt_host")]
+        public string MqttHost { get; set; }
+
         [JsonProperty("address")]
         public string Address { get; set; }
 
