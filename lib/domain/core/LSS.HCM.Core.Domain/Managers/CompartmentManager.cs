@@ -45,7 +45,7 @@ namespace LSS.HCM.Core.Domain.Managers
             }
 
             var result = new Locker();
-            //bool compartmentDoorStatusAlert = false;
+            bool compartmentDoorStatusAlert = false;
             foreach (var compartmentId in model.CompartmentIds)
             {
                 var targetCompartment = CompartmentService.CompartmentOpen(compartmentId, lockerConfiguration);
@@ -55,16 +55,16 @@ namespace LSS.HCM.Core.Domain.Managers
                 Dictionary<string, byte> objectdetectStatus = objectdetectStatusAry[targetCompartmentConfig.CompartmentCode.Odbmod];
                 targetCompartment.ObjectDetected = objectdetectStatus[targetCompartmentConfig.CompartmentCode.Odbid] == 1 ? true : false;
                 result.Compartments.Add(targetCompartment);
-                //compartmentDoorStatusAlert |= targetCompartment.CompartmentDoorOpen;
+                compartmentDoorStatusAlert |= targetCompartment.CompartmentDoorOpen;
             }
             result.TransactionId = model.TransactionId;
 
             // Set alert timer
-            //if(compartmentDoorStatusAlert)
-            //{
-                //CompartmentHelper.SetDoorOpenTimer((double)5000);
+            if(compartmentDoorStatusAlert)
+            {
+                CompartmentHelper.SetDoorOpenTimer((double)5000);
                 //CompartmentHelper.EndDoorOpenTimer();
-            //}
+            }
             
 
             return result;
