@@ -1,16 +1,13 @@
 ﻿using LSS.BE.Core.DataObjects.Dtos;
 using LSS.BE.Core.Entities.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace LSS.BE.Core.DataObjects.Mappers
 {
-    public static class ChangeLockerSizeMapper
+    public static class VerifyOtpMapper
     {
-        public static ChangeLockerSizeDto ToObject(this ChangeLockerSizeResponse model)
+        public static VerifyOtpDto ToObject(this VerifyOtpResponse model)
         {
-            return new ChangeLockerSizeDto()
+            return new VerifyOtpDto()
             {
                 IsRequestSuccess = model.IsRequestSuccess,
                 AuthenticationError = new BaseDtos.AuthenticatedErrorDto(model.Success, model.Status, model.Message),

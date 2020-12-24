@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace LSS.BE.Core.Entities.Courier
+namespace LSS.BE.Core.Entities.Models
 {
     public class BookingStatus
     {

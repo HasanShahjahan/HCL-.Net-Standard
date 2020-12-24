@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace LSS.BE.Core.Entities.Courier
+namespace LSS.BE.Core.Entities.Models
 {
     public class AssignSimilarSizeLocker
     {

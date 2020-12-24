@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using System.Collections.Generic;
 
-namespace LSS.BE.Core.Entities.Courier
+namespace LSS.BE.Core.Entities.Models
 {
     public class AvailableSizesResponse : ValidationError
     {

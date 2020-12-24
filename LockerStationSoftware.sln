@@ -80,7 +80,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LSS.BE.IntegrationTest", "t
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "common", "common", "{0DC6F7E8-F7A2-438F-BFC8-7087809A2AD8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LSS.Logging", "common\LSS.Logging\LSS.Logging.csproj", "{971A8BDC-CEB4-47CE-86DB-8737F2AC6871}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LSS.Logging", "common\LSS.Logging\LSS.Logging.csproj", "{971A8BDC-CEB4-47CE-86DB-8737F2AC6871}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

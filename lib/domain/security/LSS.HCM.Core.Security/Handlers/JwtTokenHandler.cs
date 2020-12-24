@@ -32,7 +32,6 @@ namespace LSS.HCM.Core.Security.Handlers
             {
                 return (false, claimsIdentity);
             }
-
         }
     }
 }

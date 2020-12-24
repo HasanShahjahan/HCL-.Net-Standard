@@ -4,7 +4,12 @@ using System.Text;
 
 namespace LSS.BE.Core.Domain.Interfaces
 {
-    public class IConsumerCollect
+    public interface IConsumerCollect
     {
+        void sendOtp();
+        void VerifyOtp();
+        void GetBookingConsumerByPin();
+        void UpdateBookingStatus();
+
     }
 }

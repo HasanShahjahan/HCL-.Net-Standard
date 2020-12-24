@@ -8,6 +8,7 @@ namespace LSS.BE.Core.Common.UriPath
     {
         public const string GetToken = "token";
         public const string VerifyOtp = "otp/verify";
+        public const string SendOtp = "otp/send";
         public const string ChangeLockerSize = "booking/locker/change";
         public const string CheckAccess = "courier/check-access";
         public const string AssignSimilarSizeLocker = "booking/locker/assign-similar";

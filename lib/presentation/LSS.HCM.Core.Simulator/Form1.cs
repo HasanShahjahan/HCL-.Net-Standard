@@ -19,7 +19,7 @@ namespace LSS.HCM.Core.Simulator
             txtJwtToken.Text = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MDkzNTU5MjEsInRyYW5zYWN0aW9uX2lkIjoiNzBiMzZjNDEtMDc4Yi00MTFiLTk4MmMtYzViNzc0YWFjNjZmIn0.ujOkQJUq5WY_tZJgKXqe_n4nql3cSAeHMfXGABZO3E4";
             txtJwtSecret.Text = "HWAPI_0BwRn5Bg4rJAe5eyWkRz";
             txtCompartmentId.Text = "M0-1,M0-3";
-            txtConfigurationFile.Text = @"D:\config.json";
+            txtConfigurationFile.Text = @"C:\Box24\Project Execution\config.json";
             btnSubmit.Enabled = false;
         }
 
@@ -63,7 +63,7 @@ namespace LSS.HCM.Core.Simulator
                     }
                     else if (radioCaptureImage.Checked)
                     {
-                        var requestCapture = new Capture(transactionId, lockerId, imageExtension, imageData, flag, jwtSecret, token);
+                        var requestCapture = new Capture(transactionId, lockerId, flag, jwtSecret, token);
                         var result = _lockerManager.CaptureImage(requestCapture);
                         txtResult.Text = JsonConvert.SerializeObject(result, Formatting.Indented);
                     }
