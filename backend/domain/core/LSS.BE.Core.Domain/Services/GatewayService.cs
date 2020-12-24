@@ -4,7 +4,7 @@ using LSS.BE.Core.DataObjects.Dtos;
 using LSS.BE.Core.DataObjects.Mappers;
 using LSS.BE.Core.Domain.Helpers;
 using LSS.BE.Core.Domain.Initialization;
-using LSS.BE.Core.Entities.Courier;
+using LSS.BE.Core.Entities.Models;
 using LSS.HCM.Core.DataObjects.Dtos;
 using LSS.HCM.Core.DataObjects.Models;
 using LSS.HCM.Core.Domain.Managers;
@@ -47,6 +47,19 @@ namespace LSS.BE.Core.Domain.Services
             Log.Information("[Lsp Verification][Res]" + "[" + response + "]");
 
             return LspUserAccessMapper.ToObject(result);
+        }
+
+        public SendOtpDto SendOtp(SendOtp model)
+        {
+            var request = SerializerHelper<SendOtp>.SerializeObject(model);
+            Log.Information("[Send Otp][Req]" + "[" + request + "]");
+
+            var response = HttpHandlerHelper.PostRequestResolver(request, HttpMethod.Post, _uriString, _version, _clientId, _clientSecret, UriAbsolutePath.SendOtp, _tokenResponse.AccessToken, _dateTime);
+            Log.Information("[Send Otp][Res]" + "[" + response + "]");
+
+            var result = JsonConvert.DeserializeObject<SendOtpResponse>(response);
+
+            return SendOtpMapper.ToObject(result);
         }
 
         public VerifyOtpDto VerifyOtp(VerifyOtp model)
@@ -125,22 +138,6 @@ namespace LSS.BE.Core.Domain.Services
 
             Log.Information("[Get Available Sizes][Res]" + "[" + response + "]");
             return AvailableSizesMapper.ToObject(result);
-        }
-
-        public string GetAvailableSizes(string lockerStationId, int bookingId, string value, string TestValue)
-        {
-            Log.Information("[Get Available Sizes][Req]" + "[Locker Station Id : " + lockerStationId + "]" + "[Booking Id : " + bookingId + "]");
-            var queryString = new Dictionary<string, string>()
-            {
-                { "locker_station_id", lockerStationId }
-            };
-            var response = HttpHandlerHelper.GetRequestResolver(_uriString, queryString, _version, _clientId,
-                                                                _clientSecret, UriAbsolutePath.AvailableSizes,
-                                                                _tokenResponse.AccessToken, _dateTime);
-            Log.Information("[Get Available Sizes][Res]" + "[" + response + "]");
-
-            var result = JsonConvert.SerializeObject(Newtonsoft.Json.Linq.JObject.Parse(response), Formatting.Indented);
-            return result;
         }
 
         public ChangeLockerSizeDto ChangeLockerSize(ChangeLockerSize model)

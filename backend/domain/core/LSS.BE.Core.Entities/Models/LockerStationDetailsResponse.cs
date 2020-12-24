@@ -4,10 +4,20 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace LSS.BE.Core.Entities.Courier
+namespace LSS.BE.Core.Entities.Models
 {
     public class LockerStationDetailsResponse : ValidationError
     {
+        public LockerStationDetailsResponse()
+        {
+            LockerStationId = string.Empty;
+            Languages = new Languages();
+            OtpCollect = false;
+            OtpReturn = false;
+            IsMrt = false;
+            Hardware = new Hardware();
+            OpeningHours = new OpeningHours();
+        }
 
         [JsonProperty("locker_station_id")]
         public string LockerStationId { get; set; }

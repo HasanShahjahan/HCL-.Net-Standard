@@ -2,9 +2,9 @@
 using Newtonsoft.Json;
 using System;
 
-namespace LSS.BE.Core.Entities.Courier
+namespace LSS.BE.Core.Entities.Models
 {
-    public class ChangeLockerSizeResponse : ValidationError
+    public class AssignSimilarSizeLockerResponse : ValidationError
     {
 
         [JsonProperty("booking_id")]

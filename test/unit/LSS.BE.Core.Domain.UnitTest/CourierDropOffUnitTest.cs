@@ -1,4 +1,4 @@
-using LSS.BE.Core.Entities.Courier;
+using LSS.BE.Core.Entities.Models;
 using LSS.BE.Core.Security.Handlers;
 using Newtonsoft.Json;
 using System.Net.Http;

@@ -1,13 +1,13 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Text;
 
-namespace LSS.BE.Core.DataObjects.Dtos
+namespace LSS.BE.Core.Entities.Models
 {
-    public class HardwareDto
+    public class Hardware
     {
-        public HardwareDto()
+        public Hardware()
         {
             MqttHost = string.Empty;
             Address = string.Empty;
@@ -15,7 +15,7 @@ namespace LSS.BE.Core.DataObjects.Dtos
             Token = string.Empty;
             TokenExp = string.Empty;
         }
-        public HardwareDto(string mqttHost, string address, string lockerId, string token, string tokenExp) 
+        public Hardware(string mqttHost, string address, string lockerId, string token, string tokenExp)
         {
             MqttHost = mqttHost;
             Address = address;
@@ -23,10 +23,20 @@ namespace LSS.BE.Core.DataObjects.Dtos
             Token = token;
             TokenExp = tokenExp;
         }
+
+        [JsonProperty("mqtt_host")]
         public string MqttHost { get; set; }
+
+        [JsonProperty("address")]
         public string Address { get; set; }
+
+        [JsonProperty("locker_id")]
         public string LockerId { get; set; }
+
+        [JsonProperty("token")]
         public string Token { get; set; }
+
+        [JsonProperty("token_exp")]
         public string TokenExp { get; set; }
     }
 }

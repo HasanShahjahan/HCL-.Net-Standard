@@ -1,5 +1,5 @@
 ﻿using LSS.BE.Core.DataObjects.Dtos;
-using LSS.BE.Core.Entities.Courier;
+using LSS.BE.Core.Entities.Models;
 
 namespace LSS.BE.Core.DataObjects.Mappers
 {

@@ -6,6 +6,11 @@ namespace LSS.BE.Core.DataObjects.Dtos
 {
     public class OpeningHoursDto
     {
+        public OpeningHoursDto()
+        {
+            Open = string.Empty;
+            Close = string.Empty;
+        }
         public OpeningHoursDto(string open, string close)
         {
             Open = open;

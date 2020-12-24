@@ -4,8 +4,9 @@ using LSS.BE.Core.DataObjects.Dtos;
 using LSS.BE.Core.DataObjects.Mappers;
 using LSS.BE.Core.Domain.Helpers;
 using LSS.BE.Core.Domain.Initialization;
-using LSS.BE.Core.Entities.Courier;
+using LSS.BE.Core.Entities.Models;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -29,44 +30,43 @@ namespace LSS.BE.Core.Domain.Services
             _tokenResponse = ServiceInvoke.InitAsync(uriString, version, clientId, clientSecret, loggerConfigurationPath);
         }
 
-        public LspUserAccessDto LspVerification(LspUserAccess model)
+        public JObject LspVerification(LspUserAccess model)
         {
             var request = SerializerHelper<LspUserAccess>.SerializeObject(model);
             Log.Information("[Lsp Verification][Req]" + "[" + request + "]");
 
             var response = HttpHandlerHelper.PostRequestResolver(request, HttpMethod.Post, _uriString, _version, _clientId, _clientSecret, UriAbsolutePath.CheckAccess, _tokenResponse.AccessToken, _dateTime);
-            var result = JsonConvert.DeserializeObject<LspUserAccessResponse>(response);
             Log.Information("[Lsp Verification][Res]" + "[" + response + "]");
 
-            return LspUserAccessMapper.ToObject(result);
+            var result = JObject.Parse(response);
+            return result;
         }
 
-        //public override  VerifyOtpDto VerifyOtp(VerifyOtp model)
-        //{
-        //    var request = SerializerHelper<VerifyOtp>.SerializeObject(model);
-        //    Log.Information("[Verify Otp][Req]" + "[" + request + "]");
-
-        //    var response = HttpHandlerHelper.PostRequestResolver(request, HttpMethod.Post, _uriString, _version, _clientId, _clientSecret, UriAbsolutePath.VerifyOtp, _tokenResponse.AccessToken, _dateTime);
-        //    var result = JsonConvert.DeserializeObject<VerifyOtpResponse>(response);
-        //    Log.Information("[Verify Otp][Res]" + "[" + response + "]");
-
-        //    return new VerifyOtpDto();
-        //}
-
-        public Newtonsoft.Json.Linq.JObject VerifyOtp(VerifyOtp model)
+        public JObject VerifyOtp(VerifyOtp model)
         {
             var request = SerializerHelper<VerifyOtp>.SerializeObject(model);
             Log.Information("[Verify Otp][Req]" + "[" + request + "]");
 
             var response = HttpHandlerHelper.PostRequestResolver(request, HttpMethod.Post, _uriString, _version, _clientId, _clientSecret, UriAbsolutePath.VerifyOtp, _tokenResponse.AccessToken, _dateTime);
-            //var result = JsonConvert.DeserializeObject<VerifyOtpResponse>(response);
             Log.Information("[Verify Otp][Res]" + "[" + response + "]");
 
-            var result = Newtonsoft.Json.Linq.JObject.Parse(response);
+            var result = JObject.Parse(response);
             return result;
         }
 
-        public Newtonsoft.Json.Linq.JObject LockerStationDetails(string lockerStationId)
+        public JObject SendOtp(SendOtp model)
+        {
+            var request = SerializerHelper<SendOtp>.SerializeObject(model);
+            Log.Information("[Send Otp][Req]" + "[" + request + "]");
+
+            var response = HttpHandlerHelper.PostRequestResolver(request, HttpMethod.Post, _uriString, _version, _clientId, _clientSecret, UriAbsolutePath.SendOtp, _tokenResponse.AccessToken, _dateTime);
+            Log.Information("[Send Otp][Res]" + "[" + response + "]");
+
+            var result = JObject.Parse(response);
+            return result;
+        }
+
+        public JObject LockerStationDetails(string lockerStationId)
         {
             Log.Information("[Locker Station Details][Req]" + "[Locker Station Id : " + lockerStationId + "]");
             var queryString = new Dictionary<string, string>()
@@ -76,26 +76,11 @@ namespace LSS.BE.Core.Domain.Services
             var response = HttpHandlerHelper.GetRequestResolver(_uriString, queryString, _version, _clientId, _clientSecret, UriAbsolutePath.LockerStationDetails, _tokenResponse.AccessToken, _dateTime);
             Log.Information("[Get Available Sizes][Res]" + "[" + response + "]");
 
-            var result = Newtonsoft.Json.Linq.JObject.Parse(response);
+            var result = JObject.Parse(response);
             return result;
         }
-
-        //public FindBookingDto FindBooking(string trackingNumber, string lockerStationId, string lspId)
-        //{
-        //    Log.Information("[Find Booking][Req]" + "[Tracking Number : " + trackingNumber + "]" + "[Locker Station Id : " + lockerStationId + "]" + "[lsp Id : " + lspId + "]");
-        //    var queryString = new Dictionary<string, string>()
-        //    {
-        //        { "locker_station_id", lockerStationId },
-        //        { "tracking_number", trackingNumber },
-        //        { "lsp_id", lspId}
-        //    };
-        //    var response = HttpHandlerHelper.GetRequestResolver(_uriString, queryString, _version, _clientId, _clientSecret, UriAbsolutePath.FindBooking, _tokenResponse.AccessToken, _dateTime);
-        //    var result = JsonConvert.DeserializeObject<FindBookingResponse>(response);
-        //    Log.Information("[Find Booking][Res]" + "[" + response + "]");
-
-        //    return FindBookingMapper.ToObject(result);
-        //}
-        public Newtonsoft.Json.Linq.JObject FindBooking(string trackingNumber, string lockerStationId, string lspId)
+      
+        public JObject FindBooking(string trackingNumber, string lockerStationId, string lspId)
         {
             Log.Information("[Find Booking][Req]" + "[Tracking Number : " + trackingNumber + "]" + "[Locker Station Id : " + lockerStationId + "]" + "[lsp Id : " + lspId + "]");
             var queryString = new Dictionary<string, string>()
@@ -106,50 +91,26 @@ namespace LSS.BE.Core.Domain.Services
             };
             var response = HttpHandlerHelper.GetRequestResolver(_uriString, queryString, _version, _clientId, _clientSecret, UriAbsolutePath.FindBooking, _tokenResponse.AccessToken, _dateTime);
             Log.Information("[Find Booking][Res]" + "[" + response + "]");
-            var result = Newtonsoft.Json.Linq.JObject.Parse(response);
+
+            var result = JObject.Parse(response);
             return result;
 
         }
 
-        public AssignSimilarSizeLockerDto AssignSimilarSizeLocker(AssignSimilarSizeLocker model)
+        public JObject AssignSimilarSizeLocker(AssignSimilarSizeLocker model)
         {
+            
             var request = SerializerHelper<AssignSimilarSizeLocker>.SerializeObject(model);
+            Log.Information("Assign Similar Size Locker][Req]" + "[" + request + "]");
+
             var response = HttpHandlerHelper.PostRequestResolver(request, HttpMethod.Post, _uriString, _version, _clientId, _clientSecret, UriAbsolutePath.AssignSimilarSizeLocker, _tokenResponse.AccessToken, _dateTime);
-            var result = JsonConvert.DeserializeObject<AssignSimilarSizeLockerResponse>(response);
             Log.Information("[Res]" + "[" + response + "]");
 
-            return new AssignSimilarSizeLockerDto();
-        }
-
-        public AvailableSizesDto GetAvailableSizes(string lockerStationId, int bookingId)
-        {
-            Log.Information("[Get Available Sizes][Req]" + "[Locker Station Id : " + lockerStationId + "]" + "[Booking Id : " + bookingId + "]");
-            var queryString = new Dictionary<string, string>()
-            {
-                { "locker_station_id", lockerStationId }
-            };
-            var response = HttpHandlerHelper.GetRequestResolver(_uriString, queryString, _version, _clientId, _clientSecret, UriAbsolutePath.AvailableSizes, _tokenResponse.AccessToken, _dateTime);
-            var result = JsonConvert.DeserializeObject<AvailableSizesResponse>(response);
-
-            Log.Information("[Get Available Sizes][Res]" + "[" + response + "]");
-            return AvailableSizesMapper.ToObject(result);
-        }
-
-        public Newtonsoft.Json.Linq.JObject GetAvailableSizes(string lockerStationId, int bookingId, string hasan)
-        {
-            Log.Information("[Get Available Sizes][Req]" + "[Locker Station Id : " + lockerStationId + "]" + "[Booking Id : " + bookingId + "]");
-            var queryString = new Dictionary<string, string>()
-            {
-                { "locker_station_id", lockerStationId }
-            };
-            var response = HttpHandlerHelper.GetRequestResolver(_uriString, queryString, _version, _clientId, _clientSecret, UriAbsolutePath.AvailableSizes, _tokenResponse.AccessToken, _dateTime);
-            Log.Information("[Get Available Sizes][Res]" + "[" + response + "]");
-
-            var result = Newtonsoft.Json.Linq.JObject.Parse(response);
+            var result = JObject.Parse(response);
             return result;
         }
 
-        public string GetAvailableSizes(string lockerStationId, int bookingId, string value, string TestValue)
+        public JObject GetAvailableSizes(string lockerStationId, int bookingId)
         {
             Log.Information("[Get Available Sizes][Req]" + "[Locker Station Id : " + lockerStationId + "]" + "[Booking Id : " + bookingId + "]");
             var queryString = new Dictionary<string, string>()
@@ -159,32 +120,32 @@ namespace LSS.BE.Core.Domain.Services
             var response = HttpHandlerHelper.GetRequestResolver(_uriString, queryString, _version, _clientId, _clientSecret, UriAbsolutePath.AvailableSizes, _tokenResponse.AccessToken, _dateTime);
             Log.Information("[Get Available Sizes][Res]" + "[" + response + "]");
 
-            var result = JsonConvert.SerializeObject(Newtonsoft.Json.Linq.JObject.Parse(response), Formatting.Indented);
+            var result = JObject.Parse(response);
             return result;
         }
 
-        public ChangeLockerSizeDto ChangeLockerSize(ChangeLockerSize model)
+        public JObject ChangeLockerSize(ChangeLockerSize model)
         {
             var request = SerializerHelper<ChangeLockerSize>.SerializeObject(model);
             Log.Information("[Change Locker Size][Req]" + "[" + request + "]");
 
             var response = HttpHandlerHelper.PostRequestResolver(request, HttpMethod.Post, _uriString, _version, _clientId, _clientSecret, UriAbsolutePath.ChangeLockerSize, _tokenResponse.AccessToken, _dateTime);
-            var result = JsonConvert.DeserializeObject<ChangeLockerSizeResponse>(response);
             Log.Information("[Change Locker Size][Res]" + "[" + response + "]");
 
-            return ChangeLockerSizeMapper.ToObject(result);
+            var result = JObject.Parse(response);
+            return result;
         }
 
-        public BookingStatusDto UpdateBookingStatus(BookingStatus model)
+        public JObject UpdateBookingStatus(BookingStatus model)
         {
             var request = SerializerHelper<BookingStatus>.SerializeObject(model);
             Log.Information("[Update Booking Status][Req]" + "[" + request + "]");
 
             var response = HttpHandlerHelper.PostRequestResolver(request, HttpMethod.Put, _uriString, _version, _clientId, _clientSecret, UriAbsolutePath.UpdateBookingStatus, _tokenResponse.AccessToken, _dateTime);
-            var result = JsonConvert.DeserializeObject<BookingStatusResponse>(response);
             Log.Information("[Update Booking Status][Res]" + "[" + response + "]");
 
-            return BookingStatusMapper.ToObject(result);
+            var result = JObject.Parse(response);
+            return result;
         }
     }
 }

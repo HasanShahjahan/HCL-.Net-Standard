@@ -6,13 +6,14 @@ using System.Text;
 
 namespace LSS.BE.Core.DataObjects.Mappers
 {
-    public static class ChangeLockerSizeMapper
+    public static class SendOtpMapper
     {
-        public static ChangeLockerSizeDto ToObject(this ChangeLockerSizeResponse model)
+        public static SendOtpDto ToObject(this SendOtpResponse model)
         {
-            return new ChangeLockerSizeDto()
+            return new SendOtpDto()
             {
                 IsRequestSuccess = model.IsRequestSuccess,
+                RefCode = model.RefCode,
                 AuthenticationError = new BaseDtos.AuthenticatedErrorDto(model.Success, model.Status, model.Message),
                 ValidationError = new BaseDtos.ValidationErrorDto(model.ErrorMessage, model.ErrorDetails.LockerStationId, model.ErrorDetails.LspId, model.ErrorDetails.BookingId)
             };
