@@ -11,7 +11,7 @@ namespace LSS.BE.Core.Domain.Initialization
         {
             LoggerAbstractions.SetupStaticLogger(configurationPath);
             LoggerAbstractions.CreateHostBuilder().Build();
-            Log.Information("[Initiated][Service initiated with access token and logging.]");
+            Log.Information("[Initialization][Service initiated with access token and logging.]");
 
             var tokenResponse = HttpHandlerHelper.GetToken(uriString, version, clientId, clientSecret);
             Log.Information("[Initialized][Service initialized with access token and logging.]");

@@ -56,9 +56,9 @@ namespace LSS.HCM.Core.Domain.Services
             {
                 _serialPort.Open();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                Console.WriteLine("SerialportError: " + ex.ToString());
+                //Console.WriteLine("SerialportError: " + ex.ToString());
                 return false;
             }
 

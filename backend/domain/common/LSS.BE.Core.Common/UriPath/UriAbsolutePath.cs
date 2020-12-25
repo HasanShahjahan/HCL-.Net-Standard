@@ -16,5 +16,8 @@ namespace LSS.BE.Core.Common.UriPath
         public const string AvailableSizes = "lockers/available-sizes"; 
         public const string UpdateBookingStatus = "booking/status";
         public const string LockerStationDetails = "lockers";
+        public const string CheckPin = "consumer/check-pin";
+        public const string ChangeSingleLockerStatus = "lockers/status";
+        public const string RetrieveLockersBelongsCourier = "courier/booking/all";
     }
 }

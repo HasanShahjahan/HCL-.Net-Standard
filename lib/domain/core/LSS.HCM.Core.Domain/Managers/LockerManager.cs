@@ -11,9 +11,7 @@ using LSS.HCM.Core.Domain.Services;
 using LSS.HCM.Core.Validator;
 using LSS.HCM.Core.Domain.Helpers;
 using Compartment = LSS.HCM.Core.DataObjects.Models.Compartment;
-using LSS.Logging;
 using Serilog;
-using MongoDB.Bson.IO;
 
 namespace LSS.HCM.Core.Domain.Managers
 {
@@ -36,9 +34,6 @@ namespace LSS.HCM.Core.Domain.Managers
             var content = File.ReadAllText(configurationFilePath);
             lockerConfiguration = JsonSerializer.Deserialize<AppSettings>(content);
             CommunicationPortControlService.InitializeScanner(lockerConfiguration);
-
-            LoggerAbstractions.SetupStaticLogger(configurationFilePath);
-            LoggerAbstractions.CreateHostBuilder().Build();
 
             Log.Information("[HCM][Locker Manager][Initiated][Service initiated with scanner and logging.]");
         }
