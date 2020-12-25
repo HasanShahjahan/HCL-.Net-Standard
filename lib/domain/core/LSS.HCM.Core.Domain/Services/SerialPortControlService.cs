@@ -28,6 +28,7 @@ namespace LSS.HCM.Core.Domain.Services
         private string _brokerTopicEvent = string.Empty;
         private string _socketServer = string.Empty;
         private int _socketPort;
+        private SocketClient client;
 
         /// <summary>
         /// Initialization of serial port with multiple resources. 
@@ -167,22 +168,26 @@ namespace LSS.HCM.Core.Domain.Services
         /// <returns>
         ///  Get list of byte.
         /// </returns>
-        public void SetReadToPublishHandler(AppSettings lockerConfiguration)
+        public async void SetReadToPublishHandler(AppSettings lockerConfiguration)
         {
             try
             {
                 _lockerId = lockerConfiguration.Locker.LockerId;
                 _brokerTopicEvent = lockerConfiguration.Mqtt.Topic.Event.Scanner;
-                _serialPort.DataReceived += new SerialDataReceivedEventHandler(TestEvent);
+                _serialPort.DataReceived += new SerialDataReceivedEventHandler(SerialInputEventHandler);
                 _socketServer = "127.0.0.1";
                 _socketPort = 80;
+
+                // Socket Scanner
+                //client = new SocketClient(_socketServer, _socketPort);
+                //await client.Connect();
             }
             catch (TimeoutException) { }
         }
         /// <summary>
-        /// Reads to publish to the MQTT broker.
+        /// Reads and pass data to socket.
         /// </summary>
-        private void TestEvent(object sender, SerialDataReceivedEventArgs e)
+        private void SerialInputEventHandler(object sender, SerialDataReceivedEventArgs e)
         {
             try
             {
@@ -191,55 +196,36 @@ namespace LSS.HCM.Core.Domain.Services
                 {
                     if (_serialPort.BytesToRead > 0)
                     {
-                        sendDataOnSocket(_sp.ReadLine());
-                        _serialPort.DiscardInBuffer();
+                        string serialInData = _sp.ReadLine();
+                        // Socket Scanner
+                        //sendDataOnSocket(serialInData);
+                        //_serialPort.DiscardInBuffer();
+                        //sendDataToSocket();
                     }
                 }
             }
             catch (TimeoutException) { }
         }
 
-        /// <summary>
-        /// Reads to publish to the MQTT broker.
-        /// </summary>
-        private void ReadToPublish(object sender, SerialDataReceivedEventArgs e)
-        {
-            try
-            {
-                SerialPort _sp = (SerialPort)sender;
-                if (_sp.IsOpen)
-                {
-                    if (_serialPort.BytesToRead > 0)
-                    {
-                        string indata = _sp.ReadLine();
-                        Console.WriteLine("Data Received:");
-                        Console.Write(indata);
-
-                        sendDataOnSocket(indata);
-
-                        _serialPort.DiscardInBuffer();
-                    }
-                }
-            }
-            catch (TimeoutException) { }
-        }
-
+        // Socket Scanner
         private async void sendDataOnSocket(string inputData)
         {
             try
             {
-                SocketClient client = new SocketClient(_socketServer, _socketPort); // "127.0.0.1", 80);
-
-                if (await client.Connect())
-                {
-
-                    await client.Send(_lockerId + _brokerTopicEvent + "," + inputData);
-                }
+                await client.Send(_lockerId + _brokerTopicEvent + "," + inputData);
             }
             catch (Exception ex)
             {
                 //ex.Message + ex.InnerException
             }
+        }
+
+        // Socket Scanner
+        private void sendDataToSocket()
+        {
+            //byte[] msg = System.Text.Encoding.ASCII.GetBytes("This is a test");
+            //int bytesSent = s.Send(msg);
+            SocketClientService.StartClient();
         }
 
     }

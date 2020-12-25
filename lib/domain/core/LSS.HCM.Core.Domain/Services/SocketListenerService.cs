@@ -39,9 +39,10 @@ namespace LSS.HCM.Core.Domain.Services
         /// <summary>
         ///   Initialization of socket Listener service (Server)
         ///</summary>
-        public SocketListenerService(AppSettings lockerConfiguration)
+        public SocketListenerService() //AppSettings lockerConfiguration)
         {
-            StartListening(lockerConfiguration);
+            StartListening();
+            //StartListening(lockerConfiguration);
         }
 
         /// <summary>
@@ -50,14 +51,14 @@ namespace LSS.HCM.Core.Domain.Services
         /// <returns>
         ///  nothing
         /// </returns>
-        private void StartListening(AppSettings lockerConfiguration)
+        private void StartListening() //AppSettings lockerConfiguration)
         {
             // Establish the local endpoint for the socket.  
             // The DNS name of the computer  
             // running the listener is "host.contoso.com".  
             IPHostEntry ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
             IPAddress ipAddress = ipHostInfo.AddressList[0];
-            IPEndPoint localEndPoint = new IPEndPoint(ipAddress, 11000);
+            IPEndPoint localEndPoint = new IPEndPoint(ipAddress, 80);
 
             // Create a TCP/IP socket.  
             Socket listener = new Socket(ipAddress.AddressFamily,
