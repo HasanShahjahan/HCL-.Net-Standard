@@ -35,7 +35,8 @@ namespace LSS.HCM.Core.Domain.Managers
         {
             var content = File.ReadAllText(configurationFilePath);
             lockerConfiguration = JsonSerializer.Deserialize<AppSettings>(content);
-            CommunicationPortControlService.InitializeScanner(lockerConfiguration);
+
+            CommunicationPortControlService.InitializeScannerEvent(lockerConfiguration);
 
             LoggerAbstractions.SetupStaticLogger(configurationFilePath);
             LoggerAbstractions.CreateHostBuilder().Build();

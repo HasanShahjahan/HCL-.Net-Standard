@@ -7,6 +7,7 @@ using MQTTnet.Client;
 using MQTTnet.Client.Options;
 using System.Threading;
 using LSS.HCM.Core.DataObjects.Settings;
+using SockNet.ClientSocket;
 
 namespace LSS.HCM.Core.Domain.Services
 {
@@ -23,10 +24,12 @@ namespace LSS.HCM.Core.Domain.Services
         ///  Open compartment actual result with status. 
         /// </returns>
         private readonly SerialPort _serialPort = new SerialPort();
-        private  string _lockerId = string.Empty;
-        private  string _serialPortName = string.Empty;
-        private  string _mqttServer = string.Empty;
-        private  string _brokerTopicEvent = string.Empty;
+        private string _lockerId = string.Empty;
+        private string _serialPortName = string.Empty;
+        private string _mqttServer = string.Empty;
+        private string _brokerTopicEvent = string.Empty;
+        private string _socketServer = string.Empty;
+        private int _socketPort;
 
         /// <summary>
         /// Initialization of serial port with multiple resources. 
@@ -174,9 +177,11 @@ namespace LSS.HCM.Core.Domain.Services
             {
                 _lockerId = lockerConfiguration.Locker.LockerId;
                 _serialPortName = lockerConfiguration.Microcontroller.Scanner.Name;
-                _mqttServer = lockerConfiguration.Mqtt.Server + ":" + lockerConfiguration.Mqtt.Port + "/mqtt";
+                //_mqttServer = lockerConfiguration.Mqtt.Server + ":" + lockerConfiguration.Mqtt.Port + "/mqtt";
                 _brokerTopicEvent = lockerConfiguration.Mqtt.Topic.Event.Scanner;
                 _serialPort.DataReceived += new SerialDataReceivedEventHandler(ReadToPublish);
+                _socketServer = "127.0.0.1";
+                _socketPort = 80;
             }
             catch (TimeoutException) { }
 
@@ -186,7 +191,7 @@ namespace LSS.HCM.Core.Domain.Services
         /// <summary>
         /// Reads to publish to the MQTT broker.
         /// </summary>
-        public void ReadToPublish(object sender, SerialDataReceivedEventArgs e)
+        public async void ReadToPublish(object sender, SerialDataReceivedEventArgs e)
         {
             try
             {
@@ -200,21 +205,37 @@ namespace LSS.HCM.Core.Domain.Services
                         Console.Write(indata);
 
                         // Create a new MQTT client.
-                        MqttFactory factory = new MqttFactory();
-                        var mqttClient = factory.CreateMqttClient();
+                        //MqttFactory factory = new MqttFactory();
+                        //var mqttClient = factory.CreateMqttClient();
 
-                        var options = new MqttClientOptionsBuilder()
+                        /*var options = new MqttClientOptionsBuilder()
                             .WithWebSocketServer(_mqttServer)
-                            .Build();
-                        mqttClient.ConnectAsync(options, CancellationToken.None);
+                            .Build();*/
+                        //mqttClient.ConnectAsync(options, CancellationToken.None);
 
-                        while (!mqttClient.IsConnected) ;
-                        mqttClient.PublishAsync(_lockerId + _brokerTopicEvent, indata);
+                        // (!mqttClient.IsConnected) ;
+                        //mqttClient.PublishAsync(_lockerId + _brokerTopicEvent, indata);
+
+                        try
+                        {
+                            SocketClient client = new SocketClient(_socketServer, _socketPort); // "127.0.0.1", 80);
+
+                            if (await client.Connect())
+                            {
+                                
+                                await client.Send(_lockerId + _brokerTopicEvent + "," + indata);
+                            }
+                        }
+                        catch (Exception ex) {
+                            //ex.Message + ex.InnerException
+                        }
+
                         _serialPort.DiscardInBuffer();
                     }
                 }
             }
             catch (TimeoutException) { }
         }
+
     }
 }

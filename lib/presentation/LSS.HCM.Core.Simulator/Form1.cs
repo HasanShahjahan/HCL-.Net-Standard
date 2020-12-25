@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using LSS.HCM.Core.DataObjects.Models;
 using LSS.HCM.Core.Domain.Managers;
 using Newtonsoft.Json;
 using Compartment = LSS.HCM.Core.DataObjects.Models.Compartment;
+using SockNet.ServerSocket;
 
 namespace LSS.HCM.Core.Simulator
 {
@@ -22,7 +24,12 @@ namespace LSS.HCM.Core.Simulator
             txtConfigurationFile.Text = @"C:\Box24\Project Execution\config.json";
             btnSubmit.Enabled = false;
         }
+        private string UpdateScannerValue(string txtValue)
+        {
+            textBoxScanner.Text = txtValue;
 
+            return txtValue;
+        }
         private void buttonConfigLocker_Click(object sender, EventArgs e)
         {
             string configurationPath = txtConfigurationFile.Text;
@@ -33,6 +40,7 @@ namespace LSS.HCM.Core.Simulator
                 _isConfigured = true;
                 btnSubmit.Enabled = true;
             }
+            Task.Run(() => DoSomething());
         }
         private void btnSubmit_Click(object sender, EventArgs e)
         {
@@ -190,5 +198,23 @@ namespace LSS.HCM.Core.Simulator
 
         }
 
+        private void DoSomething()
+        {
+            var server = new SocketServer();
+            server.InitializeSocketServer("127.0.0.1", 80);
+            server.SetReaderBufferBytes(1024);
+            server.StartListening();
+
+            while (!server.IsNewData()) ;
+            if (server.IsNewData())
+            {
+                var data = server.GetData();
+                // Do whatever you want with data
+                textBoxScanner.Text = BitConverter.ToString(data.Value);
+                //Console.WriteLine("Hello: " + BitConverter.ToString(data.Value));
+            }
+            //server.ResponseToClient(data.Key, "this is cool!");
+
+        }
     }
 }
