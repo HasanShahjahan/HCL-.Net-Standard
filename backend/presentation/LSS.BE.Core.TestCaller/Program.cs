@@ -19,19 +19,23 @@ namespace LSS.BE.Core.TestCaller
                 Console.WriteLine("User Case Type : \n 1.CDO (Courier Drop Off) \n 2.CC(Consumer Collect)");
                 Console.Write("Use case type :");
                 string useCaseType = Console.ReadLine();
-                if (useCaseType == "CDO") 
-                { 
-                    GetewayServiceClient.CourierDropOff(lockerStationId, gatewayService); 
+                if (useCaseType == "CDO")
+                {
+                    GetewayServiceClient.CourierDropOff(lockerStationId, gatewayService);
                 }
-                else if (useCaseType == "CC") 
-                { 
-                    GetewayServiceClient.ConsumerCollect(lockerStationId, gatewayService); 
+                else if (useCaseType == "CC")
+                {
+                    GetewayServiceClient.ConsumerCollect(lockerStationId, gatewayService);
                 }
-                else 
+                else
                 {
                     Console.WriteLine("Invalid use case type.");
                 }
 
+            }
+            catch (System.IO.FileNotFoundException ex)
+            {
+                Console.WriteLine("Please provide valid configuration file path.");
             }
             catch (Exception ex)
             {
