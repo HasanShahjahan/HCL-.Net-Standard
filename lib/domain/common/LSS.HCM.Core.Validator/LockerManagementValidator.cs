@@ -1,10 +1,10 @@
 ﻿using LSS.HCM.Core.Common.Enums;
 using LSS.HCM.Core.Common.Exceptions;
 using LSS.HCM.Core.DataObjects.Settings;
-using LSS.HCM.Core.Infrastructure.Repository;
 using LSS.HCM.Core.Security.Handlers;
-using MongoDB.Driver;
+using System;
 using System.Linq;
+using ApplicationException = LSS.HCM.Core.Common.Exceptions.ApplicationException;
 
 namespace LSS.HCM.Core.Validator
 {
@@ -183,13 +183,13 @@ namespace LSS.HCM.Core.Validator
                 
                 #endregion
             }
-            catch (MongoConfigurationException)
+            catch (Exception ex)
             {
                 statusCode = StatusCode.Status502BadGateway;
                 result = new ApplicationException
                 {
-                    Code = ApplicationErrorCodes.MongoDbConnectionProblem,
-                    Message = ApplicationErrorCodes.GetMessage(ApplicationErrorCodes.MongoDbConnectionProblem)
+                    Code = ApplicationErrorCodes.UnknownError,
+                    Message = ApplicationErrorCodes.GetMessage(ApplicationErrorCodes.UnknownError)
                 };
             }
             return (statusCode, result);
