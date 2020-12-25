@@ -5,15 +5,15 @@ using System.Text;
 
 namespace LSS.BE.Core.Entities.Models
 {
-    public class ChangeLockerSize
+    public class ChangeLockerStatus
     {
         [JsonProperty("locker_station_id")]
         public string LockerStationId { get; set; }
 
-        [JsonProperty("booking_id")]
-        public string BookingId { get; set; }
+        [JsonProperty("hwapi_id")]
+        public int HwapiId { get; set; }
 
-        [JsonProperty("size")]
-        public string Size { get; set; }
+        [JsonProperty("status")]
+        public string Status { get; set; }
     }
 }

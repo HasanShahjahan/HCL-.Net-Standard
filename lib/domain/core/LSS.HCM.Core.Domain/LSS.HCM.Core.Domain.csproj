@@ -8,7 +8,7 @@
     <Description>Hardware Control API (HWAPI) brings hardware communication and collaboration into one place so you can get all the hardware status from one place, whether you belong to a large enterprise or a small project.</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <Version>1.0.1</Version>
+    <Version>1.0.0</Version>
   </PropertyGroup>
 
   <ItemGroup>

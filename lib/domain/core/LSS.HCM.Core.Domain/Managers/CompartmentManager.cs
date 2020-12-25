@@ -3,7 +3,6 @@ using LSS.HCM.Core.DataObjects.Settings;
 using LSS.HCM.Core.Domain.Helpers;
 using LSS.HCM.Core.Domain.Services;
 using LSS.HCM.Core.Entities.Locker;
-using MongoDB.Driver;
 using System.Collections.Generic;
 using System.Linq;
 using CompartmentConfiguration = LSS.HCM.Core.DataObjects.Settings.Compartment;

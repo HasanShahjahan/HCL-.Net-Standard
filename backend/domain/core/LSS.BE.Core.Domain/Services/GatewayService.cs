@@ -9,6 +9,7 @@ using LSS.HCM.Core.DataObjects.Dtos;
 using LSS.HCM.Core.DataObjects.Models;
 using LSS.HCM.Core.Domain.Managers;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -62,7 +63,7 @@ namespace LSS.BE.Core.Domain.Services
             return SendOtpMapper.ToObject(result);
         }
 
-        public VerifyOtpDto VerifyOtp(VerifyOtp model)
+        public void VerifyOtp(VerifyOtp model)
         {
             var request = SerializerHelper<VerifyOtp>.SerializeObject(model);
             Log.Information("[Verify Otp][Req]" + "[" + request + "]");
@@ -70,10 +71,25 @@ namespace LSS.BE.Core.Domain.Services
             var response = HttpHandlerHelper.PostRequestResolver(request, HttpMethod.Post, _uriString, _version,
                                                                  _clientId, _clientSecret, UriAbsolutePath.VerifyOtp,
                                                                  _tokenResponse.AccessToken, _dateTime);
-            var result = JsonConvert.DeserializeObject<VerifyOtpResponse>(response);
+
+
+            var result = JsonConvert.DeserializeObject(response);
+
+            response.Contains("is_request_success");
+            JObject jObj = JObject.Parse(response);
+            Console.WriteLine(jObj);
+            Console.WriteLine(jObj["error_details"]);
+            if( jObj["error_details"].Type == JTokenType.Array)
+                Console.WriteLine("Array!!");
+
+            //jObject["user"][user]["structures"][0]
+            //Console.WriteLine(result["error_details"][error_details]);
+            //var jObjtest = result.ToJson();
+            //Console.WriteLine(jObjtest]);
+
             Log.Information("[Verify Otp][Res]" + "[" + response + "]");
 
-            return VerifyOtpMapper.ToObject(result);
+            //return VerifyOtpMapper.ToObject(result);
         }
         
         public LockerStationDetailsDto LockerStationDetails(string lockerStationId)
@@ -109,7 +125,7 @@ namespace LSS.BE.Core.Domain.Services
             return FindBookingMapper.ToObject(result);
         }
 
-        public AssignSimilarSizeLockerDto AssignSimilarSizeLocker(AssignSimilarSizeLocker model)
+        public LockerResponse AssignSimilarSizeLocker(AssignSimilarSizeLocker model)
         {
             var request = SerializerHelper<AssignSimilarSizeLocker>.SerializeObject(model);
             Log.Information("[Assign Similar Size Locker][Req]" + "[" + request + "]");
@@ -118,15 +134,14 @@ namespace LSS.BE.Core.Domain.Services
                                                                  _clientId, _clientSecret,
                                                                  UriAbsolutePath.AssignSimilarSizeLocker,
                                                                  _tokenResponse.AccessToken, _dateTime);
-            var result = JsonConvert.DeserializeObject<AssignSimilarSizeLockerResponse>(response);
+            var result = JsonConvert.DeserializeObject<LockerResponse>(response);
             Log.Information("[Res]" + "[" + response + "]");
-
-            return new AssignSimilarSizeLockerDto();
+            return result;
         }
 
-        public AvailableSizesDto GetAvailableSizes(string lockerStationId, int bookingId)
+        public AvailableSizesDto GetAvailableSizes(string lockerStationId)
         {
-            Log.Information("[Get Available Sizes][Req]" + "[Locker Station Id : " + lockerStationId + "]" + "[Booking Id : " + bookingId + "]");
+            Log.Information("[Get Available Sizes][Req]" + "[Locker Station Id : " + lockerStationId + "]");
             var queryString = new Dictionary<string, string>()
             {
                 { "locker_station_id", lockerStationId }
@@ -140,7 +155,7 @@ namespace LSS.BE.Core.Domain.Services
             return AvailableSizesMapper.ToObject(result);
         }
 
-        public ChangeLockerSizeDto ChangeLockerSize(ChangeLockerSize model)
+        public LockerResponse ChangeLockerSize(ChangeLockerSize model)
         {
             var request = SerializerHelper<ChangeLockerSize>.SerializeObject(model);
             Log.Information("[Change Locker Size][Req]" + "[" + request + "]");
@@ -149,10 +164,10 @@ namespace LSS.BE.Core.Domain.Services
                                                                  _clientId, _clientSecret,
                                                                  UriAbsolutePath.ChangeLockerSize,
                                                                  _tokenResponse.AccessToken, _dateTime);
-            var result = JsonConvert.DeserializeObject<ChangeLockerSizeResponse>(response);
+            var result = JsonConvert.DeserializeObject<LockerResponse>(response);
             Log.Information("[Change Locker Size][Res]" + "[" + response + "]");
 
-            return ChangeLockerSizeMapper.ToObject(result);
+            return result;
         }
 
         public BookingStatusDto UpdateBookingStatus(BookingStatus model)
@@ -168,6 +183,18 @@ namespace LSS.BE.Core.Domain.Services
             Log.Information("[Update Booking Status][Res]" + "[" + response + "]");
 
             return BookingStatusMapper.ToObject(result);
+        }
+
+        public LockerResponse GetBookingByConsumerPin(ConsumerPin model)
+        {
+            var request = SerializerHelper<ConsumerPin>.SerializeObject(model);
+            Log.Information("[Get Booking By Consumer Pin][Req]" + "[" + request + "]");
+
+            var response = HttpHandlerHelper.PostRequestResolver(request, HttpMethod.Post, _uriString, _version, _clientId, _clientSecret, UriAbsolutePath.CheckPin, _tokenResponse.AccessToken, _dateTime);
+            Log.Information("[Get Booking By Consumer Pin][Res]" + "[" + response + "]");
+
+            var result = JsonConvert.DeserializeObject<LockerResponse>(response);
+            return result;
         }
 
         public LockerDto OpenCompartment(Compartment model) 
