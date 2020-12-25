@@ -18,7 +18,9 @@ namespace LSS.HCM.Core.Domain.Helpers
     {
         //private static System.Timers.Timer aTimer = new System.Timers.Timer();
 
-        private static string _audioFileName = string.Empty;
+        private static double _timeout;
+        private static string _audioFileName; // Give configuration from DB
+        private static int _playbackTime;
         private static WaveOutEvent _outputDevice = new WaveOutEvent();
 
         /// <summary>
@@ -78,12 +80,16 @@ namespace LSS.HCM.Core.Domain.Helpers
         /// <returns>
         ///  Return nothing
         /// </returns>
-        public static void SetDoorOpenTimer(double timeout)//, ElapsedEventHandler OnTimedEvent)
+        public static void SetDoorOpenTimer(AppSettings lockerConfiguration)//, ElapsedEventHandler OnTimedEvent)
         {
+            _timeout = lockerConfiguration.Buzzer.Timeout;
+            _audioFileName = lockerConfiguration.Buzzer.AudioFileName;
+            _playbackTime = lockerConfiguration.Buzzer.PlaybackTime;
+
             // Create a timer with a two second interval.
             //aTimer = new System.Timers.Timer(timeout);
             //aTimer.Interval = 5000;
-            System.Timers.Timer aTimer = new System.Timers.Timer(timeout);
+            System.Timers.Timer aTimer = new System.Timers.Timer(_timeout);
             // Hook up the Elapsed event for the timer. 
             aTimer.Elapsed += OnTimedEvent;
             aTimer.AutoReset = false;
@@ -111,10 +117,7 @@ namespace LSS.HCM.Core.Domain.Helpers
         /// </returns>
         private static void OnTimedEvent(object sender, ElapsedEventArgs e)
         {
-            int playbackTime = 120000;
-            string audioFileName = @"C:/Windows/media/Ring08.wav"; // Give configuration from DB
-            // _audioFileName = audioFileName;
-            AudioFileReader _audioFile = new AudioFileReader(audioFileName); // "C:/Windows/media/Ring08.wav");
+            AudioFileReader _audioFile = new AudioFileReader(_audioFileName); // "C:/Windows/media/Ring08.wav");
             _outputDevice.Init(_audioFile);
             _outputDevice.Play();
 
@@ -128,7 +131,7 @@ namespace LSS.HCM.Core.Domain.Helpers
                 compartmentDoorStatusAlert |= targetCompartment.CompartmentDoorOpen;
             }*/
             //while(_outputDevice.PlaybackState == PlaybackState.Playing) Thread.Sleep(playbackTime);
-            Thread.Sleep(playbackTime);
+            Thread.Sleep(_playbackTime);
             _outputDevice.Stop();
         }
     }

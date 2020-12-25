@@ -21,7 +21,7 @@ namespace LSS.HCM.Core.Simulator
             txtJwtToken.Text = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MDkzNTU5MjEsInRyYW5zYWN0aW9uX2lkIjoiNzBiMzZjNDEtMDc4Yi00MTFiLTk4MmMtYzViNzc0YWFjNjZmIn0.ujOkQJUq5WY_tZJgKXqe_n4nql3cSAeHMfXGABZO3E4";
             txtJwtSecret.Text = "HWAPI_0BwRn5Bg4rJAe5eyWkRz";
             txtCompartmentId.Text = "M0-1,M0-3";
-            txtConfigurationFile.Text = @"C:\Box24\Project Execution\config.json";
+            txtConfigurationFile.Text = @"D:\config.json";
             btnSubmit.Enabled = false;
         }
         private string UpdateScannerValue(string txtValue)
@@ -204,17 +204,38 @@ namespace LSS.HCM.Core.Simulator
             server.InitializeSocketServer("127.0.0.1", 80);
             server.SetReaderBufferBytes(1024);
             server.StartListening();
+            SetText("scanner start");
 
-            while (!server.IsNewData()) ;
-            if (server.IsNewData())
-            {
-                var data = server.GetData();
-                // Do whatever you want with data
-                textBoxScanner.Text = BitConverter.ToString(data.Value);
-                //Console.WriteLine("Hello: " + BitConverter.ToString(data.Value));
+            while (true) {
+                if (server.IsNewData())
+                {
+                    var data = server.GetData();
+                    // Do whatever you want with data
+                    //SetText(BitConverter.ToString(data.Value));
+                    SetText(System.Text.Encoding.UTF8.GetString(data.Value));
+                    //Console.WriteLine("Hello: " + BitConverter.ToString(data.Value));
+                }
             }
+            
             //server.ResponseToClient(data.Key, "this is cool!");
 
+        }
+        delegate void SetTextCallback(string text);
+
+        private void SetText(string text)
+        {
+            // InvokeRequired required compares the thread ID of the
+            // calling thread to the thread ID of the creating thread.
+            // If these threads are different, it returns true.
+            if (this.textBoxScanner.InvokeRequired)
+            {
+                SetTextCallback d = new SetTextCallback(SetText);
+                this.Invoke(d, new object[] { text });
+            }
+            else
+            {
+                this.textBoxScanner.Text = text;
+            }
         }
     }
 }
