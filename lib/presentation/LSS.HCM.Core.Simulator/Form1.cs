@@ -5,7 +5,6 @@ using LSS.HCM.Core.DataObjects.Models;
 using LSS.HCM.Core.Domain.Managers;
 using Newtonsoft.Json;
 using Compartment = LSS.HCM.Core.DataObjects.Models.Compartment;
-using SockNet.ServerSocket;
 using LSS.HCM.Core.Domain.Services;
 
 namespace LSS.HCM.Core.Simulator
@@ -27,10 +26,10 @@ namespace LSS.HCM.Core.Simulator
         }
 
         // Socket Scanner
-        delegate void SetTextCallback(string text);
+        delegate string SetTextCallback(string inputText);
 
         // Socket Scanner
-        private void UpdateScannerValue(string text)
+        private string UpdateScannerValue(string inputText)
         {
             // InvokeRequired required compares the thread ID of the
             // calling thread to the thread ID of the creating thread.
@@ -38,12 +37,13 @@ namespace LSS.HCM.Core.Simulator
             if (this.textBoxScanner.InvokeRequired)
             {
                 SetTextCallback d = new SetTextCallback(UpdateScannerValue);
-                this.Invoke(d, new object[] { text });
+                this.Invoke(d, new object[] { inputText });
             }
             else
             {
-                this.textBoxScanner.Text = text;
+                this.textBoxScanner.Text = inputText;
             }
+            return inputText;
         }
 
         private void buttonConfigLocker_Click(object sender, EventArgs e)
@@ -216,23 +216,11 @@ namespace LSS.HCM.Core.Simulator
         // Socket Scanner
         private void StartSocketListener()
         {
-            var server = new SocketServer();
-            server.InitializeSocketServer("127.0.0.1", 80);
-            server.SetReaderBufferBytes(1024);
-            server.StartListening();
+            Task.Run(() => {
+                var server = new SocketListenerService("localhost", 11000);
+                server.AsyncStart(UpdateScannerValue);
+            });
             UpdateScannerValue("scanner start");
-
-            while (true) {
-                if (server.IsNewData())
-                {
-                    var data = server.GetData();
-                    // Do whatever you want with data
-                    //SetText(BitConverter.ToString(data.Value));
-                    UpdateScannerValue(System.Text.Encoding.UTF8.GetString(data.Value));
-                    //Console.WriteLine("Hello: " + BitConverter.ToString(data.Value));
-                }
-            }
-            
             //server.ResponseToClient(data.Key, "this is cool!");
 
         }

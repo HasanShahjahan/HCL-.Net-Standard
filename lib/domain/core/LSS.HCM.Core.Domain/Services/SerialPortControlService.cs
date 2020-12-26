@@ -7,7 +7,6 @@ using MQTTnet.Client;
 using MQTTnet.Client.Options;
 using System.Threading;
 using LSS.HCM.Core.DataObjects.Settings;
-using SockNet.ClientSocket;
 
 namespace LSS.HCM.Core.Domain.Services
 {
@@ -28,7 +27,7 @@ namespace LSS.HCM.Core.Domain.Services
         private string _brokerTopicEvent = string.Empty;
         private string _socketServer = string.Empty;
         private int _socketPort;
-        private SocketClient client;
+        private SocketClientService client;
 
         /// <summary>
         /// Initialization of serial port with multiple resources. 
@@ -87,7 +86,7 @@ namespace LSS.HCM.Core.Domain.Services
                     return false;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 //Console.WriteLine("SerialportError: " + ex.ToString());
                 return false;
@@ -168,19 +167,19 @@ namespace LSS.HCM.Core.Domain.Services
         /// <returns>
         ///  Get list of byte.
         /// </returns>
-        public async void SetReadToPublishHandler(AppSettings lockerConfiguration)
+        public void SetReadToPublishHandler(AppSettings lockerConfiguration)
         {
             try
             {
                 _lockerId = lockerConfiguration.Locker.LockerId;
                 _brokerTopicEvent = lockerConfiguration.Mqtt.Topic.Event.Scanner;
                 _serialPort.DataReceived += new SerialDataReceivedEventHandler(SerialInputEventHandler);
-                _socketServer = "127.0.0.1";
-                _socketPort = 80;
+                _socketServer = "localhost";
+                _socketPort = 11000;
 
                 // Socket Scanner
-                //client = new SocketClient(_socketServer, _socketPort);
-                //await client.Connect();
+                client = new SocketClientService(_socketServer, _socketPort);
+                client.Connect();
             }
             catch (TimeoutException) { }
         }
@@ -198,34 +197,28 @@ namespace LSS.HCM.Core.Domain.Services
                     {
                         string serialInData = _sp.ReadLine();
                         // Socket Scanner
-                        //sendDataOnSocket(serialInData);
+                        sendDataOnSocket(serialInData);
                         //_serialPort.DiscardInBuffer();
-                        //sendDataToSocket();
+                        
                     }
                 }
             }
-            catch (TimeoutException) { }
+            catch (TimeoutException) {
+                throw;
+            }
         }
 
         // Socket Scanner
-        private async void sendDataOnSocket(string inputData)
+        private void sendDataOnSocket(string inputData)
         {
             try
             {
-                await client.Send(_lockerId + _brokerTopicEvent + "," + inputData);
+                client.Send(_lockerId + _brokerTopicEvent + "," + inputData);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                //ex.Message + ex.InnerException
+                throw;
             }
-        }
-
-        // Socket Scanner
-        private void sendDataToSocket()
-        {
-            //byte[] msg = System.Text.Encoding.ASCII.GetBytes("This is a test");
-            //int bytesSent = s.Send(msg);
-            SocketClientService.StartClient();
         }
 
     }
