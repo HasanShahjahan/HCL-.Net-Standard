@@ -12,11 +12,12 @@ namespace LSS.BE.Core.Domain.UnitTest
         public readonly string clientSecret = "sgKEx9BXzV76oSXLt7NEv4HOF4g594IzYW9ffNU3";
         public readonly string uriString = "http://18.138.61.187";
         public readonly string version = "v1";
+        public readonly HttpHandler httpHandler = new HttpHandler("http://18.138.61.187");
 
         [Fact]
         public void GetTokenUnauthorized()
         {
-            var response = HttpHandler.GetTokenAsync(uriString, version, "token", clientId, clientSecret);
+            var response = httpHandler.GetTokenAsync(uriString, version, "token", clientId, clientSecret);
             var content = response.Content.ReadAsStringAsync().Result;
             if (response.StatusCode != HttpStatusCode.OK)
             {
@@ -28,7 +29,7 @@ namespace LSS.BE.Core.Domain.UnitTest
         [Fact]
         public void GetToken()
         {
-            var response = HttpHandler.GetTokenAsync(uriString, version, "token", clientId, clientSecret);
+            var response = httpHandler.GetTokenAsync(uriString, version, "token", clientId, clientSecret);
             var content = response.Content.ReadAsStringAsync().Result;
             if (response.StatusCode != HttpStatusCode.OK)
             {

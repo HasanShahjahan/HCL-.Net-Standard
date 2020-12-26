@@ -4,9 +4,11 @@ using LSS.BE.Core.DataObjects.Dtos;
 using LSS.BE.Core.DataObjects.Mappers;
 using LSS.BE.Core.Domain.Helpers;
 using LSS.BE.Core.Domain.Initialization;
+using LSS.BE.Core.Domain.Interfaces;
 using LSS.BE.Core.Entities.Models;
 using LSS.HCM.Core.DataObjects.Dtos;
 using LSS.HCM.Core.DataObjects.Models;
+using LSS.HCM.Core.Domain.Interfaces;
 using LSS.HCM.Core.Domain.Managers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -22,7 +24,8 @@ namespace LSS.BE.Core.Domain.Services
         private readonly TokenResponse _tokenResponse;
         private readonly string _uriString, _version, _clientId, _clientSecret, _configurationPath;
         private readonly DateTime _dateTime;
-        private readonly LockerManager _lockerManager;
+        private readonly ILockerManager _lockerManager;
+        private readonly IHttpHandlerHelper _httpHandler;
 
         public GatewayService(string uriString, string version, string clientId, string clientSecret, string configurationPath)
         {
@@ -32,7 +35,8 @@ namespace LSS.BE.Core.Domain.Services
             _clientSecret = clientSecret;
             _dateTime = DateTime.Now;
             _configurationPath = configurationPath;
-            _tokenResponse = ServiceInvoke.InitAsync(uriString, version, clientId, clientSecret, configurationPath);
+            _httpHandler = new HttpHandlerHelper(uriString);
+            _tokenResponse = ServiceInvoke.InitAsync(uriString, version, clientId, clientSecret, configurationPath, _httpHandler);
             _lockerManager = new LockerManager(_configurationPath);
         }
 
@@ -41,7 +45,7 @@ namespace LSS.BE.Core.Domain.Services
             var request = SerializerHelper<LspUserAccess>.SerializeObject(model);
             Log.Information("[Lsp Verification][Req]" + "[" + request +"]");
             
-            var response = HttpHandlerHelper.PostRequestResolver(request, HttpMethod.Post, _uriString, _version,
+            var response = _httpHandler.PostRequestResolver(request, HttpMethod.Post, _uriString, _version,
                                                                  _clientId, _clientSecret, UriAbsolutePath.CheckAccess,
                                                                  _tokenResponse.AccessToken, _dateTime);
             var result = JsonConvert.DeserializeObject<LspUserAccessResponse>(response);
@@ -55,7 +59,7 @@ namespace LSS.BE.Core.Domain.Services
             var request = SerializerHelper<SendOtp>.SerializeObject(model);
             Log.Information("[Send Otp][Req]" + "[" + request + "]");
 
-            var response = HttpHandlerHelper.PostRequestResolver(request, HttpMethod.Post, _uriString, _version, _clientId, _clientSecret, UriAbsolutePath.SendOtp, _tokenResponse.AccessToken, _dateTime);
+            var response = _httpHandler.PostRequestResolver(request, HttpMethod.Post, _uriString, _version, _clientId, _clientSecret, UriAbsolutePath.SendOtp, _tokenResponse.AccessToken, _dateTime);
             Log.Information("[Send Otp][Res]" + "[" + response + "]");
 
             var result = JsonConvert.DeserializeObject<SendOtpResponse>(response);
@@ -68,7 +72,7 @@ namespace LSS.BE.Core.Domain.Services
             var request = SerializerHelper<VerifyOtp>.SerializeObject(model);
             Log.Information("[Verify Otp][Req]" + "[" + request + "]");
 
-            var response = HttpHandlerHelper.PostRequestResolver(request, HttpMethod.Post, _uriString, _version,
+            var response = _httpHandler.PostRequestResolver(request, HttpMethod.Post, _uriString, _version,
                                                                  _clientId, _clientSecret, UriAbsolutePath.VerifyOtp,
                                                                  _tokenResponse.AccessToken, _dateTime);
 
@@ -99,7 +103,7 @@ namespace LSS.BE.Core.Domain.Services
             {
                 { "locker_station_id", lockerStationId }
             };
-            var response = HttpHandlerHelper.GetRequestResolver(_uriString, queryString, _version, _clientId,
+            var response = _httpHandler.GetRequestResolver(_uriString, queryString, _version, _clientId,
                                                                 _clientSecret, UriAbsolutePath.LockerStationDetails,
                                                                 _tokenResponse.AccessToken, _dateTime);
             var result = JsonConvert.DeserializeObject<LockerStationDetailsResponse>(response);
@@ -117,7 +121,7 @@ namespace LSS.BE.Core.Domain.Services
                 { "tracking_number", trackingNumber },
                 { "lsp_id", lspId}
             };
-            var response = HttpHandlerHelper.GetRequestResolver(_uriString, queryString, _version, _clientId,
+            var response = _httpHandler.GetRequestResolver(_uriString, queryString, _version, _clientId,
                 _clientSecret, UriAbsolutePath.FindBooking, _tokenResponse.AccessToken, _dateTime);
             var result = JsonConvert.DeserializeObject<FindBookingResponse>(response);
             Log.Information("[Find Booking][Res]" + "[" + response + "]");
@@ -130,7 +134,7 @@ namespace LSS.BE.Core.Domain.Services
             var request = SerializerHelper<AssignSimilarSizeLocker>.SerializeObject(model);
             Log.Information("[Assign Similar Size Locker][Req]" + "[" + request + "]");
 
-            var response = HttpHandlerHelper.PostRequestResolver(request, HttpMethod.Post, _uriString, _version,
+            var response = _httpHandler.PostRequestResolver(request, HttpMethod.Post, _uriString, _version,
                                                                  _clientId, _clientSecret,
                                                                  UriAbsolutePath.AssignSimilarSizeLocker,
                                                                  _tokenResponse.AccessToken, _dateTime);
@@ -146,7 +150,7 @@ namespace LSS.BE.Core.Domain.Services
             {
                 { "locker_station_id", lockerStationId }
             };
-            var response = HttpHandlerHelper.GetRequestResolver(_uriString, queryString, _version, _clientId,
+            var response = _httpHandler.GetRequestResolver(_uriString, queryString, _version, _clientId,
                                                                 _clientSecret, UriAbsolutePath.AvailableSizes,
                                                                 _tokenResponse.AccessToken, _dateTime);
             var result = JsonConvert.DeserializeObject<AvailableSizesResponse>(response);
@@ -160,7 +164,7 @@ namespace LSS.BE.Core.Domain.Services
             var request = SerializerHelper<ChangeLockerSize>.SerializeObject(model);
             Log.Information("[Change Locker Size][Req]" + "[" + request + "]");
 
-            var response = HttpHandlerHelper.PostRequestResolver(request, HttpMethod.Post, _uriString, _version,
+            var response = _httpHandler.PostRequestResolver(request, HttpMethod.Post, _uriString, _version,
                                                                  _clientId, _clientSecret,
                                                                  UriAbsolutePath.ChangeLockerSize,
                                                                  _tokenResponse.AccessToken, _dateTime);
@@ -175,7 +179,7 @@ namespace LSS.BE.Core.Domain.Services
             var request = SerializerHelper<BookingStatus>.SerializeObject(model);
             Log.Information("[Update Booking Status][Req]" + "[" + request + "]");
 
-            var response = HttpHandlerHelper.PostRequestResolver(request, HttpMethod.Put, _uriString, _version,
+            var response = _httpHandler.PostRequestResolver(request, HttpMethod.Put, _uriString, _version,
                                                                  _clientId, _clientSecret,
                                                                  UriAbsolutePath.UpdateBookingStatus,
                                                                  _tokenResponse.AccessToken, _dateTime);
@@ -190,7 +194,7 @@ namespace LSS.BE.Core.Domain.Services
             var request = SerializerHelper<ConsumerPin>.SerializeObject(model);
             Log.Information("[Get Booking By Consumer Pin][Req]" + "[" + request + "]");
 
-            var response = HttpHandlerHelper.PostRequestResolver(request, HttpMethod.Post, _uriString, _version, _clientId, _clientSecret, UriAbsolutePath.CheckPin, _tokenResponse.AccessToken, _dateTime);
+            var response = _httpHandler.PostRequestResolver(request, HttpMethod.Post, _uriString, _version, _clientId, _clientSecret, UriAbsolutePath.CheckPin, _tokenResponse.AccessToken, _dateTime);
             Log.Information("[Get Booking By Consumer Pin][Res]" + "[" + response + "]");
 
             var result = JsonConvert.DeserializeObject<LockerResponse>(response);

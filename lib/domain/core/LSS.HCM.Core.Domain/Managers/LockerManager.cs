@@ -12,6 +12,7 @@ using LSS.HCM.Core.Validator;
 using LSS.HCM.Core.Domain.Helpers;
 using Compartment = LSS.HCM.Core.DataObjects.Models.Compartment;
 using Serilog;
+using LSS.HCM.Core.Domain.Interfaces;
 
 namespace LSS.HCM.Core.Domain.Managers
 {
@@ -19,7 +20,7 @@ namespace LSS.HCM.Core.Domain.Managers
     /// <summary>
     ///   Represents locker as a sequence of compartment open and it's status.
     ///</summary>
-    public sealed class LockerManager
+    public sealed class LockerManager : ILockerManager
     {
         /// <summary>
         ///   Set Initialization value for locker management.

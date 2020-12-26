@@ -36,6 +36,7 @@ namespace LSS.BE.Core.TestCaller
             catch (System.IO.FileNotFoundException ex)
             {
                 Console.WriteLine("Please provide valid configuration file path.");
+                GetewayServiceClient.Init();
             }
             catch (Exception ex)
             {
