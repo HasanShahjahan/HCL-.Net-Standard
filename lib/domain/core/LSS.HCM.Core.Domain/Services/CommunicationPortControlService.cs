@@ -65,6 +65,7 @@ namespace LSS.HCM.Core.Domain.Services
             {
                 SerialPortControlService scanner = new SerialPortControlService(new SerialPortResource(lockerConfiguration.Microcontroller.Scanner.Port, lockerConfiguration.Microcontroller.Scanner.Baudrate, lockerConfiguration.Microcontroller.Scanner.DataBits, 500, 500));
                 scanner.SetReadToPublishHandler(lockerConfiguration);
+                scanner.Begin();
             }
         }
 

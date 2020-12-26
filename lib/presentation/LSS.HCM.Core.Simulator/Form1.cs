@@ -51,7 +51,7 @@ namespace LSS.HCM.Core.Simulator
             string configurationPath = txtConfigurationFile.Text;
             // Socket Scanner
             //Task.Run(() => new SocketListenerService());
-            //Task.Run(() => StartSocketListener());
+            Task.Run(() => StartSocketListener());
 
             _lockerManager = new LockerManager(configurationPath);
             if (_lockerManager != null) 
