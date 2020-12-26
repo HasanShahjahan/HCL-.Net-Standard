@@ -23,10 +23,11 @@ namespace LSS.HCM.Core.Domain.Services
         ///  Open compartment actual result with status. 
         /// </returns>
         private readonly SerialPort _serialPort = new SerialPort();
-        private  string _lockerId = string.Empty;
-        private  string _serialPortName = string.Empty;
-        private  string _mqttServer = string.Empty;
-        private  string _brokerTopicEvent = string.Empty;
+        private string _lockerId = string.Empty;
+        private string _brokerTopicEvent = string.Empty;
+        private string _socketServer = string.Empty;
+        private int _socketPort;
+        private SocketClientService client;
 
         /// <summary>
         /// Initialization of serial port with multiple resources. 
@@ -41,7 +42,7 @@ namespace LSS.HCM.Core.Domain.Services
             _serialPort.ReadTimeout = serialPortResource.ReadTimeout;
             _serialPort.WriteTimeout = serialPortResource.WriteTimeout;
 
-            Begin();
+            //Begin();
         }
 
         /// <summary>
@@ -83,12 +84,11 @@ namespace LSS.HCM.Core.Domain.Services
                 else
                 {
                     return false;
-
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                Console.WriteLine("SerialportError: " + ex.ToString());
+                //Console.WriteLine("SerialportError: " + ex.ToString());
                 return false;
             }
         }
@@ -167,26 +167,26 @@ namespace LSS.HCM.Core.Domain.Services
         /// <returns>
         ///  Get list of byte.
         /// </returns>
-        public List<byte> SetReadToPublishHandler(AppSettings lockerConfiguration)
+        public void SetReadToPublishHandler(AppSettings lockerConfiguration)
         {
-            List<byte> responseByte = new List<byte>();
             try
             {
                 _lockerId = lockerConfiguration.Locker.LockerId;
-                _serialPortName = lockerConfiguration.Microcontroller.Scanner.Name;
-                _mqttServer = lockerConfiguration.Mqtt.Server + ":" + lockerConfiguration.Mqtt.Port + "/mqtt";
                 _brokerTopicEvent = lockerConfiguration.Mqtt.Topic.Event.Scanner;
-                _serialPort.DataReceived += new SerialDataReceivedEventHandler(ReadToPublish);
+                _serialPort.DataReceived += new SerialDataReceivedEventHandler(SerialInputEventHandler);
+                _socketServer = "localhost";
+                _socketPort = 11000;
+
+                // Socket Scanner
+                client = new SocketClientService(_socketServer, _socketPort);
+                client.Connect();
             }
             catch (TimeoutException) { }
-
-            return responseByte;
         }
-
         /// <summary>
-        /// Reads to publish to the MQTT broker.
+        /// Reads and pass data to socket.
         /// </summary>
-        public void ReadToPublish(object sender, SerialDataReceivedEventArgs e)
+        private void SerialInputEventHandler(object sender, SerialDataReceivedEventArgs e)
         {
             try
             {
@@ -195,26 +195,31 @@ namespace LSS.HCM.Core.Domain.Services
                 {
                     if (_serialPort.BytesToRead > 0)
                     {
-                        string indata = _sp.ReadLine();
-                        Console.WriteLine("Data Received:");
-                        Console.Write(indata);
-
-                        // Create a new MQTT client.
-                        MqttFactory factory = new MqttFactory();
-                        var mqttClient = factory.CreateMqttClient();
-
-                        var options = new MqttClientOptionsBuilder()
-                            .WithWebSocketServer(_mqttServer)
-                            .Build();
-                        mqttClient.ConnectAsync(options, CancellationToken.None);
-
-                        while (!mqttClient.IsConnected) ;
-                        mqttClient.PublishAsync(_lockerId + _brokerTopicEvent, indata);
-                        _serialPort.DiscardInBuffer();
+                        string serialInData = _sp.ReadLine();
+                        // Socket Scanner
+                        sendDataOnSocket(serialInData);
+                        //_serialPort.DiscardInBuffer();
+                        
                     }
                 }
             }
-            catch (TimeoutException) { }
+            catch (TimeoutException) {
+                throw;
+            }
         }
+
+        // Socket Scanner
+        private void sendDataOnSocket(string inputData)
+        {
+            try
+            {
+                client.Send(_lockerId + _brokerTopicEvent + "," + inputData);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
     }
 }

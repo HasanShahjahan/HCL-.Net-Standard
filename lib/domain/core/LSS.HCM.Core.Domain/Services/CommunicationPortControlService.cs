@@ -27,6 +27,7 @@ namespace LSS.HCM.Core.Domain.Services
             if (commandName == CommandType.DoorOpen)
             {
                 controlModule = new SerialPortControlService(new SerialPortResource(lockerConfiguration.Microcontroller.LockControl.Port, lockerConfiguration.Microcontroller.LockControl.Baudrate, lockerConfiguration.Microcontroller.LockControl.DataBits, 500, 500));
+                controlModule.Begin();
                 responseData = controlModule.Write(commandString, lockerConfiguration.Microcontroller.Commands.OpenDoor.ResLen);
                 result = BoardInitializationService.ExecuteCommand(CommandType.DoorOpen, responseData);
                 controlModule.End();
@@ -34,6 +35,7 @@ namespace LSS.HCM.Core.Domain.Services
             else if (commandName == CommandType.DoorStatus)
             {
                 controlModule = new SerialPortControlService(new SerialPortResource(lockerConfiguration.Microcontroller.LockControl.Port, lockerConfiguration.Microcontroller.LockControl.Baudrate, lockerConfiguration.Microcontroller.LockControl.DataBits, 500, 500));
+                controlModule.Begin();
                 responseData = controlModule.Write(commandString, lockerConfiguration.Microcontroller.Commands.DoorStatus.ResLen);
                 result = BoardInitializationService.ExecuteCommand(CommandType.DoorStatus, responseData);
                 controlModule.End();
@@ -41,6 +43,7 @@ namespace LSS.HCM.Core.Domain.Services
             else if (commandName == CommandType.ItemDetection)
             {
                 controlModule = new SerialPortControlService(new SerialPortResource(lockerConfiguration.Microcontroller.ObjectDetection.Port, lockerConfiguration.Microcontroller.ObjectDetection.Baudrate, lockerConfiguration.Microcontroller.ObjectDetection.DataBits, 500, 500));
+                controlModule.Begin();
                 responseData = controlModule.Write(commandString, lockerConfiguration.Microcontroller.Commands.DetectItem.ResLen);
                 result = BoardInitializationService.ExecuteCommand(CommandType.ItemDetection, responseData);
                 controlModule.End();
@@ -62,6 +65,7 @@ namespace LSS.HCM.Core.Domain.Services
             {
                 SerialPortControlService scanner = new SerialPortControlService(new SerialPortResource(lockerConfiguration.Microcontroller.Scanner.Port, lockerConfiguration.Microcontroller.Scanner.Baudrate, lockerConfiguration.Microcontroller.Scanner.DataBits, 500, 500));
                 scanner.SetReadToPublishHandler(lockerConfiguration);
+                scanner.Begin();
             }
         }
 

@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using LSS.HCM.Core.DataObjects.Models;
 using LSS.HCM.Core.Domain.Managers;
 using Newtonsoft.Json;
 using Compartment = LSS.HCM.Core.DataObjects.Models.Compartment;
+using LSS.HCM.Core.Domain.Services;
 
 namespace LSS.HCM.Core.Simulator
 {
@@ -19,13 +21,37 @@ namespace LSS.HCM.Core.Simulator
             txtJwtToken.Text = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MDkzNTU5MjEsInRyYW5zYWN0aW9uX2lkIjoiNzBiMzZjNDEtMDc4Yi00MTFiLTk4MmMtYzViNzc0YWFjNjZmIn0.ujOkQJUq5WY_tZJgKXqe_n4nql3cSAeHMfXGABZO3E4";
             txtJwtSecret.Text = "HWAPI_0BwRn5Bg4rJAe5eyWkRz";
             txtCompartmentId.Text = "M0-1,M0-3";
-            txtConfigurationFile.Text = @"C:\Box24\Project Execution\config.json";
+            txtConfigurationFile.Text = @"D:\config.json";
             btnSubmit.Enabled = false;
+        }
+
+        // Socket Scanner
+        delegate string SetTextCallback(string inputText);
+
+        // Socket Scanner
+        private string UpdateScannerValue(string inputText)
+        {
+            // InvokeRequired required compares the thread ID of the
+            // calling thread to the thread ID of the creating thread.
+            // If these threads are different, it returns true.
+            if (this.textBoxScanner.InvokeRequired)
+            {
+                SetTextCallback d = new SetTextCallback(UpdateScannerValue);
+                this.Invoke(d, new object[] { inputText });
+            }
+            else
+            {
+                this.textBoxScanner.Text = inputText;
+            }
+            return inputText;
         }
 
         private void buttonConfigLocker_Click(object sender, EventArgs e)
         {
             string configurationPath = txtConfigurationFile.Text;
+            // Socket Scanner
+            //Task.Run(() => new SocketListenerService());
+            Task.Run(() => StartSocketListener());
 
             _lockerManager = new LockerManager(configurationPath);
             if (_lockerManager != null) 
@@ -46,9 +72,6 @@ namespace LSS.HCM.Core.Simulator
                     string jwtSecret = txtJwtSecret.Text;
                     string[] validCompartmentIds = txtCompartmentId.Text.Split(',');
                     bool flag = jwtEnable.Checked;
-
-                    string imageExtension = "jpeg";//txtImagExtension.Text;
-                    byte[] imageData = null;
 
                     var compartment = new Compartment(transactionId, lockerId, validCompartmentIds, flag, jwtSecret, token);
                     if (radioOpenCompartment.Checked)
@@ -190,5 +213,16 @@ namespace LSS.HCM.Core.Simulator
 
         }
 
+        // Socket Scanner
+        private void StartSocketListener()
+        {
+            Task.Run(() => {
+                var server = new SocketListenerService("localhost", 11000);
+                server.AsyncStart(UpdateScannerValue);
+            });
+            UpdateScannerValue("scanner start");
+            //server.ResponseToClient(data.Key, "this is cool!");
+
+        }
     }
 }
