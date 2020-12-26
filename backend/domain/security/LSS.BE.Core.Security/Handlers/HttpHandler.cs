@@ -8,19 +8,24 @@ using System.Text;
 
 namespace LSS.BE.Core.Security.Handlers
 {
-    public class HttpHandler
+    public class HttpHandler : IHttpHandler
     {
-        public static HttpResponseMessage GetTokenAsync(string uriString, string version, string uriPath, string clientId, string clientSecret)
+        private readonly static HttpClient client = new HttpClient();
+        public HttpHandler(string uriString)
         {
-
-            HttpClient client = new HttpClient();
             Uri baseUri = new Uri(uriString);
             client.BaseAddress = baseUri;
-            client.DefaultRequestHeaders.Clear();
-            client.DefaultRequestHeaders.ConnectionClose = true;
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        }
 
-            var values = new List<KeyValuePair<string, string>>();
-            values.Add(new KeyValuePair<string, string>("grant_type", "client_credentials"));
+        public HttpResponseMessage GetTokenAsync(string uriString, string version, string uriPath, string clientId, string clientSecret)
+        {
+            
+            var values = new List<KeyValuePair<string, string>>
+            {
+                new KeyValuePair<string, string>("grant_type", "client_credentials")
+            };
             var content = new FormUrlEncodedContent(values);
 
             var authenticationString = $"{clientId}:{clientSecret}";
@@ -35,15 +40,9 @@ namespace LSS.BE.Core.Security.Handlers
             return response;
         }
         
-        public static HttpResponseMessage PostAsync(string request, HttpMethod httpMethod, string uriString, string version, string uriPath, string type, string token)
+        public HttpResponseMessage PostAsync(string request, HttpMethod httpMethod, string uriString, string version, string uriPath, string type, string token)
         {
-            HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri(uriString);
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-            string mediaType = "application/json";
-            var content = new StringContent(request, Encoding.UTF8, mediaType);
+            var content = new StringContent(request, Encoding.UTF8, "application/json");
             var requestMessage = new HttpRequestMessage(httpMethod, "/" + version + "/" + uriPath);
             requestMessage.Headers.Authorization = new AuthenticationHeaderValue(type, token);
             requestMessage.Content = content;
@@ -53,13 +52,8 @@ namespace LSS.BE.Core.Security.Handlers
             return response;
         }
 
-        public static HttpResponseMessage GetAsync(string uriString, Dictionary<string, string> queryParams, string version, string uriPath, string type, string token)
+        public HttpResponseMessage GetAsync(string uriString, Dictionary<string, string> queryParams, string version, string uriPath, string type, string token)
         {
-            HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri(uriString);
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
             var requestMessage = new HttpRequestMessage(HttpMethod.Get, QueryHelpers.AddQueryString("/" + version + "/" + uriPath, queryParams));
             requestMessage.Headers.Authorization = new AuthenticationHeaderValue(type, token);
 

@@ -1,4 +1,5 @@
-﻿using LSS.HCM.Core.Common.Enums;
+﻿using LSS.HCM.Core.Common.Base;
+using LSS.HCM.Core.Common.Enums;
 using LSS.HCM.Core.DataObjects.Settings;
 using LSS.HCM.Core.Domain.Core.InputOutpuPorts;
 using System;
@@ -58,12 +59,14 @@ namespace LSS.HCM.Core.Domain.Services
         /// <returns>
         ///  Publish scanning value to MQTT Broker
         /// </returns>
-        public static void InitializeScannerEvent(AppSettings lockerConfiguration)
+        public static void InitializeScanner(ComPortsHealthCheck comPortsHealthCheck, AppSettings lockerConfiguration)
         {
-            SerialPortControlService scanner = new SerialPortControlService(new SerialPortResource(lockerConfiguration.Microcontroller.Scanner.Port, lockerConfiguration.Microcontroller.Scanner.Baudrate, lockerConfiguration.Microcontroller.Scanner.DataBits, 5000, 5000));
-            
-            scanner.SetReadToPublishHandler(lockerConfiguration);
-            scanner.Begin();
+            if (comPortsHealthCheck.IsScannernPortAvailable)
+            {
+                SerialPortControlService scanner = new SerialPortControlService(new SerialPortResource(lockerConfiguration.Microcontroller.Scanner.Port, lockerConfiguration.Microcontroller.Scanner.Baudrate, lockerConfiguration.Microcontroller.Scanner.DataBits, 500, 500));
+                scanner.SetReadToPublishHandler(lockerConfiguration);
+            }
         }
+
     }
 }

@@ -1,10 +1,14 @@
-﻿using LSS.HCM.Core.DataObjects.Dtos;
+﻿using LSS.HCM.Core.Common.Base;
+using LSS.HCM.Core.DataObjects.Dtos;
+using LSS.HCM.Core.DataObjects.Settings;
 using OpenCvSharp;
 using OpenCvSharp.Extensions;
 using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.IO.Ports;
+using System.Linq;
 
 namespace LSS.HCM.Core.Domain.Helpers
 {
@@ -56,6 +60,26 @@ namespace LSS.HCM.Core.Domain.Helpers
                 image.Save(ms, format);
                 return ms.ToArray();
             }
+        }
+
+        /// <summary>
+        /// Image byte array preparation by open library.
+        /// </summary>
+        public static ComPortsHealthCheck ComPortInit(AppSettings lockerConfiguration)
+        {
+            var comPorts = new ComPortsHealthCheck();
+            try 
+            {
+                string[] ports = SerialPort.GetPortNames();
+                comPorts.IsScannernPortAvailable = ports.Any(x => x == lockerConfiguration.Microcontroller.Scanner.Port);
+                comPorts.IsLockPortAvailable = ports.Any(x => x == lockerConfiguration.Microcontroller.LockControl.Port);
+                comPorts.IsDetectionPortAvailable = ports.Any(x => x == lockerConfiguration.Microcontroller.ObjectDetection.Port);
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return comPorts;
         }
     }
 }

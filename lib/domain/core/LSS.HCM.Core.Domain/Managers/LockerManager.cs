@@ -12,6 +12,8 @@ using LSS.HCM.Core.Validator;
 using LSS.HCM.Core.Domain.Helpers;
 using Compartment = LSS.HCM.Core.DataObjects.Models.Compartment;
 using Serilog;
+using LSS.HCM.Core.Domain.Interfaces;
+using LSS.HCM.Core.Common.Base;
 
 namespace LSS.HCM.Core.Domain.Managers
 {
@@ -19,12 +21,13 @@ namespace LSS.HCM.Core.Domain.Managers
     /// <summary>
     ///   Represents locker as a sequence of compartment open and it's status.
     ///</summary>
-    public sealed class LockerManager
+    public sealed class LockerManager : ILockerManager
     {
         /// <summary>
         ///   Set Initialization value for locker management.
         ///</summary>
         private readonly AppSettings lockerConfiguration;
+        private readonly ComPortsHealthCheck portsHealthCheck;
 
         /// <summary>
         ///   Initialization information for locker configuration including Microcontroller board, Serial port and Communication port.
@@ -33,9 +36,8 @@ namespace LSS.HCM.Core.Domain.Managers
         {
             var content = File.ReadAllText(configurationFilePath);
             lockerConfiguration = JsonSerializer.Deserialize<AppSettings>(content);
-
-            CommunicationPortControlService.InitializeScannerEvent(lockerConfiguration);
-
+            portsHealthCheck = LockerHelper.ComPortInit(lockerConfiguration);
+            CommunicationPortControlService.InitializeScanner(portsHealthCheck, lockerConfiguration);
             Log.Information("[HCM][Locker Manager][Initiated][Service initiated with scanner and logging.]");
         }
 
