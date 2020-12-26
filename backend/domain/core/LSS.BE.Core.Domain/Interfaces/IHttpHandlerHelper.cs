@@ -10,6 +10,6 @@ namespace LSS.BE.Core.Domain.Interfaces
     {
         TokenResponse GetToken(string uriString, string version, string clientId, string clientSecret);
         string PostRequestResolver(string request, HttpMethod httpMethod, string uriString, string version, string clientId, string clientSecret, string uriPath, AccessToken accessToken, DateTime dateTime);
-        string GetRequestResolver(string uriString, Dictionary<string, string> queryParams, string version, string clientId, string clientSecret, string uriPath, AccessToken accessToken, DateTime dateTime);
+        string GetRequestResolver(Dictionary<string, string> queryParams, string uriString,  string version, string clientId, string clientSecret, string uriPath, AccessToken accessToken, DateTime dateTime);
     }
 }

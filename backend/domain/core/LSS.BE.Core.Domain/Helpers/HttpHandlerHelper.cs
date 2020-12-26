@@ -49,7 +49,7 @@ namespace LSS.BE.Core.Domain.Helpers
             }
         }
 
-        public string GetRequestResolver(string uriString, Dictionary<string, string> queryParams, string version, string clientId, string clientSecret, string uriPath, AccessToken accessToken, DateTime dateTime)
+        public string GetRequestResolver(Dictionary<string, string> queryParams, string uriString, string version, string clientId, string clientSecret, string uriPath, AccessToken accessToken, DateTime dateTime)
         {
             GetRefreshToken(uriString, version, clientId, clientSecret, accessToken, dateTime);
             var response = _httpHandler.GetAsync(uriString, queryParams, version, uriPath, accessToken.Type, accessToken.Token);

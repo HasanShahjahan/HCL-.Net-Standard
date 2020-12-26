@@ -11,7 +11,7 @@ namespace LSS.BE.Core.TestCaller
 {
     public class GetewayServiceClient
     {
-        public static (string, LmsGatewayService) Init()
+        public static (string, GatewayService) Init()
         {
             Console.Write("Gateway Service Initialization\n");
 
@@ -32,13 +32,21 @@ namespace LSS.BE.Core.TestCaller
             Console.Write("Configuration Path : ");
             string configurationPath = Console.ReadLine();
 
-            var gatewayService = new LmsGatewayService(uriString, version, clientId, clientSecret, configurationPath);
+            var memberInfo = new Common.Base.MemberInfo
+            {
+                UriString = uriString,
+                Version = version,
+                ClientId = clientId,
+                ClientSecret = clientSecret,
+                ConfigurationPath = configurationPath
+            };
+            var gatewayService = new GatewayService(memberInfo);
             Console.WriteLine("Gateway Service Initialized");
 
             return (lockerStationId, gatewayService);
         }
 
-        public static void CourierDropOff(string lockerStationId, LmsGatewayService gatewayService)
+        public static void CourierDropOff(string lockerStationId, GatewayService gatewayService)
         {
 
             #region Lsp Verification
@@ -125,28 +133,28 @@ namespace LSS.BE.Core.TestCaller
 
             #endregion
 
-            #region Assign Similar Size Locker
-            Console.WriteLine("[Assign Similar Size Locker][Req]");
+            //#region Assign Similar Size Locker
+            //Console.WriteLine("[Assign Similar Size Locker][Req]");
 
-            Console.Write("Booking Id: ");
-            string bookingId = Console.ReadLine();
+            //Console.Write("Booking Id: ");
+            //string bookingId = Console.ReadLine();
 
-            Console.Write("Reason: ");
-            string reason = Console.ReadLine();
+            //Console.Write("Reason: ");
+            //string reason = Console.ReadLine();
 
-            var assignSimilarSizeLocker = new AssignSimilarSizeLocker()
-            {
-                LockerStationId = lockerStationId,
-                BookingId = Convert.ToInt32(bookingId),
-                Reason = reason
-            };
+            //var assignSimilarSizeLocker = new AssignSimilarSizeLocker()
+            //{
+            //    LockerStationId = lockerStationId,
+            //    BookingId = Convert.ToInt32(bookingId),
+            //    Reason = reason
+            //};
 
-            var similarSizeLockerResult = gatewayService.AssignSimilarSizeLocker(assignSimilarSizeLocker);
-            Console.WriteLine("[Assign Similar Size Locker][Res]");
-            Console.WriteLine(JsonConvert.SerializeObject(similarSizeLockerResult, Formatting.Indented));
-            Console.WriteLine("-----------------------------------------------------------------------------");
+            //var similarSizeLockerResult = gatewayService.AssignSimilarSizeLocker(assignSimilarSizeLocker);
+            //Console.WriteLine("[Assign Similar Size Locker][Res]");
+            //Console.WriteLine(JsonConvert.SerializeObject(similarSizeLockerResult, Formatting.Indented));
+            //Console.WriteLine("-----------------------------------------------------------------------------");
 
-            #endregion
+            //#endregion
 
             #region Get Available Sizes
             Console.WriteLine("[Get Available Sizes][Req]");
@@ -262,6 +270,7 @@ namespace LSS.BE.Core.TestCaller
                 LockerStationId = lockerStationId,
                 BookingId = Convert.ToInt32(UpdateBookingStatusBookingId),
                 LspId = lspVerificationResponse.LspId,
+                LspUserId = lspVerificationResponse.LspUserId,
                 MobileNumber = mobileNumber,
                 Status = status,
                 Reason = updateBookingReason
@@ -277,7 +286,7 @@ namespace LSS.BE.Core.TestCaller
             #endregion
         }
 
-        public static void ConsumerCollect(string lockerStationId, LmsGatewayService gatewayService) 
+        public static void ConsumerCollect(string lockerStationId, GatewayService gatewayService) 
         {
             #region PIN Verification
 
@@ -285,7 +294,7 @@ namespace LSS.BE.Core.TestCaller
             Console.Write("[Consumer Collect PIN Verification][Req]\n");
 
             Console.Write("Pin: ");
-            string ConsumerCollectPin = Console.ReadLine();
+            string consumerCollectPin = Console.ReadLine();
 
             Console.Write("Action: ");
             string action = Console.ReadLine();
@@ -294,7 +303,7 @@ namespace LSS.BE.Core.TestCaller
             var consumerPin = new ConsumerPin
             {
                 LockerStationId = lockerStationId,
-                Pin = ConsumerCollectPin,
+                Pin = consumerCollectPin,
                 Action = action
             };
             var consumerPinResult = gatewayService.GetBookingByConsumerPin(consumerPin);

@@ -19,6 +19,9 @@ namespace LSS.BE.Core.Entities.Models
         [JsonProperty("lsp_id")]
         public string LspId { get; set; }
 
+        [JsonProperty("lsp_user_id")]
+        public string LspUserId { get; set; }
+
         [JsonProperty("mobile_number")]
         public string MobileNumber { get; set; }
 

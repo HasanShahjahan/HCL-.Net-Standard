@@ -16,6 +16,8 @@ namespace LSS.BE.Core.TestCaller
             try
             {
                 var (lockerStationId, gatewayService) = GetewayServiceClient.Init();
+                Console.Write("Use case type :");
+
                 Console.WriteLine("User Case Type : \n 1.CDO (Courier Drop Off) \n 2.CC(Consumer Collect)");
                 Console.Write("Use case type :");
                 string useCaseType = Console.ReadLine();

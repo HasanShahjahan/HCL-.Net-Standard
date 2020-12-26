@@ -8,13 +8,13 @@ namespace LSS.BE.Core.Domain.Initialization
 {
     public sealed class ServiceInvoke
     {
-        public static TokenResponse InitAsync(string uriString, string version, string clientId, string clientSecret, string configurationPath, IHttpHandlerHelper httpHandler)
+        public static TokenResponse InitAsync(MemberInfo memberInfo, IHttpHandlerHelper httpHandler)
         {
-            LoggerAbstractions.SetupStaticLogger(configurationPath);
+            LoggerAbstractions.SetupStaticLogger(memberInfo.ConfigurationPath);
             LoggerAbstractions.CreateHostBuilder().Build();
             Log.Information("[Initialization][Service initiated with access token and logging.]");
 
-            var tokenResponse = httpHandler.GetToken(uriString, version, clientId, clientSecret);
+            var tokenResponse = httpHandler.GetToken(memberInfo.UriString, memberInfo.Version, memberInfo.ClientId, memberInfo.ClientSecret);
             Log.Information("[Initialized][Service initialized with access token and logging.]");
 
             return tokenResponse;
