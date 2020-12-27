@@ -49,9 +49,9 @@ namespace LSS.HCM.Core.Domain.Services
         /// Open serial port.
         /// </summary>
         /// <returns>
-        ///  Get boolen result of serial port open or not.
+        ///  Nothing returned but error throw when its error
         /// </returns>
-        public bool Begin()
+        public void Begin()
         {
             try
             {
@@ -59,37 +59,28 @@ namespace LSS.HCM.Core.Domain.Services
             }
             catch (Exception)
             {
-                //Console.WriteLine("SerialportError: " + ex.ToString());
-                return false;
+                throw;
             }
-
-            return true;
         }
 
         /// <summary>
         /// Close serial port.
         /// </summary>
         /// <returns>
-        ///  Get boolen result of serial port close or not.
+        ///  Nothing returned but error throw when its error
         /// </returns>
-        public bool End()
+        public void End()
         {
             try
             {
                 if (_serialPort.IsOpen)
                 {
                     _serialPort.Close();
-                    return true;
-                }
-                else
-                {
-                    return false;
                 }
             }
             catch (Exception)
             {
-                //Console.WriteLine("SerialportError: " + ex.ToString());
-                return false;
+                throw;
             }
         }
 
@@ -119,6 +110,7 @@ namespace LSS.HCM.Core.Domain.Services
                                 byte byteBuffer = (byte)_serialPort.ReadByte();
                                 commandResponseByte.Add(byteBuffer);
                             }
+
                             if (commandResponseByte.Count < dataLength)
                             {
                                 _continue = true;
@@ -129,7 +121,10 @@ namespace LSS.HCM.Core.Domain.Services
                             }
                         }
                     }
-                    catch (TimeoutException) { }
+                    catch (Exception)
+                    {
+                        throw;
+                    }
                 }
                 //_serialPort.Close();
                 return commandResponseByte;
@@ -158,7 +153,10 @@ namespace LSS.HCM.Core.Domain.Services
                     }
                 }
             }
-            catch (TimeoutException) { }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         /// <summary>
@@ -181,7 +179,10 @@ namespace LSS.HCM.Core.Domain.Services
                 client = new SocketClientService(_socketServer, _socketPort);
                 client.Connect();
             }
-            catch (TimeoutException) { }
+            catch (Exception)
+            {
+                throw;
+            }
         }
         /// <summary>
         /// Reads and pass data to socket.
@@ -203,7 +204,7 @@ namespace LSS.HCM.Core.Domain.Services
                     }
                 }
             }
-            catch (TimeoutException) {
+            catch (Exception) {
                 throw;
             }
         }

@@ -14,6 +14,7 @@ using Compartment = LSS.HCM.Core.DataObjects.Models.Compartment;
 using Serilog;
 using LSS.HCM.Core.Domain.Interfaces;
 using LSS.HCM.Core.Common.Base;
+using System.Collections.Generic;
 
 namespace LSS.HCM.Core.Domain.Managers
 {
@@ -39,6 +40,23 @@ namespace LSS.HCM.Core.Domain.Managers
             portsHealthCheck = LockerHelper.ComPortInit(lockerConfiguration);
             CommunicationPortControlService.InitializeScanner(portsHealthCheck, lockerConfiguration);
             Log.Information("[HCM][Locker Manager][Initiated][Service initiated with scanner and logging.]");
+        }
+
+        /// <summary>
+        /// Gets the open compartment parameters with Json web token credentials and MongoDB database credentials.
+        /// Json web token credentials contains enable or disable, if enable then need to provide jwt secret and token.
+        /// </summary>
+        /// <returns>
+        ///  List of compartment open status with object detection, LED status by requested compartment id's.
+        /// </returns>
+        public Dictionary<string,bool> PortHealthCheckStatus()
+        {
+            var response = new Dictionary<string, bool>();
+            response.Add("locker", portsHealthCheck.IsLockPortAvailable);
+            response.Add("detection", portsHealthCheck.IsDetectionPortAvailable);
+            response.Add("scanner", portsHealthCheck.IsScannernPortAvailable);
+
+            return response;
         }
 
         /// <summary>

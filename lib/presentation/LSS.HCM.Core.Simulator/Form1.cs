@@ -59,6 +59,13 @@ namespace LSS.HCM.Core.Simulator
                 _isConfigured = true;
                 btnSubmit.Enabled = true;
             }
+            var hcStatus = _lockerManager.PortHealthCheckStatus();
+            bStatusCOM1.BackColor = hcStatus["locker"] ? System.Drawing.Color.LimeGreen : System.Drawing.Color.Salmon;
+            bStatusCOM1.Text = "locker";
+            bStatusCOM2.BackColor = hcStatus["detection"] ? System.Drawing.Color.LimeGreen : System.Drawing.Color.Salmon;
+            bStatusCOM2.Text = "detection";
+            bStatusCOM4.BackColor = hcStatus["scanner"] ? System.Drawing.Color.LimeGreen : System.Drawing.Color.Salmon;
+            bStatusCOM4.Text = "scanner";
         }
         private void btnSubmit_Click(object sender, EventArgs e)
         {
