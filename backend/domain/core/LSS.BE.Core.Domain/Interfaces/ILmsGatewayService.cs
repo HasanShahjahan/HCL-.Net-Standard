@@ -6,9 +6,25 @@ using Newtonsoft.Json.Linq;
 
 namespace LSS.BE.Core.Domain.Interfaces
 {
+    /// <summary>
+    ///   Represents gateway service as a sequence of use cases.
+    ///</summary>
     public interface ILmsGatewayService
     {
+        /// <summary>
+        /// Sets the Lsp verificationopen member by providing locker station id, key and pin.
+        /// </summary>
+        /// <returns>
+        ///  Gets the Lsp Id, Lsp user Id, reference code and expiration date with sucess result. 
+        /// </returns>
         JObject LspVerification(LspUserAccess model);
+
+        /// <summary>
+        /// Sets the Lsp verificationopen member by providing locker station id, key and pin.
+        /// </summary>
+        /// <returns>
+        ///  Gets the Lsp Id, Lsp user Id, reference code and expiration date with sucess result. 
+        /// </returns>
         JObject VerifyOtp(VerifyOtp model);
         JObject SendOtp(SendOtp model);
         JObject LockerStationDetails(string lockerStationId);
