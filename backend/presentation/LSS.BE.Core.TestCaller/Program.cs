@@ -6,18 +6,23 @@ using LSS.HCM.Core.Domain.Managers;
 using Newtonsoft.Json;
 using System;
 using System.Globalization;
+using System.Threading.Tasks;
+using LSS.HCM.Core.Domain.Services;
 
 namespace LSS.BE.Core.TestCaller
 {
     class Program
     {
+        private static string scanningValue = string.Empty;
         static void Main(string[] args)
         {
+
+            //Task.Run(() => StartSocketListener());
             try
             {
+
                 var (lockerStationId, gatewayService) = GetewayServiceClient.Init();
                 Console.Write("Use case type :");
-
                 Console.WriteLine("User Case Type : \n 1.CDO (Courier Drop Off) \n 2.CC(Consumer Collect)");
                 Console.Write("Use case type :");
                 string useCaseType = Console.ReadLine();
@@ -49,6 +54,26 @@ namespace LSS.BE.Core.TestCaller
                 Console.ReadKey();
             }
 
+        }
+        // Socket Scanner
+        public static void StartSocketListener()
+        {
+            Task.Run(() => {
+                var server = new SocketListenerService("localhost", 11000);
+                server.AsyncStart(UpdateScannerValue);
+            });
+            UpdateScannerValue("scanner start\r\n");
+            //server.ResponseToClient(data.Key, "this is cool!");
+
+
+        }
+
+        private static string UpdateScannerValue(string inputText)
+        {
+            scanningValue = inputText;
+            Console.Write("Scanning Value :");
+            Console.WriteLine(scanningValue);
+            return inputText;
         }
     }
 }

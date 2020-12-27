@@ -51,6 +51,10 @@
             this.radioCaptureImage = new System.Windows.Forms.RadioButton();
             this.textBoxScanner = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.bStatusCOM1 = new System.Windows.Forms.Button();
+            this.bStatusCOM2 = new System.Windows.Forms.Button();
+            this.bStatusCOM3 = new System.Windows.Forms.Button();
+            this.bStatusCOM4 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // txtTransactionId
@@ -132,10 +136,10 @@
             // 
             // txtResult
             // 
-            this.txtResult.Location = new System.Drawing.Point(443, 22);
+            this.txtResult.Location = new System.Drawing.Point(443, 56);
             this.txtResult.Margin = new System.Windows.Forms.Padding(2);
             this.txtResult.Name = "txtResult";
-            this.txtResult.Size = new System.Drawing.Size(455, 331);
+            this.txtResult.Size = new System.Drawing.Size(498, 296);
             this.txtResult.TabIndex = 4;
             this.txtResult.Text = "";
             this.txtResult.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
@@ -146,7 +150,7 @@
             this.labelTransactionId.Location = new System.Drawing.Point(35, 149);
             this.labelTransactionId.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelTransactionId.Name = "labelTransactionId";
-            this.labelTransactionId.Size = new System.Drawing.Size(78, 15);
+            this.labelTransactionId.Size = new System.Drawing.Size(77, 15);
             this.labelTransactionId.TabIndex = 1;
             this.labelTransactionId.Text = "TransactionId";
             this.labelTransactionId.Click += new System.EventHandler(this.label1_Click);
@@ -169,7 +173,7 @@
             this.jwtEnable.Location = new System.Drawing.Point(166, 242);
             this.jwtEnable.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.jwtEnable.Name = "jwtEnable";
-            this.jwtEnable.Size = new System.Drawing.Size(86, 19);
+            this.jwtEnable.Size = new System.Drawing.Size(85, 19);
             this.jwtEnable.TabIndex = 5;
             this.jwtEnable.Text = "JWT Enable";
             this.jwtEnable.UseVisualStyleBackColor = true;
@@ -210,7 +214,7 @@
             this.label5.Location = new System.Drawing.Point(35, 296);
             this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(39, 15);
+            this.label5.Size = new System.Drawing.Size(38, 15);
             this.label5.TabIndex = 1;
             this.label5.Text = "Token";
             this.label5.Click += new System.EventHandler(this.label5_Click);
@@ -279,7 +283,7 @@
             // 
             this.textBoxScanner.Location = new System.Drawing.Point(535, 358);
             this.textBoxScanner.Name = "textBoxScanner";
-            this.textBoxScanner.Size = new System.Drawing.Size(363, 23);
+            this.textBoxScanner.Size = new System.Drawing.Size(406, 23);
             this.textBoxScanner.TabIndex = 12;
             // 
             // label1
@@ -291,11 +295,75 @@
             this.label1.TabIndex = 13;
             this.label1.Text = "Scanner Value";
             // 
+            // bStatusCOM1
+            // 
+            this.bStatusCOM1.BackColor = System.Drawing.Color.Gainsboro;
+            this.bStatusCOM1.FlatAppearance.BorderSize = 0;
+            this.bStatusCOM1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bStatusCOM1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.bStatusCOM1.ForeColor = System.Drawing.Color.Black;
+            this.bStatusCOM1.Location = new System.Drawing.Point(443, 21);
+            this.bStatusCOM1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.bStatusCOM1.Name = "bStatusCOM1";
+            this.bStatusCOM1.Size = new System.Drawing.Size(120, 23);
+            this.bStatusCOM1.TabIndex = 14;
+            this.bStatusCOM1.Text = "COM1";
+            this.bStatusCOM1.UseVisualStyleBackColor = false;
+            // 
+            // bStatusCOM2
+            // 
+            this.bStatusCOM2.BackColor = System.Drawing.Color.Gainsboro;
+            this.bStatusCOM2.FlatAppearance.BorderSize = 0;
+            this.bStatusCOM2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bStatusCOM2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.bStatusCOM2.ForeColor = System.Drawing.Color.Black;
+            this.bStatusCOM2.Location = new System.Drawing.Point(569, 22);
+            this.bStatusCOM2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.bStatusCOM2.Name = "bStatusCOM2";
+            this.bStatusCOM2.Size = new System.Drawing.Size(120, 23);
+            this.bStatusCOM2.TabIndex = 15;
+            this.bStatusCOM2.Text = "COM2";
+            this.bStatusCOM2.UseVisualStyleBackColor = false;
+            // 
+            // bStatusCOM3
+            // 
+            this.bStatusCOM3.BackColor = System.Drawing.Color.Gainsboro;
+            this.bStatusCOM3.FlatAppearance.BorderSize = 0;
+            this.bStatusCOM3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bStatusCOM3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.bStatusCOM3.ForeColor = System.Drawing.Color.Black;
+            this.bStatusCOM3.Location = new System.Drawing.Point(695, 22);
+            this.bStatusCOM3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.bStatusCOM3.Name = "bStatusCOM3";
+            this.bStatusCOM3.Size = new System.Drawing.Size(120, 23);
+            this.bStatusCOM3.TabIndex = 16;
+            this.bStatusCOM3.Text = "COM3";
+            this.bStatusCOM3.UseVisualStyleBackColor = false;
+            // 
+            // bStatusCOM4
+            // 
+            this.bStatusCOM4.BackColor = System.Drawing.Color.Gainsboro;
+            this.bStatusCOM4.FlatAppearance.BorderSize = 0;
+            this.bStatusCOM4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bStatusCOM4.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.bStatusCOM4.ForeColor = System.Drawing.Color.Black;
+            this.bStatusCOM4.Location = new System.Drawing.Point(821, 22);
+            this.bStatusCOM4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.bStatusCOM4.Name = "bStatusCOM4";
+            this.bStatusCOM4.Size = new System.Drawing.Size(120, 23);
+            this.bStatusCOM4.TabIndex = 17;
+            this.bStatusCOM4.Text = "COM4";
+            this.bStatusCOM4.UseVisualStyleBackColor = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(922, 400);
+            this.ClientSize = new System.Drawing.Size(976, 404);
+            this.Controls.Add(this.bStatusCOM4);
+            this.Controls.Add(this.bStatusCOM3);
+            this.Controls.Add(this.bStatusCOM2);
+            this.Controls.Add(this.bStatusCOM1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBoxScanner);
             this.Controls.Add(this.radioCaptureImage);
@@ -353,6 +421,10 @@
         private System.Windows.Forms.RadioButton radioCaptureImage;
         private System.Windows.Forms.TextBox textBoxScanner;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button bStatusCOM1;
+        private System.Windows.Forms.Button bStatusCOM2;
+        private System.Windows.Forms.Button bStatusCOM3;
+        private System.Windows.Forms.Button bStatusCOM4;
     }
 }
 
