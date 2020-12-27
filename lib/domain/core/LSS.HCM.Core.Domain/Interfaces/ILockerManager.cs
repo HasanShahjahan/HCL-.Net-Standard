@@ -37,5 +37,13 @@ namespace LSS.HCM.Core.Domain.Interfaces
         ///  Byte array of image with transaction Id and image extension.
         /// </returns>
         CaptureDto CaptureImage(Capture model);
+
+        /// <summary>
+        /// Start scanner event listener
+        /// </summary>
+        /// <returns>
+        ///  Nothing return
+        /// </returns>
+        void RegisterScannerEvent(Func<string, string> sendDataOnSocket);
     }
 }

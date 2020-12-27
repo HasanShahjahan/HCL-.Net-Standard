@@ -59,15 +59,15 @@ namespace LSS.HCM.Core.Domain.Services
         /// <returns>
         ///  Publish scanning value to MQTT Broker
         /// </returns>
-        public static void InitializeScanner(ComPortsHealthCheck comPortsHealthCheck, AppSettings lockerConfiguration)
+        public static void InitializeScanner(ComPortsHealthCheck comPortsHealthCheck, AppSettings lockerConfiguration, Func<string, string> dataProcessFunc)
         {
             if (comPortsHealthCheck.IsScannernPortAvailable)
             {
-                SerialPortControlService scanner = new SerialPortControlService(new SerialPortResource(lockerConfiguration.Microcontroller.Scanner.Port, lockerConfiguration.Microcontroller.Scanner.Baudrate, lockerConfiguration.Microcontroller.Scanner.DataBits, 500, 500));
-                scanner.SetReadToPublishHandler(lockerConfiguration);
+                SerialInterface controllerModule = lockerConfiguration.Microcontroller.Scanner;
+                SerialPortControlService scanner = new SerialPortControlService(new SerialPortResource(controllerModule.Port, controllerModule.Baudrate, controllerModule.DataBits, 500, 500));
+                scanner.SetReadToPublishHandler(controllerModule, dataProcessFunc);
                 scanner.Begin();
             }
         }
-
     }
 }
