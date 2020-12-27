@@ -60,7 +60,7 @@
             // txtTransactionId
             // 
             this.txtTransactionId.Location = new System.Drawing.Point(166, 145);
-            this.txtTransactionId.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtTransactionId.Margin = new System.Windows.Forms.Padding(2);
             this.txtTransactionId.Name = "txtTransactionId";
             this.txtTransactionId.Size = new System.Drawing.Size(248, 23);
             this.txtTransactionId.TabIndex = 0;
@@ -82,7 +82,7 @@
             this.radioOpenCompartment.AutoSize = true;
             this.radioOpenCompartment.Checked = true;
             this.radioOpenCompartment.Location = new System.Drawing.Point(166, 62);
-            this.radioOpenCompartment.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.radioOpenCompartment.Margin = new System.Windows.Forms.Padding(2);
             this.radioOpenCompartment.Name = "radioOpenCompartment";
             this.radioOpenCompartment.Size = new System.Drawing.Size(132, 19);
             this.radioOpenCompartment.TabIndex = 2;
@@ -95,7 +95,7 @@
             // 
             this.radioCompartmentStatus.AutoSize = true;
             this.radioCompartmentStatus.Location = new System.Drawing.Point(166, 85);
-            this.radioCompartmentStatus.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.radioCompartmentStatus.Margin = new System.Windows.Forms.Padding(2);
             this.radioCompartmentStatus.Name = "radioCompartmentStatus";
             this.radioCompartmentStatus.Size = new System.Drawing.Size(135, 19);
             this.radioCompartmentStatus.TabIndex = 2;
@@ -106,7 +106,7 @@
             // btnSubmit
             // 
             this.btnSubmit.Location = new System.Drawing.Point(35, 331);
-            this.btnSubmit.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnSubmit.Margin = new System.Windows.Forms.Padding(2);
             this.btnSubmit.Name = "btnSubmit";
             this.btnSubmit.Size = new System.Drawing.Size(379, 50);
             this.btnSubmit.TabIndex = 3;
@@ -117,7 +117,7 @@
             // txtLockerId
             // 
             this.txtLockerId.Location = new System.Drawing.Point(166, 172);
-            this.txtLockerId.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtLockerId.Margin = new System.Windows.Forms.Padding(2);
             this.txtLockerId.Name = "txtLockerId";
             this.txtLockerId.Size = new System.Drawing.Size(248, 23);
             this.txtLockerId.TabIndex = 0;
@@ -137,7 +137,7 @@
             // txtResult
             // 
             this.txtResult.Location = new System.Drawing.Point(443, 56);
-            this.txtResult.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtResult.Margin = new System.Windows.Forms.Padding(2);
             this.txtResult.Name = "txtResult";
             this.txtResult.Size = new System.Drawing.Size(498, 296);
             this.txtResult.TabIndex = 4;
@@ -182,7 +182,7 @@
             // txtJwtSecret
             // 
             this.txtJwtSecret.Location = new System.Drawing.Point(166, 266);
-            this.txtJwtSecret.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtJwtSecret.Margin = new System.Windows.Forms.Padding(2);
             this.txtJwtSecret.Name = "txtJwtSecret";
             this.txtJwtSecret.Size = new System.Drawing.Size(248, 23);
             this.txtJwtSecret.TabIndex = 0;
@@ -202,7 +202,7 @@
             // txtJwtToken
             // 
             this.txtJwtToken.Location = new System.Drawing.Point(166, 293);
-            this.txtJwtToken.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtJwtToken.Margin = new System.Windows.Forms.Padding(2);
             this.txtJwtToken.Name = "txtJwtToken";
             this.txtJwtToken.Size = new System.Drawing.Size(248, 23);
             this.txtJwtToken.TabIndex = 0;
@@ -222,7 +222,7 @@
             // txtCompartmentId
             // 
             this.txtCompartmentId.Location = new System.Drawing.Point(166, 199);
-            this.txtCompartmentId.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtCompartmentId.Margin = new System.Windows.Forms.Padding(2);
             this.txtCompartmentId.Name = "txtCompartmentId";
             this.txtCompartmentId.Size = new System.Drawing.Size(248, 23);
             this.txtCompartmentId.TabIndex = 6;
@@ -252,7 +252,7 @@
             // txtConfigurationFile
             // 
             this.txtConfigurationFile.Location = new System.Drawing.Point(166, 22);
-            this.txtConfigurationFile.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtConfigurationFile.Margin = new System.Windows.Forms.Padding(2);
             this.txtConfigurationFile.Name = "txtConfigurationFile";
             this.txtConfigurationFile.Size = new System.Drawing.Size(174, 23);
             this.txtConfigurationFile.TabIndex = 8;
@@ -297,7 +297,7 @@
             // 
             // bStatusCOM1
             // 
-            this.bStatusCOM1.BackColor = System.Drawing.Color.Salmon;
+            this.bStatusCOM1.BackColor = System.Drawing.Color.Gainsboro;
             this.bStatusCOM1.FlatAppearance.BorderSize = 0;
             this.bStatusCOM1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.bStatusCOM1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
@@ -312,7 +312,7 @@
             // 
             // bStatusCOM2
             // 
-            this.bStatusCOM2.BackColor = System.Drawing.Color.Salmon;
+            this.bStatusCOM2.BackColor = System.Drawing.Color.Gainsboro;
             this.bStatusCOM2.FlatAppearance.BorderSize = 0;
             this.bStatusCOM2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.bStatusCOM2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
@@ -327,7 +327,7 @@
             // 
             // bStatusCOM3
             // 
-            this.bStatusCOM3.BackColor = System.Drawing.Color.Salmon;
+            this.bStatusCOM3.BackColor = System.Drawing.Color.Gainsboro;
             this.bStatusCOM3.FlatAppearance.BorderSize = 0;
             this.bStatusCOM3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.bStatusCOM3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
@@ -342,7 +342,7 @@
             // 
             // bStatusCOM4
             // 
-            this.bStatusCOM4.BackColor = System.Drawing.Color.Salmon;
+            this.bStatusCOM4.BackColor = System.Drawing.Color.Gainsboro;
             this.bStatusCOM4.FlatAppearance.BorderSize = 0;
             this.bStatusCOM4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.bStatusCOM4.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
@@ -387,7 +387,7 @@
             this.Controls.Add(this.txtJwtSecret);
             this.Controls.Add(this.txtLockerId);
             this.Controls.Add(this.txtTransactionId);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);

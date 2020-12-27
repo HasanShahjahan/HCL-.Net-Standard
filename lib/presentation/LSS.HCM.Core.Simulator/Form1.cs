@@ -23,7 +23,18 @@ namespace LSS.HCM.Core.Simulator
             txtCompartmentId.Text = "M0-1,M0-3";
             txtConfigurationFile.Text = @"D:\config.json";
             btnSubmit.Enabled = false;
+            /*
+            bStatusCOM1.BackColor = hcStatus["locker"] ? System.Drawing.Color.LightSteelBlue : System.Drawing.Color.LightSlateGray;
+            bStatusCOM1.Text = "locker";
+            bStatusCOM2.BackColor = hcStatus["detection"] ? System.Drawing.Color.LightSteelBlue : System.Drawing.Color.LightSlateGray;
+            bStatusCOM2.Text = "detection";
+            bStatusCOM4.BackColor = hcStatus["scanner"] ? System.Drawing.Color.LightSteelBlue : System.Drawing.Color.LightSlateGray;
+            bStatusCOM4.Text = "scanner";*/
         }
+
+        //listen from here?
+
+        //txtScannervalue.text = Somevalue(Callbackevent);
 
         // Socket Scanner
         delegate string SetTextCallback(string inputText);
@@ -50,7 +61,6 @@ namespace LSS.HCM.Core.Simulator
         {
             string configurationPath = txtConfigurationFile.Text;
             // Socket Scanner
-            //Task.Run(() => new SocketListenerService());
             Task.Run(() => StartSocketListener());
 
             _lockerManager = new LockerManager(configurationPath);

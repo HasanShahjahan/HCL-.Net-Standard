@@ -1,6 +1,7 @@
 ﻿using LSS.HCM.Core.Common.Base;
 using LSS.HCM.Core.DataObjects.Dtos;
 using LSS.HCM.Core.DataObjects.Settings;
+using LSS.HCM.Core.Domain.Services;
 using OpenCvSharp;
 using OpenCvSharp.Extensions;
 using System;
@@ -63,23 +64,42 @@ namespace LSS.HCM.Core.Domain.Helpers
         }
 
         /// <summary>
-        /// Image byte array preparation by open library.
+        /// Test comport in list. 
         /// </summary>
-        public static ComPortsHealthCheck ComPortInit(AppSettings lockerConfiguration)
+        public static ComPortsHealthCheck ComPortTest(AppSettings lockerConfiguration)
         {
-            var comPorts = new ComPortsHealthCheck();
-            try 
+            try
             {
-                string[] ports = SerialPort.GetPortNames();
-                comPorts.IsScannernPortAvailable = ports.Any(x => x == lockerConfiguration.Microcontroller.Scanner.Port);
-                comPorts.IsLockPortAvailable = ports.Any(x => x == lockerConfiguration.Microcontroller.LockControl.Port);
-                comPorts.IsDetectionPortAvailable = ports.Any(x => x == lockerConfiguration.Microcontroller.ObjectDetection.Port);
-            }
-            catch (Exception ex)
-            {
+                var spService = new SerialPortBaseService();
+                var comPorts = new ComPortsHealthCheck();
 
+                //bool IsScannernPortAvailable = ;
+                comPorts.IsLockPortAvailable = false;
+                var portInterface = lockerConfiguration.Microcontroller.LockControl;
+                if (spService.IsPortPresented(portInterface.Port))
+                {
+                    comPorts.IsLockPortAvailable = !spService.IsPortOpened(portInterface);
+                }
+
+                comPorts.IsDetectionPortAvailable = false;
+                portInterface = lockerConfiguration.Microcontroller.ObjectDetection;
+                if (spService.IsPortPresented(portInterface.Port))
+                {
+                    comPorts.IsDetectionPortAvailable = !spService.IsPortOpened(portInterface);
+                }
+
+                comPorts.IsScannernPortAvailable = false;
+                portInterface = lockerConfiguration.Microcontroller.Scanner;
+                if (spService.IsPortPresented(portInterface.Port))
+                {
+                    comPorts.IsScannernPortAvailable = !spService.IsPortOpened(portInterface);
+                }
+                return comPorts;
             }
-            return comPorts;
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

@@ -2,11 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.IO.Ports;
-using MQTTnet;
-using MQTTnet.Client;
-using MQTTnet.Client.Options;
 using System.Threading;
 using LSS.HCM.Core.DataObjects.Settings;
+using LSS.HCM.Core.Common.Utiles;
 
 namespace LSS.HCM.Core.Domain.Services
 {
@@ -23,11 +21,9 @@ namespace LSS.HCM.Core.Domain.Services
         ///  Open compartment actual result with status. 
         /// </returns>
         private readonly SerialPort _serialPort = new SerialPort();
-        private string _lockerId = string.Empty;
-        private string _brokerTopicEvent = string.Empty;
-        private string _socketServer = string.Empty;
-        private int _socketPort;
-        private SocketClientService client;
+
+        private string _SerialDataEventName;
+        private Func<string, string> _SerialDataProcessing;
 
         /// <summary>
         /// Initialization of serial port with multiple resources. 
@@ -41,8 +37,6 @@ namespace LSS.HCM.Core.Domain.Services
             _serialPort.Handshake = Handshake.None;
             _serialPort.ReadTimeout = serialPortResource.ReadTimeout;
             _serialPort.WriteTimeout = serialPortResource.WriteTimeout;
-
-            //Begin();
         }
 
         /// <summary>
@@ -85,6 +79,24 @@ namespace LSS.HCM.Core.Domain.Services
         }
 
         /// <summary>
+        /// Test serial port available.
+        /// </summary>
+        /// <returns>
+        ///  Nothing returned but error throw when its error
+        /// </returns>
+        public bool IsOpen()
+        {
+            try
+            {
+                return _serialPort.IsOpen;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Writes a specified number of bytes to the serial port using data from a buffer.
         /// </summary>
         /// <returns>
@@ -95,9 +107,16 @@ namespace LSS.HCM.Core.Domain.Services
             if (_serialPort.IsOpen)
             {
                 List<byte> commandResponseByte = new List<byte>();
-                _serialPort.Write(inputBuffer.ToArray(), 0, inputBuffer.Count);
-                bool _continue = true;
+                try
+                {
+                    _serialPort.Write(inputBuffer.ToArray(), 0, inputBuffer.Count);
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
 
+                bool _continue = true;
                 while (_continue)
                 {
                     try
@@ -126,7 +145,6 @@ namespace LSS.HCM.Core.Domain.Services
                         throw;
                     }
                 }
-                //_serialPort.Close();
                 return commandResponseByte;
             }
             return new List<byte>(); // return empty byte cause of error serialPort
@@ -165,19 +183,13 @@ namespace LSS.HCM.Core.Domain.Services
         /// <returns>
         ///  Get list of byte.
         /// </returns>
-        public void SetReadToPublishHandler(AppSettings lockerConfiguration)
+        public void SetReadToPublishHandler(SerialInterface controllerModule, Func<string,string> dataProcessingFunc)
         {
             try
             {
-                _lockerId = lockerConfiguration.Locker.LockerId;
-                _brokerTopicEvent = lockerConfiguration.Mqtt.Topic.Event.Scanner;
                 _serialPort.DataReceived += new SerialDataReceivedEventHandler(SerialInputEventHandler);
-                _socketServer = "localhost";
-                _socketPort = 11000;
-
-                // Socket Scanner
-                client = new SocketClientService(_socketServer, _socketPort);
-                client.Connect();
+                _SerialDataProcessing = dataProcessingFunc;
+                _SerialDataEventName = controllerModule.Name;
             }
             catch (Exception)
             {
@@ -197,10 +209,13 @@ namespace LSS.HCM.Core.Domain.Services
                     if (_serialPort.BytesToRead > 0)
                     {
                         string serialInData = _sp.ReadLine();
-                        // Socket Scanner
-                        sendDataOnSocket(serialInData);
-                        //_serialPort.DiscardInBuffer();
+                        var dictData = new Dictionary<string, string>();
+                        dictData.Add("eventname", _SerialDataEventName);
+                        dictData.Add("data", serialInData);
                         
+                        string jsonString = Utiles.DictToJson(dictData);
+                        _SerialDataProcessing(jsonString);
+
                     }
                 }
             }
@@ -208,19 +223,5 @@ namespace LSS.HCM.Core.Domain.Services
                 throw;
             }
         }
-
-        // Socket Scanner
-        private void sendDataOnSocket(string inputData)
-        {
-            try
-            {
-                client.Send(_lockerId + _brokerTopicEvent + "," + inputData);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-
     }
 }

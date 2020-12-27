@@ -80,7 +80,7 @@ namespace LSS.HCM.Core.Domain.Helpers
         /// <returns>
         ///  Return nothing
         /// </returns>
-        public static void SetDoorOpenTimer(AppSettings lockerConfiguration)//, ElapsedEventHandler OnTimedEvent)
+        public static void SetDoorOpenTimer(AppSettings lockerConfiguration)
         {
             _timeout = lockerConfiguration.Buzzer.Timeout;
             _audioFileName = lockerConfiguration.Buzzer.AudioFileName;

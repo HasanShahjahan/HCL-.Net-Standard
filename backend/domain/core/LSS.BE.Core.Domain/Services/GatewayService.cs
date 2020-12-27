@@ -8,6 +8,7 @@ using LSS.HCM.Core.DataObjects.Dtos;
 using LSS.HCM.Core.DataObjects.Models;
 using LSS.HCM.Core.Domain.Interfaces;
 using LSS.HCM.Core.Domain.Managers;
+using LSS.HCM.Core.Domain.Services;
 using Newtonsoft.Json.Linq;
 using Serilog;
 using System;
@@ -23,12 +24,15 @@ namespace LSS.BE.Core.Domain.Services
         private readonly ILockerManager _lockerManager;
         private readonly IHttpHandlerHelper _httpHandler;
 
+        private SocketClientService client;
+
         public GatewayService(MemberInfo memberInfo)
         {
             _memberInfo = memberInfo;
             _httpHandler = new HttpHandlerHelper(_memberInfo.UriString);
             _tokenResponse = ServiceInvoke.InitAsync(_memberInfo, _httpHandler);
             _lockerManager = new LockerManager(_memberInfo.ConfigurationPath);
+            StartScannerService();
         }
 
         public JObject LspVerification(LspUserAccess model)
@@ -217,5 +221,36 @@ namespace LSS.BE.Core.Domain.Services
             var result = (JObject)JToken.FromObject(response);
             return result;
         }
+
+        public void StartScannerService()
+        {
+            //string _lockerId = lockerConfiguration.Locker.LockerId;
+            //string _brokerTopicEvent = lockerConfiguration.Mqtt.Topic.Event.Scanner;
+            string _socketServer = "localhost"; //lockerConfiguration.Socket.Server
+            int _socketPort = 11000; //lockerConfiguration.Socket.Port
+            client = new SocketClientService(_socketServer, _socketPort);
+            client.Connect();
+            _lockerManager.RegisterScannerEvent(sendDataOnSocket);
+        }
+
+        // Socket Scanner
+        private string sendDataOnSocket(string inputData)
+        {
+            try
+            {
+                client.Send("scanner," + inputData);
+                return inputData;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+
+
+
+
+
     }
 }

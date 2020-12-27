@@ -37,9 +37,16 @@ namespace LSS.HCM.Core.Domain.Managers
         {
             var content = File.ReadAllText(configurationFilePath);
             lockerConfiguration = JsonSerializer.Deserialize<AppSettings>(content);
-            portsHealthCheck = LockerHelper.ComPortInit(lockerConfiguration);
-            CommunicationPortControlService.InitializeScanner(portsHealthCheck, lockerConfiguration);
+            portsHealthCheck = LockerHelper.ComPortTest(lockerConfiguration);
             Log.Information("[HCM][Locker Manager][Initiated][Service initiated with scanner and logging.]");
+        }
+        /// <summary>
+        /// Scanner data recieving event
+        /// </summary>
+        public void RegisterScannerEvent(Func<string, string> dataProcessFunc)
+        {
+            CommunicationPortControlService.InitializeScanner(portsHealthCheck, lockerConfiguration, dataProcessFunc);
+
         }
 
         /// <summary>
@@ -72,8 +79,11 @@ namespace LSS.HCM.Core.Domain.Managers
             Log.Information("[HCM][Open Compartment][Req]" + "[" + JsonSerializer.Serialize(model) + "]");
 
             try {
+                if (!portsHealthCheck.IsLockPortAvailable && !portsHealthCheck.IsDetectionPortAvailable) return OpenCompartmentMapper.ToError(new LockerDto { StatusCode = StatusCode.Status503ServiceUnavailable, Error = new Common.Exceptions.ApplicationException(ApplicationErrorCodes.BrokenComPort, ApplicationErrorCodes.GetMessage(ApplicationErrorCodes.BrokenComPort)) });
+                
                 var (statusCode, errorResult) = LockerManagementValidator.PayloadValidator(lockerConfiguration, model.JwtCredentials.IsEnabled, model.JwtCredentials.Secret, model.JwtCredentials.Token, PayloadTypes.OpenCompartment, model.LockerId, model.TransactionId, model.CompartmentIds, null);
                 if (statusCode != StatusCode.Status200OK) return OpenCompartmentMapper.ToError(new LockerDto { StatusCode = statusCode, Error = errorResult });
+                
                 var result = CompartmentManager.CompartmentOpen(model, lockerConfiguration);
                 lockerDto = OpenCompartmentMapper.ToObject(result);
                 Log.Information("[HCM][Open Compartment][Res]" + "[" + JsonSerializer.Serialize(result) + "]");
@@ -102,8 +112,11 @@ namespace LSS.HCM.Core.Domain.Managers
 
             try
             {
+                if (!portsHealthCheck.IsLockPortAvailable && !portsHealthCheck.IsDetectionPortAvailable) return CompartmentStatusMapper.ToError(new CompartmentStatusDto { StatusCode = StatusCode.Status503ServiceUnavailable, Error = new Common.Exceptions.ApplicationException(ApplicationErrorCodes.BrokenComPort, ApplicationErrorCodes.GetMessage(ApplicationErrorCodes.BrokenComPort)) });
+
                 var (statusCode, errorResult) = LockerManagementValidator.PayloadValidator(lockerConfiguration, model.JwtCredentials.IsEnabled, model.JwtCredentials.Secret, model.JwtCredentials.Token, PayloadTypes.CompartmentStatus, model.LockerId, model.TransactionId, model.CompartmentIds, null);
                 if (statusCode != StatusCode.Status200OK) return CompartmentStatusMapper.ToError(new CompartmentStatusDto { StatusCode = statusCode, Error = errorResult });
+               
                 var result = CompartmentManager.CompartmentStatus(model, lockerConfiguration);
                 compartmentStatusDto = CompartmentStatusMapper.ToObject(result);
                 Log.Information("[HCM][Compartment Status][Res]" + "[" + JsonSerializer.Serialize(result) + "]");
