@@ -27,8 +27,12 @@ namespace LSS.HCM.Core.Domain.Managers
         /// <summary>
         ///   Set Initialization value for locker management.
         ///</summary>
-        private readonly AppSettings lockerConfiguration;
-        private readonly ComPortsHealthCheck portsHealthCheck;
+        public readonly AppSettings lockerConfiguration;
+
+        /// <summary>
+        ///   Set Initialization value for Communication Port Health Check.
+        ///</summary>
+        public readonly ComPortsHealthCheck portsHealthCheck;
 
         /// <summary>
         ///   Initialization information for locker configuration including Microcontroller board, Serial port and Communication port.

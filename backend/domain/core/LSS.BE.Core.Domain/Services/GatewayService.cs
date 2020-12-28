@@ -21,10 +21,9 @@ namespace LSS.BE.Core.Domain.Services
     {
         private readonly TokenResponse _tokenResponse;
         private readonly MemberInfo _memberInfo;
-        private readonly ILockerManager _lockerManager;
+        private readonly LockerManager _lockerManager;
         private readonly IHttpHandlerHelper _httpHandler;
-
-        private SocketClientService client;
+        private readonly bool _scannerInit;
 
         public GatewayService(MemberInfo memberInfo)
         {
@@ -32,7 +31,7 @@ namespace LSS.BE.Core.Domain.Services
             _httpHandler = new HttpHandlerHelper(_memberInfo.UriString);
             _tokenResponse = ServiceInvoke.InitAsync(_memberInfo, _httpHandler);
             _lockerManager = new LockerManager(_memberInfo.ConfigurationPath);
-            StartScannerService();
+            _scannerInit = ScannerServiceHelper.Start(_lockerManager);
         }
 
         public JObject LspVerification(LspUserAccess model)
@@ -221,36 +220,5 @@ namespace LSS.BE.Core.Domain.Services
             var result = (JObject)JToken.FromObject(response);
             return result;
         }
-
-        public void StartScannerService()
-        {
-            //string _lockerId = lockerConfiguration.Locker.LockerId;
-            //string _brokerTopicEvent = lockerConfiguration.Mqtt.Topic.Event.Scanner;
-            string _socketServer = "localhost"; //lockerConfiguration.Socket.Server
-            int _socketPort = 11000; //lockerConfiguration.Socket.Port
-            client = new SocketClientService(_socketServer, _socketPort);
-            client.Connect();
-            _lockerManager.RegisterScannerEvent(sendDataOnSocket);
-        }
-
-        // Socket Scanner
-        private string sendDataOnSocket(string inputData)
-        {
-            try
-            {
-                client.Send("scanner," + inputData);
-                return inputData;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-
-
-
-
-
-
     }
 }
