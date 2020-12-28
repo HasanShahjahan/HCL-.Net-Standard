@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Serilog;
+using System;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -25,7 +26,7 @@ namespace LSS.HCM.Core.Domain.Services
                 _client = new Socket(_ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
                 _client.Connect(_remoteEP);
 
-                Console.WriteLine("Socket connected to {0}", _client.RemoteEndPoint.ToString());
+                Log.Debug("[HCM][Socket Client Service][Connect]" + "[Socket connected to {0} : " + _client.RemoteEndPoint.ToString() + "]");
             }
             catch (Exception)
             {
@@ -41,6 +42,7 @@ namespace LSS.HCM.Core.Domain.Services
                 {
                     Connect();
                     Send(sendMsg);
+                    Log.Debug("[HCM][Socket Client Service][Send]" + "[Send normally][message : " + sendMsg + "]");
                 }
             }
             catch (SocketException)
@@ -48,6 +50,7 @@ namespace LSS.HCM.Core.Domain.Services
                 _client.Close();
                 Connect();
                 Send(sendMsg);
+                Log.Debug("[HCM][Socket Client Service][Send]" + "[Try send when some error][message : " + sendMsg + "]");
             }
             catch (Exception)
             {
