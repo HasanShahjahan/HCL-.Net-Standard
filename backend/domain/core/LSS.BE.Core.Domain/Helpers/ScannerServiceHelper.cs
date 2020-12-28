@@ -21,7 +21,7 @@ namespace LSS.BE.Core.Domain.Helpers
                 _lockerManager.RegisterScannerEvent(SendDataOnSocket);
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
