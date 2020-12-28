@@ -1,8 +1,10 @@
 ﻿using LSS.BE.Core.Common.Base;
+using LSS.BE.Core.Common.Exceptions;
 using LSS.BE.Core.Domain.Helpers;
 using LSS.BE.Core.Domain.Interfaces;
 using LSS.Logging;
 using Serilog;
+using System;
 
 namespace LSS.BE.Core.Domain.Initialization
 {
@@ -19,15 +21,23 @@ namespace LSS.BE.Core.Domain.Initialization
         /// </returns>
         public static TokenResponse InitAsync(MemberInfo memberInfo, IHttpHandlerHelper httpHandler)
         {
-            LoggerAbstractions.SetupStaticLogger(memberInfo.ConfigurationPath);
-            LoggerAbstractions.CreateHostBuilder().Build();
-            Log.Information("[Initialization][Service initiated with access token and logging.]");
+            var tokenResponse = new TokenResponse();
+            try 
+            {
+                LoggerAbstractions.SetupStaticLogger(memberInfo.ConfigurationPath);
+                LoggerAbstractions.CreateHostBuilder().Build();
+                Log.Information("[Initialization][Service initiated with access token and logging.]");
 
-            var tokenResponse = httpHandler.GetToken(memberInfo.UriString, memberInfo.Version, memberInfo.ClientId, memberInfo.ClientSecret);
-            Log.Information("[Initialized][Service initialized with access token and logging.]");
+                tokenResponse = httpHandler.GetToken(memberInfo.UriString, memberInfo.Version, memberInfo.ClientId, memberInfo.ClientSecret);
+                Log.Information("[Initialized][Service initialized with access token and logging.]");
+            }
+            catch (Exception ex) 
+            {
+                Log.Error("[Initialization][Failed]" + ex);
+                tokenResponse.StatusCode = StatusCode.Status502BadGateway;
+            }
 
             return tokenResponse;
-
         }
     }
 }

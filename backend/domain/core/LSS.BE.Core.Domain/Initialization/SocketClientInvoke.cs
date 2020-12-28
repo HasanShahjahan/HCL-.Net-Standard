@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Serilog;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
@@ -56,12 +57,11 @@ namespace LSS.BE.Core.Domain.Initialization
             {
                 _client = new Socket(_ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
                 _client.Connect(_remoteEP);
-
-                Console.WriteLine("Socket connected to {0}", _client.RemoteEndPoint.ToString());
+                Log.Information("[Socket Client Invoke][Socket connected]" + "[" + _client.RemoteEndPoint.ToString() + "]");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //throw;
+                Log.Error("[Socket Client Invoke][Connect]" + "[" + ex + "]");
             }
         }
 
@@ -80,6 +80,7 @@ namespace LSS.BE.Core.Domain.Initialization
                 {
                     Connect();
                     Send(sendMsg);
+                    Log.Information("[Socket Client Invoke][Send]" + "[" + sendMsg + "]");
                 }
             }
             catch (SocketException)
@@ -88,9 +89,9 @@ namespace LSS.BE.Core.Domain.Initialization
                 Connect();
                 Send(sendMsg);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                Log.Error("[Socket Client Invoke][Send]" + "[" + ex + "]");
             }
         }
     }

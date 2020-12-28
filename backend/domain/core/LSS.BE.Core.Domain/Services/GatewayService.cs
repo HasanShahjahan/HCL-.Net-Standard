@@ -1,4 +1,5 @@
 ﻿using LSS.BE.Core.Common.Base;
+using LSS.BE.Core.Common.Exceptions;
 using LSS.BE.Core.Common.UriPath;
 using LSS.BE.Core.Domain.Helpers;
 using LSS.BE.Core.Domain.Initialization;
@@ -67,13 +68,20 @@ namespace LSS.BE.Core.Domain.Services
         /// </returns>
         public JObject LspVerification(LspUserAccess model)
         {
-            var request = SerializerHelper<LspUserAccess>.SerializeObject(model);
-            Log.Information("[Lsp Verification][Req]" + "[" + request + "]");
+            JObject result;
+            if (TokenResponse.StatusCode == 200)
+            {
+                var request = SerializerHelper<LspUserAccess>.SerializeObject(model);
+                Log.Information("[Lsp Verification][Req]" + "[" + request + "]");
 
-            var response = HttpHandler.PostRequestResolver(request, HttpMethod.Post, MemberInfo.UriString, MemberInfo.Version, MemberInfo.ClientId, MemberInfo.ClientSecret, UriAbsolutePath.CheckAccess, TokenResponse.AccessToken, TokenResponse.DateTime);
-            Log.Information("[Lsp Verification][Res]" + "[" + response + "]");
+                var response = HttpHandler.PostRequestResolver(request, HttpMethod.Post, MemberInfo.UriString, MemberInfo.Version, MemberInfo.ClientId, MemberInfo.ClientSecret, UriAbsolutePath.CheckAccess, TokenResponse.AccessToken, TokenResponse.DateTime);
+                Log.Information("[Lsp Verification][Res]" + "[" + response + "]");
 
-            var result = JObject.Parse(response);
+                result = JObject.Parse(response);
+                return result;
+            }
+            var json = SerializerHelper<AuthenticationError>.SerializeObject(new AuthenticationError(false, "401", "Unauthenticated"));
+            result = JObject.Parse(json);
             return result;
         }
 

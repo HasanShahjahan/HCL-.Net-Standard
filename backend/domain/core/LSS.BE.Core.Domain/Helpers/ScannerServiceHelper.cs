@@ -3,6 +3,7 @@ using LSS.BE.Core.Domain.Interfaces;
 using LSS.HCM.Core.Domain.Interfaces;
 using LSS.HCM.Core.Domain.Managers;
 using LSS.HCM.Core.Domain.Services;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -34,8 +35,9 @@ namespace LSS.BE.Core.Domain.Helpers
                 _lockerManager.RegisterScannerEvent(SendDataOnSocket);
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Log.Error("[Scanner Service Helper][Start]" + "[" + ex + "]");
                 return false;
             }
 

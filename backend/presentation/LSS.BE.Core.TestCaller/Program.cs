@@ -14,7 +14,7 @@ namespace LSS.BE.Core.TestCaller
     class Program
     {
         private static string scanningValue = string.Empty;
-        static void Main(string[] args)
+        static int Main(string[] args)
         {
 
             //Task.Run(() => StartSocketListener());
@@ -29,6 +29,14 @@ namespace LSS.BE.Core.TestCaller
                 else Console.WriteLine("Object Detection Port : Available");
                 if (!gatewayService.LockerManager.PortsHealthCheck.IsScannernPortAvailable) Console.WriteLine("Scanner Port : Not Available");
                 else Console.WriteLine("Scanner Port : Available\n");
+
+                if (gatewayService.TokenResponse.StatusCode != 200)
+                {
+                    Console.WriteLine("Sevice Initialization is failed.");
+                    return 0;
+                }
+
+                Console.Write("Gateway Service Initialized\n");
 
                 Console.WriteLine("Please select user Case type : \n 1.CDO (Courier Drop Off) \n 2.CC(Consumer Collect)");
                 Console.Write("Use case type :");
@@ -61,6 +69,7 @@ namespace LSS.BE.Core.TestCaller
             {
                 Console.ReadKey();
             }
+            return 0;
 
         }
 
