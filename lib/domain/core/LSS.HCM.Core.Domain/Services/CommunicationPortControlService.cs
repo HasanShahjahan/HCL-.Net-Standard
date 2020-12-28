@@ -2,6 +2,7 @@
 using LSS.HCM.Core.Common.Enums;
 using LSS.HCM.Core.DataObjects.Settings;
 using LSS.HCM.Core.Domain.Core.InputOutpuPorts;
+using Serilog;
 using System;
 using System.Collections.Generic;
 
@@ -24,6 +25,8 @@ namespace LSS.HCM.Core.Domain.Services
             SerialPortControlService controlModule;
             List<byte> responseData;
             Dictionary<string, string> result = null;
+            Log.Debug("[HCM][Communication Port Control Service][Send Command]" + "[Command Hex Value : " + commandString + "]");
+
             if (commandName == CommandType.DoorOpen)
             {
                 controlModule = new SerialPortControlService(new SerialPortResource(lockerConfiguration.Microcontroller.LockControl.Port, lockerConfiguration.Microcontroller.LockControl.Baudrate, lockerConfiguration.Microcontroller.LockControl.DataBits, 500, 500));
@@ -48,8 +51,11 @@ namespace LSS.HCM.Core.Domain.Services
                 result = BoardInitializationService.ExecuteCommand(CommandType.ItemDetection, responseData);
                 controlModule.End();
             }
+            Log.Debug("[HCM][Communication Port Control Service][Send Command]" + "[Command Response Result : " + result + "]");
+
             Dictionary<string, string> commandResult = result;
             commandResult.Add("Command", commandName);
+
             return commandResult;
         }
 
