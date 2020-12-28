@@ -10,6 +10,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.IO.Ports;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace LSS.HCM.Core.Domain.Helpers
 {
@@ -70,36 +71,29 @@ namespace LSS.HCM.Core.Domain.Helpers
         {
             try
             {
-                var spService = new SerialPortBaseService();
-                var comPorts = new ComPortsHealthCheck();
-
-                //bool IsScannernPortAvailable = ;
-                comPorts.IsLockPortAvailable = false;
-                var portInterface = lockerConfiguration.Microcontroller.LockControl;
-                if (spService.IsPortPresented(portInterface.Port))
+                var comPorts = new ComPortsHealthCheck
                 {
-                    comPorts.IsLockPortAvailable = !spService.IsPortOpened(portInterface);
-                }
-
-                comPorts.IsDetectionPortAvailable = false;
-                portInterface = lockerConfiguration.Microcontroller.ObjectDetection;
-                if (spService.IsPortPresented(portInterface.Port))
-                {
-                    comPorts.IsDetectionPortAvailable = !spService.IsPortOpened(portInterface);
-                }
-
-                comPorts.IsScannernPortAvailable = false;
-                portInterface = lockerConfiguration.Microcontroller.Scanner;
-                if (spService.IsPortPresented(portInterface.Port))
-                {
-                    comPorts.IsScannernPortAvailable = !spService.IsPortOpened(portInterface);
-                }
+                    IsLockPortAvailable = Check(lockerConfiguration.Microcontroller.LockControl),
+                    IsDetectionPortAvailable = Check(lockerConfiguration.Microcontroller.ObjectDetection),
+                    IsScannernPortAvailable = Check(lockerConfiguration.Microcontroller.Scanner)
+                };
                 return comPorts;
             }
             catch (Exception)
             {
                 throw;
             }
+        }
+
+        private static bool Check(SerialInterface portInterface)
+        {
+            bool flag = false;
+            var spService = new SerialPortBaseService();
+            if (spService.IsPortPresented(portInterface.Port))
+            {
+                flag = !spService.IsPortOpened(portInterface);
+            }
+            return flag;
         }
     }
 }

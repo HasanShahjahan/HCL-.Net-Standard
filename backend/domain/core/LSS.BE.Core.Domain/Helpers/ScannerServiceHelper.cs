@@ -16,7 +16,7 @@ namespace LSS.BE.Core.Domain.Helpers
         {
             try
             {
-                _client = new SocketClientInvoke(_lockerManager.lockerConfiguration.Socket.Server, _lockerManager.lockerConfiguration.Socket.Port);
+                _client = new SocketClientInvoke(_lockerManager.LockerConfiguration.Socket.Server, _lockerManager.LockerConfiguration.Socket.Port);
                 _client.Connect();
                 _lockerManager.RegisterScannerEvent(SendDataOnSocket);
                 return true;

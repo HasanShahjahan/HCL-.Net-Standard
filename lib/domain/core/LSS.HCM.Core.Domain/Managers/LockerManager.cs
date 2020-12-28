@@ -27,12 +27,12 @@ namespace LSS.HCM.Core.Domain.Managers
         /// <summary>
         ///   Set Initialization value for locker management.
         ///</summary>
-        public readonly AppSettings lockerConfiguration;
+        public readonly AppSettings LockerConfiguration;
 
         /// <summary>
         ///   Set Initialization value for Communication Port Health Check.
         ///</summary>
-        public readonly ComPortsHealthCheck portsHealthCheck;
+        public readonly ComPortsHealthCheck PortsHealthCheck;
 
         /// <summary>
         ///   Initialization information for locker configuration including Microcontroller board, Serial port and Communication port.
@@ -40,35 +40,11 @@ namespace LSS.HCM.Core.Domain.Managers
         public LockerManager(string configurationFilePath)
         {
             var content = File.ReadAllText(configurationFilePath);
-            lockerConfiguration = JsonSerializer.Deserialize<AppSettings>(content);
-            portsHealthCheck = LockerHelper.ComPortTest(lockerConfiguration);
+            LockerConfiguration = JsonSerializer.Deserialize<AppSettings>(content);
+            PortsHealthCheck = LockerHelper.ComPortTest(LockerConfiguration);
             Log.Information("[HCM][Locker Manager][Initiated][Service initiated with scanner and logging.]");
         }
-        /// <summary>
-        /// Scanner data recieving event
-        /// </summary>
-        public void RegisterScannerEvent(Func<string, string> dataProcessFunc)
-        {
-            CommunicationPortControlService.InitializeScanner(portsHealthCheck, lockerConfiguration, dataProcessFunc);
-
-        }
-
-        /// <summary>
-        /// Gets the open compartment parameters with Json web token credentials and MongoDB database credentials.
-        /// Json web token credentials contains enable or disable, if enable then need to provide jwt secret and token.
-        /// </summary>
-        /// <returns>
-        ///  List of compartment open status with object detection, LED status by requested compartment id's.
-        /// </returns>
-        public Dictionary<string,bool> PortHealthCheckStatus()
-        {
-            var response = new Dictionary<string, bool>();
-            response.Add("locker", portsHealthCheck.IsLockPortAvailable);
-            response.Add("detection", portsHealthCheck.IsDetectionPortAvailable);
-            response.Add("scanner", portsHealthCheck.IsScannernPortAvailable);
-
-            return response;
-        }
+        
 
         /// <summary>
         /// Gets the open compartment parameters with Json web token credentials and MongoDB database credentials.
@@ -83,12 +59,12 @@ namespace LSS.HCM.Core.Domain.Managers
             Log.Information("[HCM][Open Compartment][Req]" + "[" + JsonSerializer.Serialize(model) + "]");
 
             try {
-                if (!portsHealthCheck.IsLockPortAvailable && !portsHealthCheck.IsDetectionPortAvailable) return OpenCompartmentMapper.ToError(new LockerDto { StatusCode = StatusCode.Status503ServiceUnavailable, Error = new Common.Exceptions.ApplicationException(ApplicationErrorCodes.BrokenComPort, ApplicationErrorCodes.GetMessage(ApplicationErrorCodes.BrokenComPort)) });
+                if (!PortsHealthCheck.IsLockPortAvailable && !PortsHealthCheck.IsDetectionPortAvailable) return OpenCompartmentMapper.ToError(new LockerDto { StatusCode = StatusCode.Status503ServiceUnavailable, Error = new Common.Exceptions.ApplicationException(ApplicationErrorCodes.BrokenComPort, ApplicationErrorCodes.GetMessage(ApplicationErrorCodes.BrokenComPort)) });
                 
-                var (statusCode, errorResult) = LockerManagementValidator.PayloadValidator(lockerConfiguration, model.JwtCredentials.IsEnabled, model.JwtCredentials.Secret, model.JwtCredentials.Token, PayloadTypes.OpenCompartment, model.LockerId, model.TransactionId, model.CompartmentIds, null);
+                var (statusCode, errorResult) = LockerManagementValidator.PayloadValidator(LockerConfiguration, model.JwtCredentials.IsEnabled, model.JwtCredentials.Secret, model.JwtCredentials.Token, PayloadTypes.OpenCompartment, model.LockerId, model.TransactionId, model.CompartmentIds, null);
                 if (statusCode != StatusCode.Status200OK) return OpenCompartmentMapper.ToError(new LockerDto { StatusCode = statusCode, Error = errorResult });
                 
-                var result = CompartmentManager.CompartmentOpen(model, lockerConfiguration);
+                var result = CompartmentManager.CompartmentOpen(model, LockerConfiguration);
                 lockerDto = OpenCompartmentMapper.ToObject(result);
                 Log.Information("[HCM][Open Compartment][Res]" + "[" + JsonSerializer.Serialize(result) + "]");
             }
@@ -116,12 +92,12 @@ namespace LSS.HCM.Core.Domain.Managers
 
             try
             {
-                if (!portsHealthCheck.IsLockPortAvailable && !portsHealthCheck.IsDetectionPortAvailable) return CompartmentStatusMapper.ToError(new CompartmentStatusDto { StatusCode = StatusCode.Status503ServiceUnavailable, Error = new Common.Exceptions.ApplicationException(ApplicationErrorCodes.BrokenComPort, ApplicationErrorCodes.GetMessage(ApplicationErrorCodes.BrokenComPort)) });
+                if (!PortsHealthCheck.IsLockPortAvailable && !PortsHealthCheck.IsDetectionPortAvailable) return CompartmentStatusMapper.ToError(new CompartmentStatusDto { StatusCode = StatusCode.Status503ServiceUnavailable, Error = new Common.Exceptions.ApplicationException(ApplicationErrorCodes.BrokenComPort, ApplicationErrorCodes.GetMessage(ApplicationErrorCodes.BrokenComPort)) });
 
-                var (statusCode, errorResult) = LockerManagementValidator.PayloadValidator(lockerConfiguration, model.JwtCredentials.IsEnabled, model.JwtCredentials.Secret, model.JwtCredentials.Token, PayloadTypes.CompartmentStatus, model.LockerId, model.TransactionId, model.CompartmentIds, null);
+                var (statusCode, errorResult) = LockerManagementValidator.PayloadValidator(LockerConfiguration, model.JwtCredentials.IsEnabled, model.JwtCredentials.Secret, model.JwtCredentials.Token, PayloadTypes.CompartmentStatus, model.LockerId, model.TransactionId, model.CompartmentIds, null);
                 if (statusCode != StatusCode.Status200OK) return CompartmentStatusMapper.ToError(new CompartmentStatusDto { StatusCode = statusCode, Error = errorResult });
                
-                var result = CompartmentManager.CompartmentStatus(model, lockerConfiguration);
+                var result = CompartmentManager.CompartmentStatus(model, LockerConfiguration);
                 compartmentStatusDto = CompartmentStatusMapper.ToObject(result);
                 Log.Information("[HCM][Compartment Status][Res]" + "[" + JsonSerializer.Serialize(result) + "]");
             }
@@ -148,7 +124,7 @@ namespace LSS.HCM.Core.Domain.Managers
 
             try
             {
-                var (statusCode, errorResult) = LockerManagementValidator.PayloadValidator(lockerConfiguration, model.JwtCredentials.IsEnabled, model.JwtCredentials.Secret, model.JwtCredentials.Token, PayloadTypes.CaptureImage, model.LockerId, model.TransactionId, null, CaptureType.Photo);
+                var (statusCode, errorResult) = LockerManagementValidator.PayloadValidator(LockerConfiguration, model.JwtCredentials.IsEnabled, model.JwtCredentials.Secret, model.JwtCredentials.Token, PayloadTypes.CaptureImage, model.LockerId, model.TransactionId, null, CaptureType.Photo);
                 if (statusCode != StatusCode.Status200OK) return CaptureMapper.ToError(new CaptureDto { StatusCode = statusCode, Error = errorResult });
                 var result = LockerHelper.CapturePhoto(model);
                 captureDto = CaptureMapper.ToObject(result);
@@ -161,6 +137,30 @@ namespace LSS.HCM.Core.Domain.Managers
             }
 
             return captureDto;
+        }
+
+        /// <summary>
+        /// Scanner data recieving event
+        /// </summary>
+        public void RegisterScannerEvent(Func<string, string> dataProcessFunc) => CommunicationPortControlService.InitializeScanner(PortsHealthCheck, LockerConfiguration, dataProcessFunc);
+
+        /// <summary>
+        /// Gets the open compartment parameters with Json web token credentials and MongoDB database credentials.
+        /// Json web token credentials contains enable or disable, if enable then need to provide jwt secret and token.
+        /// </summary>
+        /// <returns>
+        ///  List of compartment open status with object detection, LED status by requested compartment id's.
+        /// </returns>
+        public Dictionary<string, bool> PortHealthCheckStatus()
+        {
+            var response = new Dictionary<string, bool>
+            {
+                { "locker", PortsHealthCheck.IsLockPortAvailable },
+                { "detection", PortsHealthCheck.IsDetectionPortAvailable },
+                { "scanner", PortsHealthCheck.IsScannernPortAvailable }
+            };
+
+            return response;
         }
     }
 }

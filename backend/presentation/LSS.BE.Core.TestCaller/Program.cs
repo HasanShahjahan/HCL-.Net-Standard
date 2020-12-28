@@ -22,10 +22,18 @@ namespace LSS.BE.Core.TestCaller
             {
 
                 var (lockerStationId, gatewayService) = GetewayServiceClient.Init();
-                Console.Write("Use case type :");
-                Console.WriteLine("User Case Type : \n 1.CDO (Courier Drop Off) \n 2.CC(Consumer Collect)");
+
+                if (!gatewayService.LockerManager.PortsHealthCheck.IsLockPortAvailable) Console.WriteLine("Lock Port : Not Available");
+                else Console.WriteLine("Lock Port : Available");
+                if (!gatewayService.LockerManager.PortsHealthCheck.IsDetectionPortAvailable) Console.WriteLine("Object Detection Port : Not Available");
+                else Console.WriteLine("Object Detection Port : Available");
+                if (!gatewayService.LockerManager.PortsHealthCheck.IsScannernPortAvailable) Console.WriteLine("Scanner Port : Not Available");
+                else Console.WriteLine("Scanner Port : Available\n");
+
+                Console.WriteLine("Please select user Case type : \n 1.CDO (Courier Drop Off) \n 2.CC(Consumer Collect)");
                 Console.Write("Use case type :");
                 string useCaseType = Console.ReadLine();
+
                 if (useCaseType == "CDO")
                 {
                     GetewayServiceClient.CourierDropOff(lockerStationId, gatewayService);
@@ -55,10 +63,12 @@ namespace LSS.BE.Core.TestCaller
             }
 
         }
+
         // Socket Scanner
         public static void StartSocketListener()
         {
-            Task.Run(() => {
+            Task.Run(() =>
+            {
                 var server = new SocketListenerService("localhost", 11000);
                 server.AsyncStart(UpdateScannerValue);
             });
