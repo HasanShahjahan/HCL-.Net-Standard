@@ -64,7 +64,7 @@ namespace LSS.HCM.Core.Domain.Managers
             // Set alert timer
             if(compartmentDoorStatusAlert)
             {
-                Log.Debug("[HCM][Compartment Manager][Compartment Open]" + "[SetDoorOpenTimer]");
+                Log.Information("[HCM][Compartment Manager][Compartment Open]" + "[SetDoorOpenTimer]");
                 CompartmentHelper.SetDoorOpenTimer(lockerConfiguration);
                 //CompartmentHelper.EndDoorOpenTimer();
             }
