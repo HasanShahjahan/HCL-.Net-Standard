@@ -7,7 +7,7 @@ namespace LSS.HCM.Core.Domain.Services
 {
     class SocketClientService
     {
-        private Socket _client;
+        private  Socket _client;
         private IPHostEntry _host;
         private IPAddress _ipAddress;
         private IPEndPoint _remoteEP;
