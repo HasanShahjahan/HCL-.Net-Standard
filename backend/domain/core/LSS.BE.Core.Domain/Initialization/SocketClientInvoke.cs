@@ -1,19 +1,23 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
 
-namespace LSS.HCM.Core.Domain.Services
+namespace LSS.BE.Core.Domain.Initialization
 {
-    class SocketClientService
+    public class SocketClientInvoke
     {
         private Socket _client;
         private IPHostEntry _host;
         private IPAddress _ipAddress;
         private IPEndPoint _remoteEP;
 
-        public SocketClientService(string hostName, int hostPort)
+        public SocketClientInvoke(string hostName, int hostPort)
         {
+            if (string.IsNullOrEmpty(hostName)) hostName = "localhost";
+            if (hostPort == 0) hostPort = 11000;
+
             _host = Dns.GetHostEntry(hostName);
             _ipAddress = _host.AddressList[0];
             _remoteEP = new IPEndPoint(_ipAddress, hostPort);

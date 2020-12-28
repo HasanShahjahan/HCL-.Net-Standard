@@ -5,6 +5,7 @@
     <Authors>Hasan Shahjahan</Authors>
     <Product>Locker Station Backend Service</Product>
     <Description>To fascilitae locker station app by connection any other parties (E.g. LMS, HCM and other parites too).</Description>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <Version>1.0.0</Version>
   </PropertyGroup>
 
