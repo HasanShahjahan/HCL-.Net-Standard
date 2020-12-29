@@ -3,6 +3,7 @@ using LSS.HCM.Core.DataObjects.Settings;
 using LSS.HCM.Core.Domain.Helpers;
 using LSS.HCM.Core.Domain.Services;
 using LSS.HCM.Core.Entities.Locker;
+using Serilog;
 using System.Collections.Generic;
 using System.Linq;
 using CompartmentConfiguration = LSS.HCM.Core.DataObjects.Settings.Compartment;
@@ -41,7 +42,9 @@ namespace LSS.HCM.Core.Domain.Managers
             foreach (string moduleNo in odbModuleList)
             {
                 objectdetectStatusAry[moduleNo] = CompartmentHelper.GetStatusByModuleId(CommandType.ItemDetection, moduleNo, lockerConfiguration);
+                Log.Debug("[HCM][Compartment Manager][Compartment Open]" + "[Module No : " + moduleNo + "]" + "[Object Detection Status Array : " + objectdetectStatusAry[moduleNo] + "]");
             }
+
 
             var result = new Locker();
             bool compartmentDoorStatusAlert = false;
@@ -61,10 +64,10 @@ namespace LSS.HCM.Core.Domain.Managers
             // Set alert timer
             if(compartmentDoorStatusAlert)
             {
+                Log.Information("[HCM][Compartment Manager][Compartment Open]" + "[Set Door Open Timer]");
                 CompartmentHelper.SetDoorOpenTimer(lockerConfiguration);
                 //CompartmentHelper.EndDoorOpenTimer();
             }
-            
 
             return result;
         }

@@ -77,6 +77,7 @@ namespace LSS.HCM.Core.Domain.Helpers
 
         /// <summary>
         /// Setup door open timer to alert if time out.
+        /// </summary>
         /// <returns>
         ///  Return nothing
         /// </returns>

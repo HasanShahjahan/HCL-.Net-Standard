@@ -19,7 +19,7 @@ namespace LSS.BE.Core.Security.Handlers
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
-        public HttpResponseMessage GetTokenAsync(string uriString, string version, string uriPath, string clientId, string clientSecret)
+        public HttpResponseMessage GetTokenAsync(string version, string uriPath, string clientId, string clientSecret)
         {
             
             var values = new List<KeyValuePair<string, string>>
@@ -40,7 +40,7 @@ namespace LSS.BE.Core.Security.Handlers
             return response;
         }
         
-        public HttpResponseMessage PostAsync(string request, HttpMethod httpMethod, string uriString, string version, string uriPath, string type, string token)
+        public HttpResponseMessage PostAsync(string request, HttpMethod httpMethod, string version, string uriPath, string type, string token)
         {
             var content = new StringContent(request, Encoding.UTF8, "application/json");
             var requestMessage = new HttpRequestMessage(httpMethod, "/" + version + "/" + uriPath);
@@ -52,7 +52,7 @@ namespace LSS.BE.Core.Security.Handlers
             return response;
         }
 
-        public HttpResponseMessage GetAsync(string uriString, Dictionary<string, string> queryParams, string version, string uriPath, string type, string token)
+        public HttpResponseMessage GetAsync(Dictionary<string, string> queryParams, string version, string uriPath, string type, string token)
         {
             var requestMessage = new HttpRequestMessage(HttpMethod.Get, QueryHelpers.AddQueryString("/" + version + "/" + uriPath, queryParams));
             requestMessage.Headers.Authorization = new AuthenticationHeaderValue(type, token);

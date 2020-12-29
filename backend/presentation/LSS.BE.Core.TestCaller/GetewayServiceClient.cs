@@ -41,8 +41,6 @@ namespace LSS.BE.Core.TestCaller
                 ConfigurationPath = configurationPath
             };
             var gatewayService = new GatewayService(memberInfo);
-            Console.WriteLine("Gateway Service Initialized\n");
-
             return (lockerStationId, gatewayService);
         }
 

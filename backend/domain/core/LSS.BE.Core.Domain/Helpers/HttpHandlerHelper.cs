@@ -12,20 +12,36 @@ using System.Net.Http;
 
 namespace LSS.BE.Core.Domain.Helpers
 {
+    /// <summary>
+    ///   Represents http handler for get, post and put request.
+    ///</summary>
     public class HttpHandlerHelper: IHttpHandlerHelper
     {
+        /// <summary>
+        ///   Initialize the handler interface.
+        ///</summary>
         private readonly IHttpHandler _httpHandler;
+
+        /// <summary>
+        ///   Initialization information for Http Handler.
+        ///</summary>
         public HttpHandlerHelper(string uriString)
         {
             _httpHandler = new HttpHandler(uriString);
         }
 
-        public TokenResponse GetToken(string uriString, string version, string clientId, string clientSecret)
+        /// <summary>
+        /// Sets uri string, version, client id and secret.
+        /// </summary>
+        /// <returns>
+        ///  Gets the bearer token response with expiration time. 
+        /// </returns>
+        public TokenResponse GetToken(string version, string clientId, string clientSecret)
         {
             
-            Log.Information("[Get Token][Token Information]: " + "[URL:" + uriString + "]" + "[Version:" + version + "]" + "[ClientId:" + clientId + "]" + "[ClientSecret:" + clientSecret + "]");
+            Log.Information("[Get Token][Token Information]: " + "[Version:" + version + "]" + "[ClientId:" + clientId + "]" + "[ClientSecret:" + clientSecret + "]");
             var tokenResponse = new TokenResponse();
-            var response = _httpHandler.GetTokenAsync(uriString, version, UriAbsolutePath.GetToken, clientId, clientSecret);
+            var response = _httpHandler.GetTokenAsync(version, UriAbsolutePath.GetToken, clientId, clientSecret);
             var content = response.Content.ReadAsStringAsync().Result;
             Log.Information("[Get Token][Token Response :" + content + "]");
 
@@ -35,7 +51,13 @@ namespace LSS.BE.Core.Domain.Helpers
             return tokenResponse;
         }
 
-        private void GetRefreshToken(string uriString, string version, string clientId, string clientSecret, AccessToken accessToken, DateTime dateTime)
+        /// <summary>
+        /// Sets refresh token by uri string, version, client id and secret.
+        /// </summary>
+        /// <returns>
+        ///  Gets the bearer token response with expiration time. 
+        /// </returns>
+        private void GetRefreshToken(string version, string clientId, string clientSecret, AccessToken accessToken, DateTime dateTime)
         {
             DateTime currentDateTime = DateTime.Now;
             TimeSpan ts = currentDateTime - dateTime;
@@ -43,24 +65,36 @@ namespace LSS.BE.Core.Domain.Helpers
             if (total >= accessToken.ExpiresIn)
             {
                 Log.Information("[Get Refresh Token][Expires In : " + total + "]");
-                var tokenResponse = GetToken(uriString, version, clientId, clientSecret);
+                var tokenResponse = GetToken(version, clientId, clientSecret);
                 accessToken.Type = tokenResponse.AccessToken.Type;
                 accessToken.Token = tokenResponse.AccessToken.Token;
             }
         }
 
-        public string GetRequestResolver(Dictionary<string, string> queryParams, string uriString, string version, string clientId, string clientSecret, string uriPath, AccessToken accessToken, DateTime dateTime)
+        /// <summary>
+        /// Sets the query string param, http method(get), uri string, version, client id, client secret and access token.
+        /// </summary>
+        /// <returns>
+        ///  Gets the respective result. 
+        /// </returns>
+        public string GetRequestResolver(Dictionary<string, string> queryParams, string version, string clientId, string clientSecret, string uriPath, AccessToken accessToken, DateTime dateTime)
         {
-            GetRefreshToken(uriString, version, clientId, clientSecret, accessToken, dateTime);
-            var response = _httpHandler.GetAsync(uriString, queryParams, version, uriPath, accessToken.Type, accessToken.Token);
+            GetRefreshToken(version, clientId, clientSecret, accessToken, dateTime);
+            var response = _httpHandler.GetAsync(queryParams, version, uriPath, accessToken.Type, accessToken.Token);
             var content = response.Content.ReadAsStringAsync().Result;
             return content;
         }
-        
-        public string PostRequestResolver(string request, HttpMethod httpMethod, string uriString, string version, string clientId, string clientSecret, string uriPath, AccessToken accessToken, DateTime dateTime)
+
+        /// <summary>
+        /// Sets request, http method(post/put), uri string, version, client id, client secret and access token.
+        /// </summary>
+        /// <returns>
+        ///  Gets the respective result. 
+        /// </returns>
+        public string PostRequestResolver(string request, HttpMethod httpMethod, string version, string clientId, string clientSecret, string uriPath, AccessToken accessToken, DateTime dateTime)
         {
-            GetRefreshToken(uriString, version, clientId, clientSecret, accessToken, dateTime);
-            var response = _httpHandler.PostAsync(request, httpMethod, uriString, version, uriPath, accessToken.Type, accessToken.Token);
+            GetRefreshToken(version, clientId, clientSecret, accessToken, dateTime);
+            var response = _httpHandler.PostAsync(request, httpMethod, version, uriPath, accessToken.Type, accessToken.Token);
             var content = response.Content.ReadAsStringAsync().Result;
             return content;
         }

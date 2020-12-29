@@ -14,6 +14,13 @@ namespace LSS.BE.Core.Common.Exceptions
             Message = string.Empty;
         }
 
+        public AuthenticationError(bool success, string status, string message)
+        {
+            Success = success;
+            Status = status;
+            Message = message;
+        }
+
         [JsonProperty("success")]
         public bool Success { get; set; }
 

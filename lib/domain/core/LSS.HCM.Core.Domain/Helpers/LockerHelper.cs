@@ -7,9 +7,11 @@ using OpenCvSharp.Extensions;
 using System;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Globalization;
 using System.IO;
 using System.IO.Ports;
 using System.Linq;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 
 namespace LSS.HCM.Core.Domain.Helpers
@@ -71,12 +73,11 @@ namespace LSS.HCM.Core.Domain.Helpers
         {
             try
             {
-                var comPorts = new ComPortsHealthCheck
-                {
-                    IsLockPortAvailable = Check(lockerConfiguration.Microcontroller.LockControl),
-                    IsDetectionPortAvailable = Check(lockerConfiguration.Microcontroller.ObjectDetection),
-                    IsScannernPortAvailable = Check(lockerConfiguration.Microcontroller.Scanner)
-                };
+                var comPorts = new ComPortsHealthCheck();
+                if (lockerConfiguration == null) return comPorts;
+                comPorts.IsLockPortAvailable = Check(lockerConfiguration.Microcontroller.LockControl);
+                comPorts.IsDetectionPortAvailable = Check(lockerConfiguration.Microcontroller.ObjectDetection);
+                comPorts.IsScannernPortAvailable = Check(lockerConfiguration.Microcontroller.Scanner);
                 return comPorts;
             }
             catch (Exception)
@@ -95,5 +96,37 @@ namespace LSS.HCM.Core.Domain.Helpers
             }
             return flag;
         }
+
+        /// <summary>
+        /// Check Valid Path
+        /// </summary>
+        /// <returns>
+        ///  True if the caller has the required permissions and path contains the name of an existing file; otherwise, false.
+        /// </returns>
+        private static bool IsValidPath(string path)
+        {
+            bool exists = File.Exists(path);
+            return exists;
+        }
+
+        /// <summary>
+        /// Check Valid Path
+        /// </summary>
+        /// <returns>
+        ///  True if the caller has the required permissions and path contains the name of an existing file; otherwise, false.
+        /// </returns>
+        public static AppSettings GetConfiguration(string path)
+        {
+            AppSettings configuration = null;
+            if (IsValidPath(path))
+            {
+                var content = File.ReadAllText(path);
+                if (string.IsNullOrEmpty(content)) return configuration;
+                configuration = JsonSerializer.Deserialize<AppSettings>(content);
+            }
+            return configuration;
+        }
+
+
     }
 }
