@@ -5,6 +5,7 @@ using LSS.HCM.Core.Domain.Core.InputOutpuPorts;
 using Serilog;
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 
 namespace LSS.HCM.Core.Domain.Services
 {
@@ -25,7 +26,7 @@ namespace LSS.HCM.Core.Domain.Services
             SerialPortControlService controlModule;
             List<byte> responseData;
             Dictionary<string, string> result = null;
-            Log.Debug("[HCM][Communication Port Control Service][Send Command]" + "[Command Hex Value : " + commandString + "]");
+            Log.Information("[HCM][Communication Port Control Service][Send Command]" + "[Command Hex Value : " + commandString + "]");
 
             if (commandName == CommandType.DoorOpen)
             {
@@ -51,7 +52,7 @@ namespace LSS.HCM.Core.Domain.Services
                 result = BoardInitializationService.ExecuteCommand(CommandType.ItemDetection, responseData);
                 controlModule.End();
             }
-            Log.Debug("[HCM][Communication Port Control Service][Send Command]" + "[Command Response Result : " + result + "]");
+            Log.Information("[HCM][Communication Port Control Service][Send Command]" + "[Command Response Result : " + JsonSerializer.Serialize(result) + "]");
 
             Dictionary<string, string> commandResult = result;
             commandResult.Add("Command", commandName);
@@ -73,6 +74,8 @@ namespace LSS.HCM.Core.Domain.Services
                 SerialPortControlService scanner = new SerialPortControlService(new SerialPortResource(controllerModule.Port, controllerModule.Baudrate, controllerModule.DataBits, 500, 500));
                 scanner.SetReadToPublishHandler(controllerModule, dataProcessFunc);
                 scanner.Begin();
+                Log.Information("[HCM][Communication Port Control Service][Initialize Scanner]" + "[Scanner Port : " + controllerModule.Port + "]");
+
             }
         }
     }
