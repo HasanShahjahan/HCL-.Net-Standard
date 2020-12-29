@@ -1,6 +1,7 @@
 ﻿using LSS.HCM.Core.Common.Enums;
 using LSS.HCM.Core.Common.Utiles;
 using LSS.HCM.Core.DataObjects.Settings;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -97,6 +98,7 @@ namespace LSS.HCM.Core.Domain.Services
 
             string statusAry = statusStr1_8 + statusStr9_16 + statusStr17_24;
             compiledData.Add("statusAry", statusAry);
+            Log.Debug("[HCM][Board Initialization Service][Door Status Command]" + "[Status Array : " + statusAry + "]");
         }
 
         /// <summary>
@@ -117,6 +119,7 @@ namespace LSS.HCM.Core.Domain.Services
             compiledData.Add("moduleNo", moduleNo.ToString());
             compiledData.Add("doorNo", doorNo.ToString());
             compiledData.Add("DoorOpen", openingStatus);
+            Log.Debug("[HCM][Board Initialization Service][Door Open Command]" + "[Module No. : " + moduleNo.ToString() + "]" + "[Door No. : " + doorNo.ToString() + "]" + "[Opening Status : " + openingStatus + "]");
         }
 
         /// <summary>
@@ -134,6 +137,7 @@ namespace LSS.HCM.Core.Domain.Services
 
             string detectionAry = detectionArray1_8 + detectionArray9_16 + detectionArray17_24 + detectionArray25_32;
             compiledData.Add("detectionAry", detectionAry);
+            Log.Debug("[HCM][Board Initialization Service][Item Detection Command]" + "[Status Array : " + detectionAry + "]");
         }
     }
 }
