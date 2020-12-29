@@ -57,8 +57,8 @@ namespace LSS.BE.Core.Domain.Services
             MemberInfo = memberInfo;
             HttpHandler = new HttpHandlerHelper(MemberInfo.UriString);
             TokenResponse = ServiceInvoke.InitAsync(MemberInfo, HttpHandler);
-            LockerManager = new LockerManager(MemberInfo.ConfigurationPath);
-            ScannerInit = ScannerServiceHelper.Start(LockerManager);
+            if (TokenResponse.StatusCode == 200) LockerManager = new LockerManager(MemberInfo.ConfigurationPath);
+            if (LockerManager != null) ScannerInit = ScannerServiceHelper.Start(LockerManager);
         }
 
         /// <summary>
