@@ -4,6 +4,7 @@ using LSS.HCM.Core.DataObjects.Settings;
 using LSS.HCM.Core.Domain.Services;
 using OpenCvSharp;
 using OpenCvSharp.Extensions;
+using Serilog;
 using System;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -41,12 +42,14 @@ namespace LSS.HCM.Core.Domain.Helpers
                     capture.Read(frame);
                     Bitmap imageBitmapData = BitmapConverter.ToBitmap(frame);
                     Bitmap snapshot = new Bitmap(imageBitmapData);
-
-                    snapshot.Save(string.Format(@"{0}.jpeg", Guid.NewGuid()), ImageFormat.Jpeg); //This saved real picture to physical location. 
+                    string photofileName = string.Format(@"{0}.jpeg", Guid.NewGuid());
+                    snapshot.Save(photofileName, ImageFormat.Jpeg); //This saved real picture to physical location. 
                     imageBytes = ToByteArray(snapshot, ImageFormat.Jpeg);
+                    Log.Debug("[HCM][Locker Helper][Capture Photo]" + "[Photo taken File : " + photofileName + "]");
                 }
                 else
                 {
+                    Log.Debug("[HCM][Locker Helper][Capture Photo]" + "[Cannot take picture if the camera isn't capturing image!]");
                     Console.WriteLine("Cannot take picture if the camera isn't capturing image!");
                 }
 
@@ -78,6 +81,8 @@ namespace LSS.HCM.Core.Domain.Helpers
                 comPorts.IsLockPortAvailable = Check(lockerConfiguration.Microcontroller.LockControl);
                 comPorts.IsDetectionPortAvailable = Check(lockerConfiguration.Microcontroller.ObjectDetection);
                 comPorts.IsScannernPortAvailable = Check(lockerConfiguration.Microcontroller.Scanner);
+
+                Log.Debug("[HCM][Locker Helper][Com Port Test]" + "[Com Port Health : " + JsonSerializer.Serialize(comPorts) + "]");
                 return comPorts;
             }
             catch (Exception)
@@ -123,6 +128,7 @@ namespace LSS.HCM.Core.Domain.Helpers
                 var content = File.ReadAllText(path);
                 if (string.IsNullOrEmpty(content)) return configuration;
                 configuration = JsonSerializer.Deserialize<AppSettings>(content);
+                Log.Debug("[HCM][Locker Helper][Get Configuration]" + "[Configuration : " + JsonSerializer.Serialize(configuration) + "]");
             }
             return configuration;
         }

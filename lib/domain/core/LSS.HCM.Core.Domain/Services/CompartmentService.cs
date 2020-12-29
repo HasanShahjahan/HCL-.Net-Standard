@@ -6,6 +6,8 @@ using CompartmentConfiguration = LSS.HCM.Core.DataObjects.Settings.Compartment;
 using Compartment = LSS.HCM.Core.Entities.Locker.Compartment;
 using LSS.HCM.Core.Domain.Helpers;
 using System.Linq;
+using Serilog;
+using System.Text.Json;
 
 namespace LSS.HCM.Core.Domain.Services
 {
@@ -94,6 +96,13 @@ namespace LSS.HCM.Core.Domain.Services
                                                                  opendoorStatus[compartment.CompartmentCode.Lcbid] == 0 ? false : true,
                                                                  objectdetectStatus[compartment.CompartmentCode.Odbid] == 1 ? true : false,
                                                                  opendoorStatus[compartment.CompartmentCode.Lcbid] == 0 ? "ON" : "OFF");
+
+                Log.Debug("[HCM][Compartment Service][Compartment Status]" + "[Compartment ID : " + compartmentResult.CompartmentId.ToString() + "]"
+                                                                           + "[Open Door status: " + compartmentResult.CompartmentDoorOpen.ToString() + "]"
+                                                                           + "[Door Available status: " + compartmentResult.CompartmentDoorAvailable.ToString() + "]"
+                                                                           + "[Object Detection status: " + compartmentResult.ObjectDetected.ToString() + "]"
+                                                                           + "[LED status: " + compartmentResult.StatusLed.ToString() + "]"
+                                                                           );
                 compartmentList.Add(compartmentResult);
             }
 
