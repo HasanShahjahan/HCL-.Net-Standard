@@ -35,7 +35,7 @@ namespace LSS.BE.Core.Domain.Helpers
                 _lockerManager.RegisterScannerEvent(SendDataOnSocket);
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 Log.Error("[Scanner Service Helper][Start]" + "[" + ex + "]");
                 return false;

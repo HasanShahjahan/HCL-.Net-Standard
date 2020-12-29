@@ -49,25 +49,25 @@ namespace LSS.HCM.Core.Validator
                         {
                             statusCode = StatusCode.Status422UnprocessableEntity;
                             result = new ApplicationException { Code = ApplicationErrorCodes.EmptyTransactionId, Message = ApplicationErrorCodes.GetMessage(ApplicationErrorCodes.EmptyTransactionId) };
-                            //Log.Warning("[HCM][Locker Management Validator][Open Compartment]" + "[Status Code : " + statusCode + "]" + "[Result : " + result + "]");
+                            Log.Warning("[HCM][Locker Management Validator][Open Compartment]" + "[Status Code : " + statusCode + "]" + "[Result : " + result + "]");
                             
-                            //return (statusCode, result);
+                            return (statusCode, result);
                         }
                         else if (string.IsNullOrEmpty(lockerId))
                         {
                             statusCode = StatusCode.Status422UnprocessableEntity;
                             result = new ApplicationException { Code = ApplicationErrorCodes.EmptyLockerId, Message = ApplicationErrorCodes.GetMessage(ApplicationErrorCodes.EmptyLockerId) };
-                            //Log.Warning("[HCM][Locker Management Validator][Open Compartment]" + "[Status Code : " + statusCode + "]" + "[Result : " + result + "]");
+                            Log.Warning("[HCM][Locker Management Validator][Open Compartment]" + "[Status Code : " + statusCode + "]" + "[Result : " + result + "]");
 
-                            //return (statusCode, result);
+                            return (statusCode, result);
                         }
                         else if (compartmentIds == null || compartmentIds.Length == 0)
                         {
                             statusCode = StatusCode.Status422UnprocessableEntity;
                             result = new ApplicationException { Code = ApplicationErrorCodes.EmptyCompartmentId, Message = ApplicationErrorCodes.GetMessage(ApplicationErrorCodes.EmptyCompartmentId) };
-                            //Log.Warning("[HCM][Locker Management Validator][Open Compartment]" + "[Status Code : " + statusCode + "]" + "[Result : " + result + "]");
+                            Log.Warning("[HCM][Locker Management Validator][Open Compartment]" + "[Status Code : " + statusCode + "]" + "[Result : " + result + "]");
 
-                            //return (statusCode, result);
+                            return (statusCode, result);
                         }
                         else if (compartmentIds.Length > 0 && !compartmentIds.Contains("All"))
                         {
@@ -112,17 +112,17 @@ namespace LSS.HCM.Core.Validator
                         {
                             statusCode = StatusCode.Status422UnprocessableEntity;
                             result = new ApplicationException { Code = ApplicationErrorCodes.EmptyLockerId, Message = ApplicationErrorCodes.GetMessage(ApplicationErrorCodes.EmptyLockerId) };
-                            //Log.Warning("[HCM][Locker Management Validator][Compartment Status]" + "[Status Code : " + statusCode + "]" + "[Result : " + result + "]");
+                            Log.Warning("[HCM][Locker Management Validator][Compartment Status]" + "[Status Code : " + statusCode + "]" + "[Result : " + result + "]");
 
-                            //return (statusCode, result);
+                            return (statusCode, result);
                         }
                         else if (lockerConfiguration != null && lockerConfiguration.Locker.LockerId != lockerId)
                         {
                             statusCode = StatusCode.Status422UnprocessableEntity;
                             result = new ApplicationException { Code = ApplicationErrorCodes.InvalidLockerId, Message = ApplicationErrorCodes.GetMessage(ApplicationErrorCodes.InvalidLockerId) };
-                            //Log.Warning("[HCM][Locker Management Validator][Compartment Status]" + "[Status Code : " + statusCode + "]" + "[Result : " + result + "]");
+                            Log.Warning("[HCM][Locker Management Validator][Compartment Status]" + "[Status Code : " + statusCode + "]" + "[Result : " + result + "]");
 
-                            //return (statusCode, result);
+                            return (statusCode, result);
                         }
                         if (lockerConfiguration != null && lockerConfiguration.Locker.Compartments.Count() > 0 && !compartmentIds.Contains("All"))
                         {
@@ -156,20 +156,20 @@ namespace LSS.HCM.Core.Validator
                         {
                             statusCode = StatusCode.Status422UnprocessableEntity;
                             result = new ApplicationException { Code = ApplicationErrorCodes.EmptyLockerId, Message = ApplicationErrorCodes.GetMessage(ApplicationErrorCodes.EmptyLockerId) };
-                            //Log.Warning("[HCM][Locker Management Validator][Locker Status]" + "[Status Code : " + statusCode + "]" + "[Result : " + result + "]");
+                            Log.Warning("[HCM][Locker Management Validator][Locker Status]" + "[Status Code : " + statusCode + "]" + "[Result : " + result + "]");
 
-                            //return (statusCode, result);
+                            return (statusCode, result);
                         }
                         if (lockerConfiguration != null && lockerConfiguration.Locker.LockerId != lockerId)
                         {
                             statusCode = StatusCode.Status422UnprocessableEntity;
                             result = new ApplicationException { Code = ApplicationErrorCodes.InvalidLockerId, Message = ApplicationErrorCodes.GetMessage(ApplicationErrorCodes.InvalidLockerId) };
-                            //Log.Warning("[HCM][Locker Management Validator][Locker Status]" + "[Status Code : " + statusCode + "]" + "[Result : " + result + "]");
+                            Log.Warning("[HCM][Locker Management Validator][Locker Status]" + "[Status Code : " + statusCode + "]" + "[Result : " + result + "]");
 
-                            //return (statusCode, result);
+                            return (statusCode, result);
                         }
-                        Log.Warning("[HCM][Locker Management Validator][Locker Status]" + "[Status Code : " + statusCode + "]" + "[Result : " + result + "]");
 
+                        Log.Warning("[HCM][Locker Management Validator][Locker Status]" + "[Status Code : " + statusCode + "]" + "[Result : " + result + "]");
                         return (statusCode, result);
 
                     case PayloadTypes.CaptureImage:
@@ -178,44 +178,44 @@ namespace LSS.HCM.Core.Validator
                         {
                             statusCode = StatusCode.Status422UnprocessableEntity;
                             result = new ApplicationException { Code = ApplicationErrorCodes.EmptyLockerId, Message = ApplicationErrorCodes.GetMessage(ApplicationErrorCodes.EmptyLockerId) };
-                            //Log.Warning("[HCM][Locker Management Validator][Capture Image]" + "[Status Code : " + statusCode + "]" + "[Result : " + result + "]");
+                            Log.Warning("[HCM][Locker Management Validator][Capture Image]" + "[Status Code : " + statusCode + "]" + "[Result : " + result + "]");
 
-                            //return (statusCode, result);
+                            return (statusCode, result);
                         }
                         else if (lockerConfiguration != null && lockerConfiguration.Locker.LockerId != lockerId)
                         {
                             statusCode = StatusCode.Status422UnprocessableEntity;
                             result = new ApplicationException { Code = ApplicationErrorCodes.InvalidLockerId, Message = ApplicationErrorCodes.GetMessage(ApplicationErrorCodes.InvalidLockerId) };
-                            //Log.Warning("[HCM][Locker Management Validator][Capture Image]" + "[Status Code : " + statusCode + "]" + "[Result : " + result + "]");
+                            Log.Warning("[HCM][Locker Management Validator][Capture Image]" + "[Status Code : " + statusCode + "]" + "[Result : " + result + "]");
 
-                            //return (statusCode, result);
+                            return (statusCode, result);
                         }
                         else if (string.IsNullOrEmpty(captureType))
                         {
                             statusCode = StatusCode.Status422UnprocessableEntity;
                             result = new ApplicationException { Code = ApplicationErrorCodes.EmptyCaptureType, Message = ApplicationErrorCodes.GetMessage(ApplicationErrorCodes.EmptyCaptureType) };
-                            //Log.Warning("[HCM][Locker Management Validator][Capture Image]" + "[Status Code : " + statusCode + "]" + "[Result : " + result + "]");
+                            Log.Warning("[HCM][Locker Management Validator][Capture Image]" + "[Status Code : " + statusCode + "]" + "[Result : " + result + "]");
 
-                            //return (statusCode, result);
+                            return (statusCode, result);
                         }
                         else if (!(captureType == CaptureType.Photo || captureType == CaptureType.Screen))
                         {
                             statusCode = StatusCode.Status422UnprocessableEntity;
                             result = new ApplicationException { Code = ApplicationErrorCodes.InvalidCaptureType, Message = ApplicationErrorCodes.GetMessage(ApplicationErrorCodes.InvalidCaptureType) };
-                            //Log.Warning("[HCM][Locker Management Validator][Capture Image]" + "[Status Code : " + statusCode + "]" + "[Result : " + result + "]");
+                            Log.Warning("[HCM][Locker Management Validator][Capture Image]" + "[Status Code : " + statusCode + "]" + "[Result : " + result + "]");
                             
-                            //return (statusCode, result);
+                            return (statusCode, result);
                         }
                         else if (string.IsNullOrEmpty(transactionId))
                         {
                             statusCode = StatusCode.Status422UnprocessableEntity;
                             result = new ApplicationException { Code = ApplicationErrorCodes.EmptyTransactionId, Message = ApplicationErrorCodes.GetMessage(ApplicationErrorCodes.EmptyTransactionId) };
-                            //Log.Warning("[HCM][Locker Management Validator][Capture Image]" + "[Status Code : " + statusCode + "]" + "[Result : " + result + "]");
+                            Log.Warning("[HCM][Locker Management Validator][Capture Image]" + "[Status Code : " + statusCode + "]" + "[Result : " + result + "]");
                             
-                            //return (statusCode, result);
+                            return (statusCode, result);
                         }
+                        
                         Log.Warning("[HCM][Locker Management Validator][Capture Image]" + "[Status Code : " + statusCode + "]" + "[Result : " + result + "]");
-
                         return (statusCode, result);
 
                 }
