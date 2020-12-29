@@ -30,7 +30,7 @@ namespace LSS.BE.Core.Domain.UnitTest
             };
 
             var json = JsonConvert.SerializeObject(request, new JsonSerializerSettings() { DefaultValueHandling = DefaultValueHandling.Ignore });
-            var response = httpHandler.PostAsync(json, HttpMethod.Post, uriString, version, uriPath, type, token);
+            var response = httpHandler.PostAsync(json, HttpMethod.Post, version, uriPath, type, token);
         }
     }
 }

@@ -23,16 +23,16 @@ namespace LSS.BE.Core.TestCaller
 
                 var (lockerStationId, gatewayService) = GetewayServiceClient.Init();
 
-                if (!gatewayService.LockerManager.PortsHealthCheck.IsLockPortAvailable) Console.WriteLine("Lock Port : Not Available");
+                if (gatewayService.LockerManager!= null && !gatewayService.LockerManager.PortsHealthCheck.IsLockPortAvailable) Console.WriteLine("Lock Port : Not Available");
                 else Console.WriteLine("Lock Port : Available");
-                if (!gatewayService.LockerManager.PortsHealthCheck.IsDetectionPortAvailable) Console.WriteLine("Object Detection Port : Not Available");
+                if (gatewayService.LockerManager != null && !gatewayService.LockerManager.PortsHealthCheck.IsDetectionPortAvailable) Console.WriteLine("Object Detection Port : Not Available");
                 else Console.WriteLine("Object Detection Port : Available");
-                if (!gatewayService.LockerManager.PortsHealthCheck.IsScannernPortAvailable) Console.WriteLine("Scanner Port : Not Available");
+                if (gatewayService.LockerManager != null && !gatewayService.LockerManager.PortsHealthCheck.IsScannernPortAvailable) Console.WriteLine("Scanner Port : Not Available");
                 else Console.WriteLine("Scanner Port : Available\n");
 
                 if (gatewayService.TokenResponse.StatusCode != 200)
                 {
-                    Console.WriteLine("Sevice Initialization is failed.");
+                    Console.WriteLine("Sevice Initialization is failed with status : " + gatewayService.TokenResponse.StatusCode);
                     return 0;
                 }
 

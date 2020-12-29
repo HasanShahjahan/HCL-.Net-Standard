@@ -17,7 +17,7 @@ namespace LSS.BE.Core.Domain.UnitTest
         [Fact]
         public void GetTokenUnauthorized()
         {
-            var response = httpHandler.GetTokenAsync(uriString, version, "token", clientId, clientSecret);
+            var response = httpHandler.GetTokenAsync(version, "token", clientId, clientSecret);
             var content = response.Content.ReadAsStringAsync().Result;
             if (response.StatusCode != HttpStatusCode.OK)
             {
@@ -29,7 +29,7 @@ namespace LSS.BE.Core.Domain.UnitTest
         [Fact]
         public void GetToken()
         {
-            var response = httpHandler.GetTokenAsync(uriString, version, "token", clientId, clientSecret);
+            var response = httpHandler.GetTokenAsync(version, "token", clientId, clientSecret);
             var content = response.Content.ReadAsStringAsync().Result;
             if (response.StatusCode != HttpStatusCode.OK)
             {

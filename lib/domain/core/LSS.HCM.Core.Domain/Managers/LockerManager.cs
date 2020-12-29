@@ -39,8 +39,7 @@ namespace LSS.HCM.Core.Domain.Managers
         ///</summary>
         public LockerManager(string configurationFilePath)
         {
-            var content = File.ReadAllText(configurationFilePath);
-            LockerConfiguration = JsonSerializer.Deserialize<AppSettings>(content);
+            LockerConfiguration = LockerHelper.GetConfiguration(configurationFilePath);
             PortsHealthCheck = LockerHelper.ComPortTest(LockerConfiguration);
             Log.Information("[HCM][Locker Manager][Initiated][Service initiated with scanner and logging.]");
         }

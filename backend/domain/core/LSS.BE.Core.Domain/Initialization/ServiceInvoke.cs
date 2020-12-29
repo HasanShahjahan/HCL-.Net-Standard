@@ -1,5 +1,6 @@
 ﻿using LSS.BE.Core.Common.Base;
 using LSS.BE.Core.Common.Exceptions;
+using LSS.BE.Core.Common.Utiles;
 using LSS.BE.Core.Domain.Helpers;
 using LSS.BE.Core.Domain.Interfaces;
 using LSS.Logging;
@@ -24,12 +25,20 @@ namespace LSS.BE.Core.Domain.Initialization
             var tokenResponse = new TokenResponse();
             try 
             {
-                LoggerAbstractions.SetupStaticLogger(memberInfo.ConfigurationPath);
-                LoggerAbstractions.CreateHostBuilder().Build();
-                Log.Information("[Initialization][Service initiated with access token and logging.]");
+                if (Utiles.IsValidPath(memberInfo.ConfigurationPath))
+                {
+                    LoggerAbstractions.SetupStaticLogger(memberInfo.ConfigurationPath);
+                    LoggerAbstractions.CreateHostBuilder().Build();
+                    Log.Information("[Initialization][Service initiated with logging.]");
 
-                tokenResponse = httpHandler.GetToken(memberInfo.UriString, memberInfo.Version, memberInfo.ClientId, memberInfo.ClientSecret);
-                Log.Information("[Initialized][Service initialized with access token and logging.]");
+                    tokenResponse = httpHandler.GetToken(memberInfo.Version, memberInfo.ClientId, memberInfo.ClientSecret);
+                    Log.Information("[Initialized][Service initialized with access token]");
+                }
+                else
+                {
+                    tokenResponse.StatusCode = StatusCode.Status412PreconditionFailed;
+                }
+                
             }
             catch (Exception ex) 
             {
