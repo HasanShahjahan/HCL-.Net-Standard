@@ -38,7 +38,7 @@ namespace LSS.BE.Core.TestCaller
 
                 Console.Write("Gateway Service Initialized\n");
 
-                Console.WriteLine("Please select user Case type : \n 1.CDO (Courier Drop Off) \n 2.CC(Consumer Collect)");
+                Console.WriteLine("Please select user Case type : \n 1.CDO (Courier Drop Off) \n 2.CC (Consumer Collect) \n 3.CRN (Consumer Return) \n 3.CRT (Courier Retrieve)");
                 Console.Write("Use case type :");
                 string useCaseType = Console.ReadLine();
 
@@ -46,9 +46,17 @@ namespace LSS.BE.Core.TestCaller
                 {
                     GetewayServiceClient.CourierDropOff(lockerStationId, gatewayService);
                 }
-                else if (useCaseType == "CC")
+                else if (useCaseType == "CCO")
                 {
                     GetewayServiceClient.ConsumerCollect(lockerStationId, gatewayService);
+                }
+                else if (useCaseType == "CRN")
+                {
+                    GetewayServiceClient.ConsumerReturn(lockerStationId, gatewayService);
+                }
+                else if (useCaseType == "CRT") 
+                {
+                    GetewayServiceClient.CourierRetrieve(lockerStationId, gatewayService);
                 }
                 else
                 {

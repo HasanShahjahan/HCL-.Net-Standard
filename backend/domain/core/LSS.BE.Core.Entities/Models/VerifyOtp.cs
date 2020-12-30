@@ -21,5 +21,8 @@ namespace LSS.BE.Core.Entities.Models
 
         [JsonProperty("phone_number")]
         public string PhoneNumber { get; set; }
+
+        [JsonProperty("booking_id")]
+        public string BookingId { get; set; }
     }
 }
