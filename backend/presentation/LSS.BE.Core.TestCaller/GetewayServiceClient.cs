@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using SendOtpResponse = LSS.BE.Core.TestCaller.Models.SendOtpResponse;
 
 namespace LSS.BE.Core.TestCaller
 {
@@ -427,6 +428,400 @@ namespace LSS.BE.Core.TestCaller
 
 
             #endregion
+        }
+
+        public static void ConsumerReturn(string lockerStationId, GatewayService gatewayService)
+        {
+            #region PIN Verification
+
+            Console.Write("-----------------------------------------------------------------------------\n");
+            Console.Write("[Consumer Return PIN Verification][Req]\n");
+
+            Console.Write("Pin: ");
+            string consumerCollectPin = Console.ReadLine();
+
+            Console.Write("Action: ");
+            string action = Console.ReadLine();
+
+
+            var consumerPin = new ConsumerPin
+            {
+                LockerStationId = lockerStationId,
+                Pin = consumerCollectPin,
+                Action = action
+            };
+            var consumerPinResult = gatewayService.GetBookingByConsumerPin(consumerPin);
+
+            Console.WriteLine("[Consumer Return PIN Verification][Res]");
+            Console.WriteLine(JsonConvert.SerializeObject(consumerPinResult, Formatting.Indented));
+            Console.WriteLine("-----------------------------------------------------------------------------");
+
+            #endregion
+
+            #region Find Booking By Tracking Number
+
+            Console.WriteLine("[Find Booking By Tracking Number][Req]");
+
+            Console.Write("Tracking Number: ");
+            string trackingNumber = Console.ReadLine();
+
+            Console.Write("Booking Id: ");
+            string bookingId = Console.ReadLine();
+
+            Console.Write("Action: ");
+            string bookingAction = Console.ReadLine();
+
+
+            var findBookingResult = gatewayService.FindBooking(trackingNumber, lockerStationId, bookingId, bookingAction);
+
+            Console.WriteLine("[Find Booking By Tracking Number][Res]");
+            Console.WriteLine(JsonConvert.SerializeObject(findBookingResult, Formatting.Indented));
+            Console.WriteLine("-----------------------------------------------------------------------------");
+
+            #endregion
+
+            #region Send OTP
+            Console.WriteLine("[Send Otp][Req]\n");
+
+            Console.Write("MobileNumber: ");
+            string consumerCollectMobileNumber = Console.ReadLine();
+
+            Console.Write("BookingId: ");
+            string consumerBookingId = Console.ReadLine();
+
+            var sendOtp = new SendOtp()
+            {
+                LockerStationId = lockerStationId,
+                PhoneNumber = consumerCollectMobileNumber,
+                BookingId = consumerBookingId
+            };
+            var sendOtpResult = gatewayService.SendOtp(sendOtp);
+
+            Console.WriteLine("[Send Otp][Res]");
+            Console.WriteLine(JsonConvert.SerializeObject(sendOtpResult, Formatting.Indented));
+            Console.WriteLine("-----------------------------------------------------------------------------");
+
+            var sendOtpResponse = JsonConvert.DeserializeObject<SendOtpResponse>(sendOtpResult.ToString());
+
+            #endregion
+
+            #region Verify Otp
+
+            Console.WriteLine("[Verify Otp][Req]");
+
+            Console.Write("Code: ");
+            string code = Console.ReadLine();
+
+            Console.Write("Booking Id: ");
+            string consumerReturnBookingId = Console.ReadLine();
+
+            var verifyOtpModel = new VerifyOtp
+            {
+                LockerStationId = lockerStationId,
+                Code = code,
+                RefCode = sendOtpResponse.RefCode,
+                BookingId = consumerReturnBookingId
+            };
+
+            var verifyOtpResult = gatewayService.VerifyOtp(verifyOtpModel);
+
+            Console.WriteLine("[Verify Otp][Res]");
+            Console.WriteLine(JsonConvert.SerializeObject(verifyOtpResult, Formatting.Indented));
+            Console.WriteLine("-----------------------------------------------------------------------------");
+
+            #endregion
+
+            #region Open Compartment
+
+            Console.WriteLine("[Open Compartment][Req]");
+            string transactionId = Guid.NewGuid().ToString();
+
+            Console.Write("Locker Id: ");
+            string lockerId = Console.ReadLine();
+
+            Console.Write("Compartment Id: ");
+            string compartmentIds = Console.ReadLine();
+            string[] compartmentId = compartmentIds.Split(',');
+
+            var openCompartment = new HCM.Core.DataObjects.Models.Compartment(transactionId, lockerId, compartmentId, false, string.Empty, string.Empty);
+            var openCompartmentResult = gatewayService.OpenCompartment(openCompartment);
+
+            Console.WriteLine("[Open Compartment][Res]");
+            Console.WriteLine(JsonConvert.SerializeObject(openCompartmentResult, Formatting.Indented));
+            Console.WriteLine("-----------------------------------------------------------------------------");
+
+            #endregion
+
+            #region Compartment Status
+
+            Console.WriteLine("[Compartment Status][Req]");
+
+            Console.Write("Locker Id: ");
+            lockerId = Console.ReadLine();
+
+            Console.Write("Compartment Id: ");
+            compartmentIds = Console.ReadLine();
+            compartmentId = compartmentIds.Split(',');
+
+            var compartmentStatus = new HCM.Core.DataObjects.Models.Compartment(transactionId, lockerId, compartmentId, false, string.Empty, string.Empty);
+            var compartmentStatusResult = gatewayService.CompartmentStatus(compartmentStatus);
+
+            Console.WriteLine("[Compartment Status][Res]");
+            Console.WriteLine(JsonConvert.SerializeObject(compartmentStatusResult, Formatting.Indented));
+            Console.WriteLine("-----------------------------------------------------------------------------");
+            #endregion
+
+            #region Capture Image
+
+            Console.WriteLine("[Capture Image][Req]");
+
+            Console.Write("Locker Id: ");
+            lockerId = Console.ReadLine();
+
+            var captureImage = new Capture(transactionId, lockerId, false, string.Empty, string.Empty);
+            var captureImageResult = gatewayService.CaptureImage(captureImage);
+
+            Console.WriteLine("[Capture Image][Res]");
+            Console.WriteLine(JsonConvert.SerializeObject(captureImageResult, Formatting.Indented));
+            Console.WriteLine("-----------------------------------------------------------------------------");
+
+
+            #endregion
+
+            #region Update Booking Status
+
+            Console.WriteLine("[Update Booking Status][Req]");
+
+            Console.Write("Booking Id: ");
+            string UpdateBookingStatusBookingId = Console.ReadLine();
+
+            Console.Write("Lsp Id: ");
+            string lspId = Console.ReadLine();
+
+            Console.Write("Lsp User Id: ");
+            string lspUserId = Console.ReadLine();
+
+            Console.Write("Status: ");
+            string status = Console.ReadLine();
+
+            Console.Write("MobileNumber: ");
+            string mobileNumber = Console.ReadLine();
+
+            Console.Write("Reason: ");
+            string updateBookingReason = Console.ReadLine();
+
+            var bookingStatusUpdate = new BookingStatus()
+            {
+                LockerStationId = lockerStationId,
+                BookingId = Convert.ToInt32(UpdateBookingStatusBookingId),
+                LspId = lspId,
+                LspUserId = lspUserId,
+                MobileNumber = mobileNumber,
+                Status = status,
+                Reason = updateBookingReason
+
+            };
+
+            var bookingStatusUpdateResult = gatewayService.UpdateBookingStatus(bookingStatusUpdate);
+            Console.WriteLine("[Update Booking Status][Res]");
+            Console.WriteLine(JsonConvert.SerializeObject(bookingStatusUpdateResult, Formatting.Indented));
+            Console.WriteLine("-----------------------------------------------------------------------------");
+
+
+            #endregion
+
+        }
+
+        public static void CourierRetrieve(string lockerStationId, GatewayService gatewayService)
+        {
+            #region Lsp Verification
+
+            Console.Write("-----------------------------------------------------------------------------\n");
+            Console.Write("[Lsp Verification][Req]\n");
+
+            Console.Write("Key: ");
+            string key = Console.ReadLine();
+
+            Console.Write("Pin: ");
+            string pin = Console.ReadLine();
+
+
+            var lspVerification = new LspUserAccess
+            {
+                LockerStationid = lockerStationId,
+                Key = key,
+                Pin = pin
+            };
+            var lspVerificationResult = gatewayService.LspVerification(lspVerification);
+
+            Console.WriteLine("[Lsp Verification][Res]");
+            Console.WriteLine(JsonConvert.SerializeObject(lspVerificationResult, Formatting.Indented));
+            Console.WriteLine("-----------------------------------------------------------------------------");
+
+            var lspVerificationResponse = JsonConvert.DeserializeObject<LspVerificationResponse>(lspVerificationResult.ToString());
+
+            #endregion
+
+            #region Resend OTP
+            //Console.Write("-----------------------------------------------------------------------------\n");
+            //Console.Write("[Resend Otp][Req]\n");
+
+            //Console.Write("Key: ");
+            //string resendOtpKey = Console.ReadLine();
+
+            //Console.Write("Pin: ");
+            //string resendOtppin = Console.ReadLine();
+
+
+            //var resendOtp = new LspUserAccess
+            //{
+            //    LockerStationid = lockerStationId,
+            //    Key = resendOtpKey,
+            //    Pin = resendOtppin
+            //};
+            //var resendOtpResult = gatewayService.LspVerification(lspVerification);
+
+            //Console.WriteLine("[Resend Otp][Res]");
+            //Console.WriteLine(JsonConvert.SerializeObject(resendOtpResult, Formatting.Indented));
+            //Console.WriteLine("-----------------------------------------------------------------------------");
+
+            //var resendOtpResponse = JsonConvert.DeserializeObject<LspVerificationResponse>(lspVerificationResult.ToString());
+            #endregion
+
+            #region Verify Otp
+
+            Console.WriteLine("[Verify Otp][Req]");
+
+            Console.Write("Code: ");
+            string code = Console.ReadLine();
+
+            var verifyOtpModel = new VerifyOtp
+            {
+                LockerStationId = lockerStationId,
+                LspId = lspVerificationResponse.LspId,
+                Code = code,
+                RefCode = lspVerificationResponse.RefCode
+            };
+
+            var verifyOtpResult = gatewayService.VerifyOtp(verifyOtpModel);
+
+            Console.WriteLine("[Verify Otp][Res]");
+            Console.WriteLine(JsonConvert.SerializeObject(verifyOtpResult, Formatting.Indented));
+            Console.WriteLine("-----------------------------------------------------------------------------");
+
+            #endregion
+
+            #region Courier Booking All
+
+            Console.WriteLine("[Courier Booking All][Req]");
+
+            Console.Write("TrackingNumber: ");
+            string trackingNumber = Console.ReadLine();
+
+            Console.Write("status: ");
+            string status = Console.ReadLine();
+
+            var retrieveLockersBelongsToCourierResult = gatewayService.RetrieveLockersBelongsToCourier(trackingNumber, lockerStationId, lspVerificationResponse.LspId, lspVerificationResponse.LspUserId,status);
+
+            Console.WriteLine("[Courier Booking All][Res]");
+            Console.WriteLine(JsonConvert.SerializeObject(retrieveLockersBelongsToCourierResult, Formatting.Indented));
+            Console.WriteLine("-----------------------------------------------------------------------------");
+
+            #endregion
+
+            #region Open Compartment
+
+            Console.WriteLine("[Open Compartment][Req]");
+            string transactionId = Guid.NewGuid().ToString();
+
+            Console.Write("Locker Id: ");
+            string lockerId = Console.ReadLine();
+
+            Console.Write("Compartment Id: ");
+            string compartmentIds = Console.ReadLine();
+            string[] compartmentId = compartmentIds.Split(',');
+
+            var openCompartment = new HCM.Core.DataObjects.Models.Compartment(transactionId, lockerId, compartmentId, false, string.Empty, string.Empty);
+            var openCompartmentResult = gatewayService.OpenCompartment(openCompartment);
+
+            Console.WriteLine("[Open Compartment][Res]");
+            Console.WriteLine(JsonConvert.SerializeObject(openCompartmentResult, Formatting.Indented));
+            Console.WriteLine("-----------------------------------------------------------------------------");
+
+            #endregion
+
+            #region Compartment Status
+
+            Console.WriteLine("[Compartment Status][Req]");
+
+            Console.Write("Locker Id: ");
+            lockerId = Console.ReadLine();
+
+            Console.Write("Compartment Id: ");
+            compartmentIds = Console.ReadLine();
+            compartmentId = compartmentIds.Split(',');
+
+            var compartmentStatus = new HCM.Core.DataObjects.Models.Compartment(transactionId, lockerId, compartmentId, false, string.Empty, string.Empty);
+            var compartmentStatusResult = gatewayService.CompartmentStatus(compartmentStatus);
+
+            Console.WriteLine("[Compartment Status][Res]");
+            Console.WriteLine(JsonConvert.SerializeObject(compartmentStatusResult, Formatting.Indented));
+            Console.WriteLine("-----------------------------------------------------------------------------");
+            #endregion
+
+            #region Capture Image
+
+            Console.WriteLine("[Capture Image][Req]");
+
+            Console.Write("Locker Id: ");
+            lockerId = Console.ReadLine();
+
+            var captureImage = new Capture(transactionId, lockerId, false, string.Empty, string.Empty);
+            var captureImageResult = gatewayService.CaptureImage(captureImage);
+
+            Console.WriteLine("[Capture Image][Res]");
+            Console.WriteLine(JsonConvert.SerializeObject(captureImageResult, Formatting.Indented));
+            Console.WriteLine("-----------------------------------------------------------------------------");
+
+
+            #endregion
+
+            #region Update Booking Status
+
+            Console.WriteLine("[Update Booking Status][Req]");
+
+            Console.Write("Booking Id: ");
+            string UpdateBookingStatusBookingId = Console.ReadLine();
+
+            Console.Write("Status: ");
+            string updateBookingStatus = Console.ReadLine();
+
+            Console.Write("MobileNumber: ");
+            string mobileNumber = Console.ReadLine();
+
+            Console.Write("Reason: ");
+            string updateBookingReason = Console.ReadLine();
+
+            var bookingStatusUpdate = new BookingStatus()
+            {
+                LockerStationId = lockerStationId,
+                BookingId = Convert.ToInt32(UpdateBookingStatusBookingId),
+                LspId = lspVerificationResponse.LspId,
+                LspUserId = lspVerificationResponse.LspUserId,
+                MobileNumber = mobileNumber,
+                Status = updateBookingStatus,
+                Reason = updateBookingReason
+
+            };
+
+            var bookingStatusUpdateResult = gatewayService.UpdateBookingStatus(bookingStatusUpdate);
+            Console.WriteLine("[Update Booking Status][Res]");
+            Console.WriteLine(JsonConvert.SerializeObject(bookingStatusUpdateResult, Formatting.Indented));
+            Console.WriteLine("-----------------------------------------------------------------------------");
+
+
+            #endregion
+
         }
     }
 }

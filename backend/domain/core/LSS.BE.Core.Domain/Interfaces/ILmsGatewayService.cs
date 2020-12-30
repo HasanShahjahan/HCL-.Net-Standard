@@ -52,6 +52,14 @@ namespace LSS.BE.Core.Domain.Interfaces
         JObject FindBooking(string trackingNumber, string lockerStationId, string lspId);
 
         /// <summary>
+        /// Sets the find booking details by locker station id, tracking number, booking id and action.
+        /// </summary>
+        /// <returns>
+        ///  Gets the success bool flag, hardware door number, locker preview.
+        /// </returns>
+        JObject FindBooking(string trackingNumber, string lockerStationId, string bookingId, string action);
+
+        /// <summary>
         /// Sets the assign similar size locker by locker station id, booking id and reason.
         /// </summary>
         /// <returns>
@@ -99,7 +107,7 @@ namespace LSS.BE.Core.Domain.Interfaces
         /// <summary>
         /// Sets the retrieve locker belongs to courier by locker station id, lsp id, tracking number and status.
         /// </summary>
-        JObject RetrieveLockersBelongsToCourier(string lockerStationId, string lspId, string trackingNumber, string status);
+        JObject RetrieveLockersBelongsToCourier(string trackingNumber, string lockerStationId, string lspId, string lsp_user_id, string status);
 
         /// <summary>
         /// Gets the open compartment parameters with Json web token credentials and MongoDB database credentials.
