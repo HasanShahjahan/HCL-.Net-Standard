@@ -3,6 +3,7 @@ using LSS.BE.Core.Entities.Models;
 using LSS.BE.Core.TestCaller.Models;
 using LSS.HCM.Core.DataObjects.Models;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -595,12 +596,6 @@ namespace LSS.BE.Core.TestCaller
             Console.Write("Booking Id: ");
             string UpdateBookingStatusBookingId = Console.ReadLine();
 
-            Console.Write("Lsp Id: ");
-            string lspId = Console.ReadLine();
-
-            Console.Write("Lsp User Id: ");
-            string lspUserId = Console.ReadLine();
-
             Console.Write("Status: ");
             string status = Console.ReadLine();
 
@@ -614,8 +609,8 @@ namespace LSS.BE.Core.TestCaller
             {
                 LockerStationId = lockerStationId,
                 BookingId = Convert.ToInt32(UpdateBookingStatusBookingId),
-                LspId = lspId,
-                LspUserId = lspUserId,
+                LspId = string.Empty,
+                LspUserId = string.Empty,
                 MobileNumber = mobileNumber,
                 Status = status,
                 Reason = updateBookingReason
@@ -721,7 +716,10 @@ namespace LSS.BE.Core.TestCaller
             Console.Write("status: ");
             string status = Console.ReadLine();
 
-            var retrieveLockersBelongsToCourierResult = gatewayService.RetrieveLockersBelongsToCourier(trackingNumber, lockerStationId, lspVerificationResponse.LspId, lspVerificationResponse.LspUserId,status);
+            JObject retrieveLockersBelongsToCourierResult;
+
+            if (status == "individual") retrieveLockersBelongsToCourierResult = gatewayService.RetrieveLockersBelongsToCourier(trackingNumber, lockerStationId, lspVerificationResponse.LspId, lspVerificationResponse.LspUserId, string.Empty, status);
+            else retrieveLockersBelongsToCourierResult = gatewayService.RetrieveLockersBelongsToCourier(lockerStationId, lspVerificationResponse.LspId, lspVerificationResponse.LspUserId, string.Empty, status);
 
             Console.WriteLine("[Courier Booking All][Res]");
             Console.WriteLine(JsonConvert.SerializeObject(retrieveLockersBelongsToCourierResult, Formatting.Indented));

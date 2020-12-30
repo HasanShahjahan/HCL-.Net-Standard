@@ -360,20 +360,48 @@ namespace LSS.BE.Core.Domain.Services
         }
 
         /// <summary>
-        /// Sets the retrieve locker belongs to courier by locker station id, lsp id, tracking number and status.
+        /// Sets the single retrieve locker belongs to courier by locker station id, lsp id, tracking number and status.
         /// </summary>
-        public JObject RetrieveLockersBelongsToCourier(string trackingNumber, string lockerStationId, string lspId, string lsp_user_id, string status)
+        public JObject RetrieveLockersBelongsToCourier(string trackingNumber, string lockerStationId, string lspId, string lspUserId, string lspIdToCollect, string status)
         {
             JObject result;
             if (TokenResponse.StatusCode == 200)
             {
-                Log.Information("[Retrieve Lockers Belongs To Courier][Req]" + "[Tracking Number : " + trackingNumber + "]" + "[Locker Station Id : " + lockerStationId + "]" + "[lsp Id : " + lspId + "]" + "[Status : " + status + "]");
+                Log.Information("[Retrieve Lockers Belongs To Courier][Req]" + "[Tracking Number : " + trackingNumber + "]" + "[Locker Station Id : " + lockerStationId + "]" + "[lsp Id : " + lspId + "]" + "[Lsp User Id : " + lspUserId + "]" + "[Lsp Id To Collect : " + lspIdToCollect + "]" + "[Status : " + status + "]");
                 var queryString = new Dictionary<string, string>()
             {
                 { "locker_station_id", lockerStationId },
                 { "tracking_number", trackingNumber },
                 { "lsp_id", lspId},
-                { "lsp_user_id", lsp_user_id},
+                { "lsp_user_id", lspUserId},
+                { "lsp_id_to_collect", lspIdToCollect},
+                { "status", status}
+            };
+                var response = HttpHandler.GetRequestResolver(queryString, MemberInfo.Version, MemberInfo.ClientId, MemberInfo.ClientSecret, UriAbsolutePath.RetrieveLockersBelongsCourier, TokenResponse.AccessToken, TokenResponse.DateTime);
+                Log.Information("[Retrieve Lockers Belongs To Courier][Res]" + "[" + response + "]");
+
+                result = JObject.Parse(response);
+                return result;
+            }
+            return JObject.Parse(SerializerHelper<AuthenticationError>.SerializeObject(new AuthenticationError(false, "401", "Unauthenticated")));
+
+        }
+
+        /// <summary>
+        /// Sets the bulk retrieve locker belongs to courier by locker station id, lsp id, tracking number and status.
+        /// </summary>
+        public JObject RetrieveLockersBelongsToCourier(string lockerStationId, string lspId, string lspUserId, string lspIdToCollect, string status)
+        {
+            JObject result;
+            if (TokenResponse.StatusCode == 200)
+            {
+                Log.Information("[Retrieve Lockers Belongs To Courier][Req]" +  "[Locker Station Id : " + lockerStationId + "]" + "[lsp Id : " + lspId + "]" + "[ls pUser Id : " + lspUserId + "]" + "[Lsp Id To Collect : " + lspIdToCollect + "]"+ "[Status : " + status + "]");
+                var queryString = new Dictionary<string, string>()
+            {
+                { "locker_station_id", lockerStationId },
+                { "lsp_id", lspId},
+                { "lsp_user_id", lspUserId},
+                { "lsp_id_to_collect", lspIdToCollect},
                 { "status", status}
             };
                 var response = HttpHandler.GetRequestResolver(queryString, MemberInfo.Version, MemberInfo.ClientId, MemberInfo.ClientSecret, UriAbsolutePath.RetrieveLockersBelongsCourier, TokenResponse.AccessToken, TokenResponse.DateTime);
