@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace LSS.HCM.Core.Common.Utiles
 {
@@ -19,7 +20,6 @@ namespace LSS.HCM.Core.Common.Utiles
             return hexByteArray;
         }
 
-        // Caculate checksum CRC16 MODBUS
         public static List<byte> Crc16CheckSum(List<byte> byteCommand)
         {
             uint crc16 = 0xffff;
@@ -75,6 +75,12 @@ namespace LSS.HCM.Core.Common.Utiles
                 stringLength -= chunkSize;
             }
             return statusList;
+        }
+
+        public static string DictToJson(Dictionary<string, string> dict)
+        {
+            var entries = dict.Select(d => string.Format("\"{0}\": \"{1}\"", d.Key, string.Join(",", d.Value)));
+            return "{" + string.Join(",", entries) + "}";
         }
     }
 }

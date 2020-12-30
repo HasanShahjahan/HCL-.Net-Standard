@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\core\LSS.BE.Core.Entities\LSS.BE.Core.Entities.csproj" />
+    <ProjectReference Include="..\LSS.BE.Core.Common\LSS.BE.Core.Common.csproj" />
+  </ItemGroup>
+
+</Project>

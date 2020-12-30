@@ -1,14 +1,24 @@
 ﻿using LSS.HCM.Core.Common.Enums;
 using LSS.HCM.Core.Common.Utiles;
 using LSS.HCM.Core.DataObjects.Settings;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace LSS.HCM.Core.Domain.Services
 {
+    /// <summary>
+    ///   Represents microcontroller board initialization for open compartment, compartment status, item detection and LED status. 
+    ///</summary>
     public sealed class BoardInitializationService
     {
+        /// <summary>
+        /// Execute command buffer from list of byte response buffer based on command type. 
+        /// </summary>
+        /// <returns>
+        ///  Compiled data based on command type. 
+        /// </returns>
         public static Dictionary<string, string> ExecuteCommand(string commandType, List<byte> bufferResponse)
         {
             byte length = bufferResponse.ElementAt(3);
@@ -34,6 +44,13 @@ namespace LSS.HCM.Core.Domain.Services
             }
             return compiledData;
         }
+
+        /// <summary>
+        /// Generate command buffer from list of byte command data and locker configuration.
+        /// </summary>
+        /// <returns>
+        ///  Command byte from microcontroller command header, commands of each type with locker configuration.  
+        /// </returns>
         public static List<byte> GenerateCommand(string commandName, List<byte> commandData, AppSettings lockerConfiguration)
         {
             List<byte> commandHeader = Utiles.ToByteList(lockerConfiguration.Microcontroller.CommandHeader);
@@ -58,6 +75,13 @@ namespace LSS.HCM.Core.Domain.Services
             
             return commandByte;
         }
+
+        /// <summary>
+        /// Sets open compartment command form compiled data.
+        /// </summary>
+        /// <returns>
+        ///  Set the value to compiled array.
+        /// </returns>
         private static void DoorStatusCommand(List<byte> Data, Dictionary<string, string> compiledData)
         {
             char[] statusArray1_8 = Convert.ToString(Data.ElementAt(2), 2).PadLeft(8, '0').ToCharArray();
@@ -74,7 +98,15 @@ namespace LSS.HCM.Core.Domain.Services
 
             string statusAry = statusStr1_8 + statusStr9_16 + statusStr17_24;
             compiledData.Add("statusAry", statusAry);
+            Log.Debug("[HCM][Board Initialization Service][Door Status Command]" + "[Status Array : " + statusAry + "]");
         }
+
+        /// <summary>
+        /// Sets compartment status command form compiled data.
+        /// </summary>
+        /// <returns>
+        ///  Set the value to compiled array.
+        /// </returns>
         private static void DoorOpenCommand(List<byte> Data, Dictionary<string, string> compiledData)
         {
             byte moduleNo = Data.ElementAt(0);
@@ -87,7 +119,15 @@ namespace LSS.HCM.Core.Domain.Services
             compiledData.Add("moduleNo", moduleNo.ToString());
             compiledData.Add("doorNo", doorNo.ToString());
             compiledData.Add("DoorOpen", openingStatus);
+            Log.Debug("[HCM][Board Initialization Service][Door Open Command]" + "[Module No. : " + moduleNo.ToString() + "]" + "[Door No. : " + doorNo.ToString() + "]" + "[Opening Status : " + openingStatus + "]");
         }
+
+        /// <summary>
+        /// Sets item detection command form compiled data.
+        /// </summary>
+        /// <returns>
+        ///  Set the value to compiled array.
+        /// </returns>
         private static void ItemDetectionCommand(List<byte> Data, Dictionary<string, string> compiledData)
         {
             string detectionArray1_8 = Convert.ToString(Data.ElementAt(3), 2).PadLeft(8, '0');
@@ -97,6 +137,7 @@ namespace LSS.HCM.Core.Domain.Services
 
             string detectionAry = detectionArray1_8 + detectionArray9_16 + detectionArray17_24 + detectionArray25_32;
             compiledData.Add("detectionAry", detectionAry);
+            Log.Debug("[HCM][Board Initialization Service][Item Detection Command]" + "[Status Array : " + detectionAry + "]");
         }
     }
 }

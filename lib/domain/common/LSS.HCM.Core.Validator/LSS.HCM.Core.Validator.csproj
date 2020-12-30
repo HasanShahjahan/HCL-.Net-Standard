@@ -5,7 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\infrastructure\LSS.HCM.Core.Infrastructure\LSS.HCM.Core.Infrastructure.csproj" />
+    <PackageReference Include="Serilog" Version="2.10.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\security\LSS.HCM.Core.Security\LSS.HCM.Core.Security.csproj" />
     <ProjectReference Include="..\LSS.HCM.Core.Common\LSS.HCM.Core.Common.csproj" />
     <ProjectReference Include="..\LSS.HCM.Core.DataObjects\LSS.HCM.Core.DataObjects.csproj" />

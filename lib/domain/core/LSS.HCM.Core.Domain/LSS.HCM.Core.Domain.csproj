@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -7,15 +7,20 @@
     <Product>Hardware Control Module</Product>
     <Description>Hardware Control API (HWAPI) brings hardware communication and collaboration into one place so you can get all the hardware status from one place, whether you belong to a large enterprise or a small project.</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <GenerateDocumentationFile>false</GenerateDocumentationFile>
-    <Version>1.0.1</Version>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <Version>1.0.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MQTTnet" Version="3.0.13" />
+    <PackageReference Include="NAudio" Version="1.10.0" />
+    <PackageReference Include="OpenCvSharp4" Version="4.1.1.20191216" />
+    <PackageReference Include="OpenCvSharp4.runtime.win" Version="4.1.1.20191216" />
     <PackageReference Include="System.IO.Ports" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\common\LSS.Logging\LSS.Logging.csproj" />
     <ProjectReference Include="..\..\common\LSS.HCM.Core.DataObjects\LSS.HCM.Core.DataObjects.csproj" />
     <ProjectReference Include="..\..\common\LSS.HCM.Core.Validator\LSS.HCM.Core.Validator.csproj" />
     <ProjectReference Include="..\LSS.HCM.Core.Entities\LSS.HCM.Core.Entities.csproj" />

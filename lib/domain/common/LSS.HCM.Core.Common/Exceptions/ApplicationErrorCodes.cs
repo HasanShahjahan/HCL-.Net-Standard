@@ -19,8 +19,10 @@ namespace LSS.HCM.Core.Common.Exceptions
         public const string InvalidLockerId = "INVALID_LOCKER_ID";
         public const string InvalidCaptureType = "INVALID_IMAGE_CAPTURE_TYPE";
 
-        public const string MongoDbConnectionProblem = "MONGODB_CONNECTION_ERROR";
+        public const string UnknownError = "UNKNOWN_ERROR";
         public const string InternalServerError = "INTERNAL_SERVER_ERROR";
+        public const string BrokenComPort = "COM_PORT_NOT_EXIST";
+
         public static string GetMessage(string value)
         {
             switch (value)
@@ -41,8 +43,10 @@ namespace LSS.HCM.Core.Common.Exceptions
                     return "Capture Type is Required";
                 case InvalidCaptureType:
                     return "Specify Valid Capture Type";
-                case MongoDbConnectionProblem:
-                    return "Specify Valid Database Connection String";
+                case BrokenComPort:
+                    return "Please check your communication port.";
+                case UnknownError:
+                    return "Please try again later.";
                 default:
                     throw new ArgumentOutOfRangeException(nameof(value), value, null);
             }

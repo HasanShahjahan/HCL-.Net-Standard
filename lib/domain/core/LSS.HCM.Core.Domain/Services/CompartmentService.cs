@@ -6,11 +6,22 @@ using CompartmentConfiguration = LSS.HCM.Core.DataObjects.Settings.Compartment;
 using Compartment = LSS.HCM.Core.Entities.Locker.Compartment;
 using LSS.HCM.Core.Domain.Helpers;
 using System.Linq;
+using Serilog;
+using System.Text.Json;
 
 namespace LSS.HCM.Core.Domain.Services
 {
+    /// <summary>
+    ///   Represents locker compartment service for open comparment and it's status.
+    ///</summary>
     public class CompartmentService
     {
+        /// <summary>
+        /// Prepare open compartment object by communicating command to communication port service. 
+        /// </summary>
+        /// <returns>
+        ///  Open compartment actual result with status. 
+        /// </returns>
         public static Compartment CompartmentOpen(string compartmentId, AppSettings lockerConfiguration)
         {
             // Find the target compartment
@@ -29,6 +40,12 @@ namespace LSS.HCM.Core.Domain.Services
             return compartmentResult;
         }
 
+        /// <summary>
+        /// Prepare compartment status object by communicating command to communication port service. 
+        /// </summary>
+        /// <returns>
+        ///  Compartment status actual result including real hardware status. 
+        /// </returns>
         public static List<Compartment> CompartmentStatus(DataObjects.Models.Compartment model, AppSettings lockerConfiguration)
         {
             // Find locker controller board module id and object detection module id list
@@ -79,6 +96,13 @@ namespace LSS.HCM.Core.Domain.Services
                                                                  opendoorStatus[compartment.CompartmentCode.Lcbid] == 0 ? false : true,
                                                                  objectdetectStatus[compartment.CompartmentCode.Odbid] == 1 ? true : false,
                                                                  opendoorStatus[compartment.CompartmentCode.Lcbid] == 0 ? "ON" : "OFF");
+
+                Log.Debug("[HCM][Compartment Service][Compartment Status]" + "[Compartment ID : " + compartmentResult.CompartmentId.ToString() + "]"
+                                                                           + "[Open Door status: " + compartmentResult.CompartmentDoorOpen.ToString() + "]"
+                                                                           + "[Door Available status: " + compartmentResult.CompartmentDoorAvailable.ToString() + "]"
+                                                                           + "[Object Detection status: " + compartmentResult.ObjectDetected.ToString() + "]"
+                                                                           + "[LED status: " + compartmentResult.StatusLed.ToString() + "]"
+                                                                           );
                 compartmentList.Add(compartmentResult);
             }
 

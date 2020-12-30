@@ -3,15 +3,25 @@ using LSS.HCM.Core.DataObjects.Settings;
 using LSS.HCM.Core.Domain.Helpers;
 using LSS.HCM.Core.Domain.Services;
 using LSS.HCM.Core.Entities.Locker;
-using MongoDB.Driver;
+using Serilog;
 using System.Collections.Generic;
 using System.Linq;
 using CompartmentConfiguration = LSS.HCM.Core.DataObjects.Settings.Compartment;
 
 namespace LSS.HCM.Core.Domain.Managers
 {
+    /// <summary>
+    ///   Represents Compartment Mangement for open compartment and compartment status.
+    ///</summary>
     public sealed class CompartmentManager
     {
+
+        /// <summary>
+        /// Manage open compartment by requested object and based on locker configuration.
+        /// </summary>
+        /// <returns>
+        ///  The compartment object mapped from locker configuration.
+        /// </returns>
         public static Locker CompartmentOpen(DataObjects.Models.Compartment model, AppSettings lockerConfiguration) 
         {
             var odbModuleList = new List<string> { }; // Find  object detection module id list by input list of compartment
@@ -32,9 +42,12 @@ namespace LSS.HCM.Core.Domain.Managers
             foreach (string moduleNo in odbModuleList)
             {
                 objectdetectStatusAry[moduleNo] = CompartmentHelper.GetStatusByModuleId(CommandType.ItemDetection, moduleNo, lockerConfiguration);
+                Log.Debug("[HCM][Compartment Manager][Compartment Open]" + "[Module No : " + moduleNo + "]" + "[Object Detection Status Array : " + objectdetectStatusAry[moduleNo] + "]");
             }
 
+
             var result = new Locker();
+            bool compartmentDoorStatusAlert = false;
             foreach (var compartmentId in model.CompartmentIds)
             {
                 var targetCompartment = CompartmentService.CompartmentOpen(compartmentId, lockerConfiguration);
@@ -44,15 +57,34 @@ namespace LSS.HCM.Core.Domain.Managers
                 Dictionary<string, byte> objectdetectStatus = objectdetectStatusAry[targetCompartmentConfig.CompartmentCode.Odbmod];
                 targetCompartment.ObjectDetected = objectdetectStatus[targetCompartmentConfig.CompartmentCode.Odbid] == 1 ? true : false;
                 result.Compartments.Add(targetCompartment);
+                compartmentDoorStatusAlert |= targetCompartment.CompartmentDoorOpen;
             }
             result.TransactionId = model.TransactionId;
+
+            // Set alert timer
+            if(compartmentDoorStatusAlert)
+            {
+                Log.Information("[HCM][Compartment Manager][Compartment Open]" + "[Set Door Open Timer]");
+                CompartmentHelper.SetDoorOpenTimer(lockerConfiguration);
+                //CompartmentHelper.EndDoorOpenTimer();
+            }
+
             return result;
         }
+
+
+        /// <summary>
+        /// Manage compartment status by requested object and based on locker configuration.
+        /// </summary>
+        /// <returns>
+        ///  List of compartment status object mapped from locker configuration.
+        /// </returns>
         public static List<Entities.Locker.Compartment> CompartmentStatus(DataObjects.Models.Compartment model, AppSettings lockerConfiguration)
         {
             // Find  object detection module id list by input list of compartment
             var compartments = CompartmentService.CompartmentStatus(model, lockerConfiguration);
             return compartments;
         }
+
     }
 }

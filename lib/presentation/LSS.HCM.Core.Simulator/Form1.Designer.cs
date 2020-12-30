@@ -45,24 +45,34 @@
             this.label5 = new System.Windows.Forms.Label();
             this.txtCompartmentId = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
+            this.configurationFile = new System.Windows.Forms.Label();
+            this.txtConfigurationFile = new System.Windows.Forms.TextBox();
+            this.buttonConfigLocker = new System.Windows.Forms.Button();
+            this.radioCaptureImage = new System.Windows.Forms.RadioButton();
+            this.textBoxScanner = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.bStatusCOM1 = new System.Windows.Forms.Button();
+            this.bStatusCOM2 = new System.Windows.Forms.Button();
+            this.bStatusCOM3 = new System.Windows.Forms.Button();
+            this.bStatusCOM4 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // txtTransactionId
             // 
-            this.txtTransactionId.Location = new System.Drawing.Point(142, 74);
+            this.txtTransactionId.Location = new System.Drawing.Point(166, 145);
             this.txtTransactionId.Margin = new System.Windows.Forms.Padding(2);
             this.txtTransactionId.Name = "txtTransactionId";
-            this.txtTransactionId.Size = new System.Drawing.Size(213, 20);
+            this.txtTransactionId.Size = new System.Drawing.Size(248, 23);
             this.txtTransactionId.TabIndex = 0;
             this.txtTransactionId.TextChanged += new System.EventHandler(this.txtCompartmentId_TextChanged);
             // 
             // lblCompartmentId
             // 
             this.lblCompartmentId.AutoSize = true;
-            this.lblCompartmentId.Location = new System.Drawing.Point(40, 153);
+            this.lblCompartmentId.Location = new System.Drawing.Point(35, 203);
             this.lblCompartmentId.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblCompartmentId.Name = "lblCompartmentId";
-            this.lblCompartmentId.Size = new System.Drawing.Size(81, 13);
+            this.lblCompartmentId.Size = new System.Drawing.Size(95, 15);
             this.lblCompartmentId.TabIndex = 1;
             this.lblCompartmentId.Text = "Compartment Id";
             this.lblCompartmentId.Click += new System.EventHandler(this.lblCompartmentId_Click);
@@ -71,10 +81,10 @@
             // 
             this.radioOpenCompartment.AutoSize = true;
             this.radioOpenCompartment.Checked = true;
-            this.radioOpenCompartment.Location = new System.Drawing.Point(142, 20);
+            this.radioOpenCompartment.Location = new System.Drawing.Point(166, 62);
             this.radioOpenCompartment.Margin = new System.Windows.Forms.Padding(2);
             this.radioOpenCompartment.Name = "radioOpenCompartment";
-            this.radioOpenCompartment.Size = new System.Drawing.Size(116, 17);
+            this.radioOpenCompartment.Size = new System.Drawing.Size(132, 19);
             this.radioOpenCompartment.TabIndex = 2;
             this.radioOpenCompartment.TabStop = true;
             this.radioOpenCompartment.Text = "Open Compartment";
@@ -84,10 +94,10 @@
             // radioCompartmentStatus
             // 
             this.radioCompartmentStatus.AutoSize = true;
-            this.radioCompartmentStatus.Location = new System.Drawing.Point(142, 41);
+            this.radioCompartmentStatus.Location = new System.Drawing.Point(166, 85);
             this.radioCompartmentStatus.Margin = new System.Windows.Forms.Padding(2);
             this.radioCompartmentStatus.Name = "radioCompartmentStatus";
-            this.radioCompartmentStatus.Size = new System.Drawing.Size(120, 17);
+            this.radioCompartmentStatus.Size = new System.Drawing.Size(135, 19);
             this.radioCompartmentStatus.TabIndex = 2;
             this.radioCompartmentStatus.Text = "Compartment Status";
             this.radioCompartmentStatus.UseVisualStyleBackColor = true;
@@ -95,10 +105,10 @@
             // 
             // btnSubmit
             // 
-            this.btnSubmit.Location = new System.Drawing.Point(24, 457);
+            this.btnSubmit.Location = new System.Drawing.Point(35, 331);
             this.btnSubmit.Margin = new System.Windows.Forms.Padding(2);
             this.btnSubmit.Name = "btnSubmit";
-            this.btnSubmit.Size = new System.Drawing.Size(331, 34);
+            this.btnSubmit.Size = new System.Drawing.Size(379, 50);
             this.btnSubmit.TabIndex = 3;
             this.btnSubmit.Text = "Enter";
             this.btnSubmit.UseVisualStyleBackColor = true;
@@ -106,30 +116,30 @@
             // 
             // txtLockerId
             // 
-            this.txtLockerId.Location = new System.Drawing.Point(142, 112);
+            this.txtLockerId.Location = new System.Drawing.Point(166, 172);
             this.txtLockerId.Margin = new System.Windows.Forms.Padding(2);
             this.txtLockerId.Name = "txtLockerId";
-            this.txtLockerId.Size = new System.Drawing.Size(213, 20);
+            this.txtLockerId.Size = new System.Drawing.Size(248, 23);
             this.txtLockerId.TabIndex = 0;
             this.txtLockerId.TextChanged += new System.EventHandler(this.txtLockerId_TextChanged);
             // 
             // lblLockerId
             // 
             this.lblLockerId.AutoSize = true;
-            this.lblLockerId.Location = new System.Drawing.Point(75, 115);
+            this.lblLockerId.Location = new System.Drawing.Point(35, 176);
             this.lblLockerId.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblLockerId.Name = "lblLockerId";
-            this.lblLockerId.Size = new System.Drawing.Size(46, 13);
+            this.lblLockerId.Size = new System.Drawing.Size(55, 15);
             this.lblLockerId.TabIndex = 1;
-            this.lblLockerId.Text = "Loker Id";
+            this.lblLockerId.Text = "Locker Id";
             this.lblLockerId.Click += new System.EventHandler(this.lblLockerId_Click);
             // 
             // txtResult
             // 
-            this.txtResult.Location = new System.Drawing.Point(379, 11);
+            this.txtResult.Location = new System.Drawing.Point(443, 56);
             this.txtResult.Margin = new System.Windows.Forms.Padding(2);
             this.txtResult.Name = "txtResult";
-            this.txtResult.Size = new System.Drawing.Size(397, 480);
+            this.txtResult.Size = new System.Drawing.Size(498, 296);
             this.txtResult.TabIndex = 4;
             this.txtResult.Text = "";
             this.txtResult.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
@@ -137,10 +147,10 @@
             // labelTransactionId
             // 
             this.labelTransactionId.AutoSize = true;
-            this.labelTransactionId.Location = new System.Drawing.Point(49, 77);
+            this.labelTransactionId.Location = new System.Drawing.Point(35, 149);
             this.labelTransactionId.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelTransactionId.Name = "labelTransactionId";
-            this.labelTransactionId.Size = new System.Drawing.Size(72, 13);
+            this.labelTransactionId.Size = new System.Drawing.Size(77, 15);
             this.labelTransactionId.TabIndex = 1;
             this.labelTransactionId.Text = "TransactionId";
             this.labelTransactionId.Click += new System.EventHandler(this.label1_Click);
@@ -148,10 +158,10 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(30, 191);
+            this.label2.Location = new System.Drawing.Point(35, 224);
             this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(91, 13);
+            this.label2.Size = new System.Drawing.Size(0, 15);
             this.label2.TabIndex = 1;
             this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
@@ -160,9 +170,10 @@
             this.jwtEnable.AutoSize = true;
             this.jwtEnable.Checked = true;
             this.jwtEnable.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.jwtEnable.Location = new System.Drawing.Point(142, 328);
+            this.jwtEnable.Location = new System.Drawing.Point(166, 242);
+            this.jwtEnable.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.jwtEnable.Name = "jwtEnable";
-            this.jwtEnable.Size = new System.Drawing.Size(85, 17);
+            this.jwtEnable.Size = new System.Drawing.Size(85, 19);
             this.jwtEnable.TabIndex = 5;
             this.jwtEnable.Text = "JWT Enable";
             this.jwtEnable.UseVisualStyleBackColor = true;
@@ -170,68 +181,195 @@
             // 
             // txtJwtSecret
             // 
-            this.txtJwtSecret.Location = new System.Drawing.Point(142, 365);
+            this.txtJwtSecret.Location = new System.Drawing.Point(166, 266);
             this.txtJwtSecret.Margin = new System.Windows.Forms.Padding(2);
             this.txtJwtSecret.Name = "txtJwtSecret";
-            this.txtJwtSecret.Size = new System.Drawing.Size(213, 20);
+            this.txtJwtSecret.Size = new System.Drawing.Size(248, 23);
             this.txtJwtSecret.TabIndex = 0;
             this.txtJwtSecret.TextChanged += new System.EventHandler(this.txtLockerId_TextChanged);
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(83, 368);
+            this.label4.Location = new System.Drawing.Point(35, 270);
             this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(38, 13);
+            this.label4.Size = new System.Drawing.Size(39, 15);
             this.label4.TabIndex = 1;
             this.label4.Text = "Secret";
             this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
             // txtJwtToken
             // 
-            this.txtJwtToken.Location = new System.Drawing.Point(142, 403);
+            this.txtJwtToken.Location = new System.Drawing.Point(166, 293);
             this.txtJwtToken.Margin = new System.Windows.Forms.Padding(2);
             this.txtJwtToken.Name = "txtJwtToken";
-            this.txtJwtToken.Size = new System.Drawing.Size(213, 20);
+            this.txtJwtToken.Size = new System.Drawing.Size(248, 23);
             this.txtJwtToken.TabIndex = 0;
             this.txtJwtToken.TextChanged += new System.EventHandler(this.txtLockerId_TextChanged);
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(83, 406);
+            this.label5.Location = new System.Drawing.Point(35, 296);
             this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(38, 13);
+            this.label5.Size = new System.Drawing.Size(38, 15);
             this.label5.TabIndex = 1;
             this.label5.Text = "Token";
             this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // txtCompartmentId
             // 
-            this.txtCompartmentId.Location = new System.Drawing.Point(142, 150);
+            this.txtCompartmentId.Location = new System.Drawing.Point(166, 199);
             this.txtCompartmentId.Margin = new System.Windows.Forms.Padding(2);
             this.txtCompartmentId.Name = "txtCompartmentId";
-            this.txtCompartmentId.Size = new System.Drawing.Size(213, 20);
+            this.txtCompartmentId.Size = new System.Drawing.Size(248, 23);
             this.txtCompartmentId.TabIndex = 6;
             this.txtCompartmentId.TextChanged += new System.EventHandler(this.txtConnectionString_TextChanged);
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(67, 32);
+            this.label6.Location = new System.Drawing.Point(35, 75);
             this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(54, 13);
+            this.label6.Size = new System.Drawing.Size(64, 15);
             this.label6.TabIndex = 7;
             this.label6.Text = "Command";
             // 
+            // configurationFile
+            // 
+            this.configurationFile.AutoSize = true;
+            this.configurationFile.Location = new System.Drawing.Point(35, 25);
+            this.configurationFile.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.configurationFile.Name = "configurationFile";
+            this.configurationFile.Size = new System.Drawing.Size(102, 15);
+            this.configurationFile.TabIndex = 9;
+            this.configurationFile.Text = "Configuration File";
+            this.configurationFile.Click += new System.EventHandler(this.label1_Click_1);
+            // 
+            // txtConfigurationFile
+            // 
+            this.txtConfigurationFile.Location = new System.Drawing.Point(166, 22);
+            this.txtConfigurationFile.Margin = new System.Windows.Forms.Padding(2);
+            this.txtConfigurationFile.Name = "txtConfigurationFile";
+            this.txtConfigurationFile.Size = new System.Drawing.Size(174, 23);
+            this.txtConfigurationFile.TabIndex = 8;
+            // 
+            // buttonConfigLocker
+            // 
+            this.buttonConfigLocker.Location = new System.Drawing.Point(358, 22);
+            this.buttonConfigLocker.Name = "buttonConfigLocker";
+            this.buttonConfigLocker.Size = new System.Drawing.Size(56, 23);
+            this.buttonConfigLocker.TabIndex = 10;
+            this.buttonConfigLocker.Text = "Config";
+            this.buttonConfigLocker.UseVisualStyleBackColor = true;
+            this.buttonConfigLocker.Click += new System.EventHandler(this.buttonConfigLocker_Click);
+            // 
+            // radioCaptureImage
+            // 
+            this.radioCaptureImage.AutoSize = true;
+            this.radioCaptureImage.Location = new System.Drawing.Point(166, 109);
+            this.radioCaptureImage.Name = "radioCaptureImage";
+            this.radioCaptureImage.Size = new System.Drawing.Size(103, 19);
+            this.radioCaptureImage.TabIndex = 11;
+            this.radioCaptureImage.TabStop = true;
+            this.radioCaptureImage.Text = "Capture Image";
+            this.radioCaptureImage.UseVisualStyleBackColor = true;
+            this.radioCaptureImage.CheckedChanged += new System.EventHandler(this.radioCaptureImage_CheckedChanged);
+            // 
+            // textBoxScanner
+            // 
+            this.textBoxScanner.Location = new System.Drawing.Point(535, 358);
+            this.textBoxScanner.Name = "textBoxScanner";
+            this.textBoxScanner.Size = new System.Drawing.Size(406, 23);
+            this.textBoxScanner.TabIndex = 12;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(443, 361);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(80, 15);
+            this.label1.TabIndex = 13;
+            this.label1.Text = "Scanner Value";
+            // 
+            // bStatusCOM1
+            // 
+            this.bStatusCOM1.BackColor = System.Drawing.Color.Gainsboro;
+            this.bStatusCOM1.FlatAppearance.BorderSize = 0;
+            this.bStatusCOM1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bStatusCOM1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.bStatusCOM1.ForeColor = System.Drawing.Color.Black;
+            this.bStatusCOM1.Location = new System.Drawing.Point(443, 21);
+            this.bStatusCOM1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.bStatusCOM1.Name = "bStatusCOM1";
+            this.bStatusCOM1.Size = new System.Drawing.Size(120, 23);
+            this.bStatusCOM1.TabIndex = 14;
+            this.bStatusCOM1.Text = "COM1";
+            this.bStatusCOM1.UseVisualStyleBackColor = false;
+            // 
+            // bStatusCOM2
+            // 
+            this.bStatusCOM2.BackColor = System.Drawing.Color.Gainsboro;
+            this.bStatusCOM2.FlatAppearance.BorderSize = 0;
+            this.bStatusCOM2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bStatusCOM2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.bStatusCOM2.ForeColor = System.Drawing.Color.Black;
+            this.bStatusCOM2.Location = new System.Drawing.Point(569, 22);
+            this.bStatusCOM2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.bStatusCOM2.Name = "bStatusCOM2";
+            this.bStatusCOM2.Size = new System.Drawing.Size(120, 23);
+            this.bStatusCOM2.TabIndex = 15;
+            this.bStatusCOM2.Text = "COM2";
+            this.bStatusCOM2.UseVisualStyleBackColor = false;
+            // 
+            // bStatusCOM3
+            // 
+            this.bStatusCOM3.BackColor = System.Drawing.Color.Gainsboro;
+            this.bStatusCOM3.FlatAppearance.BorderSize = 0;
+            this.bStatusCOM3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bStatusCOM3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.bStatusCOM3.ForeColor = System.Drawing.Color.Black;
+            this.bStatusCOM3.Location = new System.Drawing.Point(695, 22);
+            this.bStatusCOM3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.bStatusCOM3.Name = "bStatusCOM3";
+            this.bStatusCOM3.Size = new System.Drawing.Size(120, 23);
+            this.bStatusCOM3.TabIndex = 16;
+            this.bStatusCOM3.Text = "COM3";
+            this.bStatusCOM3.UseVisualStyleBackColor = false;
+            // 
+            // bStatusCOM4
+            // 
+            this.bStatusCOM4.BackColor = System.Drawing.Color.Gainsboro;
+            this.bStatusCOM4.FlatAppearance.BorderSize = 0;
+            this.bStatusCOM4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bStatusCOM4.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.bStatusCOM4.ForeColor = System.Drawing.Color.Black;
+            this.bStatusCOM4.Location = new System.Drawing.Point(821, 22);
+            this.bStatusCOM4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.bStatusCOM4.Name = "bStatusCOM4";
+            this.bStatusCOM4.Size = new System.Drawing.Size(120, 23);
+            this.bStatusCOM4.TabIndex = 17;
+            this.bStatusCOM4.Text = "COM4";
+            this.bStatusCOM4.UseVisualStyleBackColor = false;
+            // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(790, 502);
+            this.ClientSize = new System.Drawing.Size(976, 404);
+            this.Controls.Add(this.bStatusCOM4);
+            this.Controls.Add(this.bStatusCOM3);
+            this.Controls.Add(this.bStatusCOM2);
+            this.Controls.Add(this.bStatusCOM1);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.textBoxScanner);
+            this.Controls.Add(this.radioCaptureImage);
+            this.Controls.Add(this.buttonConfigLocker);
+            this.Controls.Add(this.configurationFile);
+            this.Controls.Add(this.txtConfigurationFile);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.txtCompartmentId);
             this.Controls.Add(this.jwtEnable);
@@ -277,6 +415,16 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox txtCompartmentId;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label configurationFile;
+        private System.Windows.Forms.TextBox txtConfigurationFile;
+        private System.Windows.Forms.Button buttonConfigLocker;
+        private System.Windows.Forms.RadioButton radioCaptureImage;
+        private System.Windows.Forms.TextBox textBoxScanner;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button bStatusCOM1;
+        private System.Windows.Forms.Button bStatusCOM2;
+        private System.Windows.Forms.Button bStatusCOM3;
+        private System.Windows.Forms.Button bStatusCOM4;
     }
 }
 

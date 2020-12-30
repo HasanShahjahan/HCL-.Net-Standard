@@ -1,4 +1,5 @@
 ﻿using Microsoft.IdentityModel.Tokens;
+using Serilog;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
@@ -26,13 +27,14 @@ namespace LSS.HCM.Core.Security.Handlers
                 };
                 var claims = tokenHandler.ValidateToken(token, validationParameters, out SecurityToken validatedToken).Claims.ToList();
                 claimsIdentity = claims.FirstOrDefault(c => c.Type == "transaction_id").Value;
+                Log.Debug("[HCM][JWT Token Handler][Verify Jwt Security Token][Right token]" + "[token: " + token + "]");
                 return (true, claimsIdentity);
             }
             catch
             {
+                Log.Debug("[HCM][JWT Token Handler][Verify Jwt Security Token][Wrong token]" + "[token: " + token + "]");
                 return (false, claimsIdentity);
             }
-
         }
     }
 }
