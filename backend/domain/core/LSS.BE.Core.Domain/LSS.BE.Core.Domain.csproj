@@ -7,6 +7,7 @@
     <Description>To fascilitae locker station app by connection any other parties (E.g. LMS, HCM and other parites too).</Description>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <Version>1.0.0</Version>
+    <UserSecretsId>ed259a17-2431-4309-8557-e48aa51abc64</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\common\LSS.Logging\LSS.Logging.csproj" />
+    <ProjectReference Include="..\..\..\..\common\LSS.Common.Logging\LSS.Common.Logging.csproj" />
     <ProjectReference Include="..\..\..\..\lib\domain\core\LSS.HCM.Core.Domain\LSS.HCM.Core.Domain.csproj" />
     <ProjectReference Include="..\..\common\LSS.BE.Core.Common\LSS.BE.Core.Common.csproj" />
     <ProjectReference Include="..\..\common\LSS.BE.Core.DataObjects\LSS.BE.Core.DataObjects.csproj" />

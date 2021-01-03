@@ -6,10 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MongoDB.Bson" Version="2.11.5" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\core\LSS.HCM.Core.Entities\LSS.HCM.Core.Entities.csproj" />
     <ProjectReference Include="..\LSS.HCM.Core.Common\LSS.HCM.Core.Common.csproj" />
   </ItemGroup>
