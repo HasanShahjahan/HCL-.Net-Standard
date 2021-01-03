@@ -3,7 +3,7 @@ using LSS.BE.Core.Common.Exceptions;
 using LSS.BE.Core.Common.Utiles;
 using LSS.BE.Core.Domain.Helpers;
 using LSS.BE.Core.Domain.Interfaces;
-using LSS.Logging;
+using LSS.Common.Logging;
 using Serilog;
 using System;
 
@@ -27,8 +27,7 @@ namespace LSS.BE.Core.Domain.Initialization
             {
                 if (Utiles.IsValidPath(memberInfo.ConfigurationPath))
                 {
-                    LoggerAbstractions.SetupStaticLogger(memberInfo.ConfigurationPath);
-                    LoggerAbstractions.CreateHostBuilder().Build();
+                    LoggerAbstractions.SetupStaticLogger(memberInfo);
                     Log.Information("[Initialization][Service initiated with logging.]");
 
                     tokenResponse = httpHandler.GetToken(memberInfo.Version, memberInfo.ClientId, memberInfo.ClientSecret);
