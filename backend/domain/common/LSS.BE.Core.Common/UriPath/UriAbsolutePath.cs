@@ -6,6 +6,7 @@ namespace LSS.BE.Core.Common.UriPath
 {
     public static class UriAbsolutePath
     {
+        public const string HealthCheck = "me/health-check";
         public const string GetToken = "token";
         public const string VerifyOtp = "otp/verify";
         public const string SendOtp = "otp/send";

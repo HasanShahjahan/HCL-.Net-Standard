@@ -50,7 +50,6 @@ namespace LSS.HCM.Core.Domain.Helpers
                 else
                 {
                     Log.Debug("[HCM][Locker Helper][Capture Photo]" + "[Cannot take picture if the camera isn't capturing image!]");
-                    Console.WriteLine("Cannot take picture if the camera isn't capturing image!");
                 }
 
                 var captureResponse = new CaptureDto(model.TransactionId, model.LockerId, "jpeg", imageBytes);

@@ -127,7 +127,7 @@ namespace LSS.HCM.Core.Domain.Managers
                 if (statusCode != StatusCode.Status200OK) return CaptureMapper.ToError(new CaptureDto { StatusCode = statusCode, Error = errorResult });
                 var result = LockerHelper.CapturePhoto(model);
                 captureDto = CaptureMapper.ToObject(result);
-                Log.Information("[HCM][Capture Image][Res]" + "[" + JsonSerializer.Serialize(result) + "]");
+                Log.Information("[HCM][Capture Image][Res]" + "[Success]");
             }
             catch (Exception ex)
             {

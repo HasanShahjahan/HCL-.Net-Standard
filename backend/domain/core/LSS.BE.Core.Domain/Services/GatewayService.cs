@@ -61,6 +61,26 @@ namespace LSS.BE.Core.Domain.Services
         }
 
         /// <summary>
+        /// Sets the health check by providing token.
+        /// </summary>
+        /// <returns>
+        ///  Gets health check status true. 
+        /// </returns>
+        public JObject HealthCheck() 
+        {
+            JObject result;
+            if (TokenResponse.StatusCode == 200) 
+            {
+                var response = HttpHandler.PostRequestResolver(string.Empty, HttpMethod.Post, MemberInfo.Version, MemberInfo.ClientId, MemberInfo.ClientSecret, UriAbsolutePath.HealthCheck, TokenResponse.AccessToken, TokenResponse.DateTime);
+                Log.Information("[Health Check][Res]" + "[" + response + "]");
+
+                result = JObject.Parse(response);
+                return result;
+            }
+            return JObject.Parse(SerializerHelper<AuthenticationError>.SerializeObject(new AuthenticationError(false, "401", "Unauthenticated")));
+        }
+
+        /// <summary>
         /// Sets the Lsp verification member by providing locker station id, key and pin.
         /// </summary>
         /// <returns>
