@@ -17,19 +17,24 @@ namespace LSS.BE.Core.TestCaller
         {
             Console.Write("Gateway Service Initialization\n");
 
-            Console.Write("Uri String: http://18.138.61.187\n");
-            string uriString = "http://18.138.61.187";
+            Console.Write("Uri String: http://18.138.61.187 (For Staging) https://uat-p.picknetwork.com/ (For UAT)\n");
+            Console.Write("Enter your URI String: ");
+            string uriString = Console.ReadLine();
 
-            Console.Write("LockerStation Id: c17fb923-70f9-4d3c-b081-4226096d6905\n");
-            string lockerStationId = "c17fb923-70f9-4d3c-b081-4226096d6905";
+            Console.Write("LockerStation Id: c17fb923-70f9-4d3c-b081-4226096d6905 (For Staging) 062df68f-7635-4b33-b3a5-e5738ce6b518 (For UAT)\n");
+            Console.Write("Enter your Locker Station Id: ");
+            string lockerStationId = Console.ReadLine();
+            
             Console.Write("Version: v1\n");
             string version = "v1";
 
-            Console.Write("Client Id: ef3350f9-ace2-4900-9da0-bba80402535a\n");
-            string clientId = "ef3350f9-ace2-4900-9da0-bba80402535a";
+            Console.Write("Client Id: ef3350f9-ace2-4900-9da0-bba80402535a (For Staging) 06a2fe24-c3e2-409d-8289-e04293e0d8f0 (For UAT)\n");
+            Console.Write("Enter your Client Id: ");
+            string clientId = Console.ReadLine();
 
-            Console.Write("Client Secret: FA1s0QmZFxXh44QUkVOcEj19hvhjWTsfl1sslwGO\n");
-            string clientSecret = "FA1s0QmZFxXh44QUkVOcEj19hvhjWTsfl1sslwGO";
+            Console.Write("Client Secret: FA1s0QmZFxXh44QUkVOcEj19hvhjWTsfl1sslwGO (For Staging) JCBGGnsqwtlNBN1K60WNhmNiIR8jfy31U89s0Igz (For UAT)\n");
+            Console.Write("Enter your Client Secret: ");
+            string clientSecret = Console.ReadLine();
 
             Console.Write("Configuration Path : ");
             string configurationPath = Console.ReadLine();
@@ -749,8 +754,8 @@ namespace LSS.BE.Core.TestCaller
 
             JObject retrieveLockersBelongsToCourierResult;
 
-            if (status == "individual") retrieveLockersBelongsToCourierResult = gatewayService.RetrieveLockersBelongsToCourier(trackingNumber, lockerStationId, lspVerificationResponse.LspId, lspVerificationResponse.LspUserId, string.Empty, status);
-            else retrieveLockersBelongsToCourierResult = gatewayService.RetrieveLockersBelongsToCourier(lockerStationId, lspVerificationResponse.LspId, lspVerificationResponse.LspUserId, string.Empty, status);
+            if (status == "individual") retrieveLockersBelongsToCourierResult = gatewayService.CourierBookingAll(trackingNumber, lockerStationId, lspVerificationResponse.LspId, lspVerificationResponse.LspUserId, string.Empty, status);
+            else retrieveLockersBelongsToCourierResult = gatewayService.CourierBookingAll(lockerStationId, lspVerificationResponse.LspId, lspVerificationResponse.LspUserId, string.Empty, status);
 
             Console.WriteLine("[Courier Booking All][Res]");
             Console.WriteLine(JsonConvert.SerializeObject(retrieveLockersBelongsToCourierResult, Formatting.Indented));
@@ -851,6 +856,207 @@ namespace LSS.BE.Core.TestCaller
 
             #endregion
 
+        }
+
+        public static void Courier3rdParty(string lockerStationId, GatewayService gatewayService)
+        {
+            #region Health Check
+
+            var healthCheckResult = gatewayService.HealthCheck();
+            Console.WriteLine("[Health Check][Res]");
+            Console.WriteLine(JsonConvert.SerializeObject(healthCheckResult, Formatting.Indented));
+
+            #endregion
+
+            #region Lsp Verification
+
+            Console.Write("-----------------------------------------------------------------------------\n");
+            Console.Write("[Lsp Verification][Req]\n");
+
+            Console.Write("Key: ");
+            string key = Console.ReadLine();
+
+            Console.Write("Pin: ");
+            string pin = Console.ReadLine();
+
+
+            var lspVerification = new LspUserAccess
+            {
+                LockerStationid = lockerStationId,
+                Key = key,
+                Pin = pin
+            };
+            var lspVerificationResult = gatewayService.LspVerification(lspVerification);
+
+            Console.WriteLine("[Lsp Verification][Res]");
+            Console.WriteLine(JsonConvert.SerializeObject(lspVerificationResult, Formatting.Indented));
+            Console.WriteLine("-----------------------------------------------------------------------------");
+
+            var lspVerificationResponse = JsonConvert.DeserializeObject<LspVerificationResponse>(lspVerificationResult.ToString());
+
+            #endregion
+
+            #region Verify Otp
+
+            Console.WriteLine("[Verify Otp][Req]");
+
+            Console.Write("Code: ");
+            string code = Console.ReadLine();
+
+            var verifyOtpModel = new VerifyOtp
+            {
+                LockerStationId = lockerStationId,
+                LspId = lspVerificationResponse.LspId,
+                Code = code,
+                RefCode = lspVerificationResponse.RefCode
+            };
+
+            var verifyOtpResult = gatewayService.VerifyOtp(verifyOtpModel);
+
+            Console.WriteLine("[Verify Otp][Res]");
+            Console.WriteLine(JsonConvert.SerializeObject(verifyOtpResult, Formatting.Indented));
+            Console.WriteLine("-----------------------------------------------------------------------------");
+
+            #endregion
+
+            #region 3rd Party Verify
+
+            Console.WriteLine("[3rd Verify][Req]");
+            var thirdPartyVerifyResult = gatewayService.Verify3rdParty(lockerStationId, lspVerificationResponse.LspId, lspVerificationResponse.LspUserId);
+
+            Console.WriteLine("[3rd Verify][Res]");
+            Console.WriteLine(JsonConvert.SerializeObject(thirdPartyVerifyResult, Formatting.Indented));
+            Console.WriteLine("-----------------------------------------------------------------------------");
+
+            #endregion
+
+            #region Courier List
+            Console.WriteLine("[Courier List][Req]");
+            var courierListResult = gatewayService.CourierList();
+
+            Console.WriteLine("[Courier List][Res]");
+            Console.WriteLine(JsonConvert.SerializeObject(courierListResult, Formatting.Indented));
+            Console.WriteLine("-----------------------------------------------------------------------------");
+            #endregion
+
+            #region Courier 3rd Party
+            Console.WriteLine("[Courier 3rd Party][Req]");
+
+            Console.Write("Lsp Id To Collect: ");
+            string lspIdToCollect = Console.ReadLine();
+
+            var courier3rdPartyResult = gatewayService.CourierBooking3rdParty(lockerStationId, lspVerificationResponse.LspId, lspVerificationResponse.LspUserId, lspIdToCollect);
+
+            Console.WriteLine("[Courier 3rd Party][Res]");
+            Console.WriteLine(JsonConvert.SerializeObject(courier3rdPartyResult, Formatting.Indented));
+            Console.WriteLine("-----------------------------------------------------------------------------");
+            #endregion
+
+            #region Courier All
+            Console.WriteLine("[Courier All][Req]");
+
+            Console.Write("Status : ");
+            string status = Console.ReadLine();
+
+            var courierAllResult = gatewayService.CourierBookingAll(lockerStationId, lspVerificationResponse.LspId, lspVerificationResponse.LspUserId, lspIdToCollect, status);
+
+            Console.WriteLine("[Courier All][Res]");
+            Console.WriteLine(JsonConvert.SerializeObject(courierAllResult, Formatting.Indented));
+            Console.WriteLine("-----------------------------------------------------------------------------");
+            #endregion
+
+            #region Open Compartment
+
+            Console.WriteLine("[Open Compartment][Req]");
+            string transactionId = Guid.NewGuid().ToString();
+
+            Console.Write("Locker Id: ");
+            string lockerId = Console.ReadLine();
+
+            Console.Write("Compartment Id: ");
+            string compartmentIds = Console.ReadLine();
+            string[] compartmentId = compartmentIds.Split(',');
+
+            var openCompartment = new HCM.Core.DataObjects.Models.Compartment(transactionId, lockerId, compartmentId, false, string.Empty, string.Empty);
+            var openCompartmentResult = gatewayService.OpenCompartment(openCompartment);
+
+            Console.WriteLine("[Open Compartment][Res]");
+            Console.WriteLine(JsonConvert.SerializeObject(openCompartmentResult, Formatting.Indented));
+            Console.WriteLine("-----------------------------------------------------------------------------");
+
+            #endregion
+
+            #region Compartment Status
+
+            Console.WriteLine("[Compartment Status][Req]");
+
+            Console.Write("Locker Id: ");
+            lockerId = Console.ReadLine();
+
+            Console.Write("Compartment Id: ");
+            compartmentIds = Console.ReadLine();
+            compartmentId = compartmentIds.Split(',');
+
+            var compartmentStatus = new HCM.Core.DataObjects.Models.Compartment(transactionId, lockerId, compartmentId, false, string.Empty, string.Empty);
+            var compartmentStatusResult = gatewayService.CompartmentStatus(compartmentStatus);
+
+            Console.WriteLine("[Compartment Status][Res]");
+            Console.WriteLine(JsonConvert.SerializeObject(compartmentStatusResult, Formatting.Indented));
+            Console.WriteLine("-----------------------------------------------------------------------------");
+            #endregion
+
+            #region Capture Image
+
+            Console.WriteLine("[Capture Image][Req]");
+
+            Console.Write("Locker Id: ");
+            lockerId = Console.ReadLine();
+
+            var captureImage = new Capture(transactionId, lockerId, false, string.Empty, string.Empty);
+            var captureImageResult = gatewayService.CaptureImage(captureImage);
+
+            Console.WriteLine("[Capture Image][Res]");
+            Console.WriteLine(JsonConvert.SerializeObject(captureImageResult, Formatting.Indented));
+            Console.WriteLine("-----------------------------------------------------------------------------");
+
+
+            #endregion
+
+            #region Update Booking Status
+
+            Console.WriteLine("[Update Booking Status][Req]");
+
+            Console.Write("Booking Id: ");
+            string updateBookingStatusBookingId = Console.ReadLine();
+
+            Console.Write("Status: ");
+            string updateBookingStatus = Console.ReadLine();
+
+            Console.Write("MobileNumber: ");
+            string mobileNumber = Console.ReadLine();
+
+            Console.Write("Reason: ");
+            string updateBookingReason = Console.ReadLine();
+
+            var bookingStatusUpdate = new BookingStatus()
+            {
+                LockerStationId = lockerStationId,
+                BookingId = Convert.ToInt32(updateBookingStatusBookingId),
+                LspId = lspVerificationResponse.LspId,
+                LspUserId = lspVerificationResponse.LspUserId,
+                MobileNumber = mobileNumber,
+                Status = updateBookingStatus,
+                Reason = updateBookingReason
+
+            };
+
+            var bookingStatusUpdateResult = gatewayService.UpdateBookingStatus(bookingStatusUpdate);
+            Console.WriteLine("[Update Booking Status][Res]");
+            Console.WriteLine(JsonConvert.SerializeObject(bookingStatusUpdateResult, Formatting.Indented));
+            Console.WriteLine("-----------------------------------------------------------------------------");
+
+
+            #endregion
         }
     }
 }
