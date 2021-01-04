@@ -9,6 +9,7 @@ namespace LSS.BE.Core.Common.UriPath
         public const string HealthCheck = "me/health-check";
         public const string GetToken = "token";
         public const string VerifyOtp = "otp/verify";
+        public const string Verify3rdParty = "courier/booking/verify-3rd-party";
         public const string SendOtp = "otp/send";
         public const string ChangeLockerSize = "booking/locker/change";
         public const string CheckAccess = "courier/check-access";
@@ -19,6 +20,8 @@ namespace LSS.BE.Core.Common.UriPath
         public const string LockerStationDetails = "lockers";
         public const string CheckPin = "consumer/check-pin";
         public const string ChangeSingleLockerStatus = "lockers/status";
-        public const string RetrieveLockersBelongsCourier = "courier/booking/all";
+        public const string CourierBookingAll = "courier/booking/all";
+        public const string CourierBooking3rdParty = "courier/booking/3rd-party";
+        public const string CourierList = "courier/list";
     }
 }
