@@ -48,6 +48,13 @@ namespace LSS.BE.Core.TestCaller
 
         public static void CourierDropOff(string lockerStationId, GatewayService gatewayService)
         {
+            #region Health Check
+
+            var healthCheckResult = gatewayService.HealthCheck();
+            Console.WriteLine("[Health Check][Res]");
+            Console.WriteLine(JsonConvert.SerializeObject(healthCheckResult, Formatting.Indented));
+
+            #endregion
 
             #region Lsp Verification
 
@@ -288,6 +295,14 @@ namespace LSS.BE.Core.TestCaller
 
         public static void ConsumerCollect(string lockerStationId, GatewayService gatewayService) 
         {
+            #region Health Check
+
+            var healthCheckResult = gatewayService.HealthCheck();
+            Console.WriteLine("[Health Check][Res]");
+            Console.WriteLine(JsonConvert.SerializeObject(healthCheckResult, Formatting.Indented));
+
+            #endregion
+
             #region PIN Verification
 
             Console.Write("-----------------------------------------------------------------------------\n");
@@ -433,6 +448,14 @@ namespace LSS.BE.Core.TestCaller
 
         public static void ConsumerReturn(string lockerStationId, GatewayService gatewayService)
         {
+            #region Health Check
+
+            var healthCheckResult = gatewayService.HealthCheck();
+            Console.WriteLine("[Health Check][Res]");
+            Console.WriteLine(JsonConvert.SerializeObject(healthCheckResult, Formatting.Indented));
+
+            #endregion
+
             #region PIN Verification
 
             Console.Write("-----------------------------------------------------------------------------\n");
@@ -629,6 +652,14 @@ namespace LSS.BE.Core.TestCaller
 
         public static void CourierRetrieve(string lockerStationId, GatewayService gatewayService)
         {
+            #region Health Check
+
+            var healthCheckResult = gatewayService.HealthCheck();
+            Console.WriteLine("[Health Check][Res]");
+            Console.WriteLine(JsonConvert.SerializeObject(healthCheckResult, Formatting.Indented));
+
+            #endregion
+
             #region Lsp Verification
 
             Console.Write("-----------------------------------------------------------------------------\n");
