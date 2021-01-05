@@ -32,6 +32,7 @@ namespace LSS.FE.App
 
             var gatewayService = new GatewayService(model);
             if(gatewayService.TokenResponse.StatusCode == 200) textBox1.Text = "By .Net framework 4.7.2, logging is executed.";
+            gatewayService.Dispose();
         }
     }
 }

@@ -8,6 +8,9 @@ using LSS.HCM.Core.Domain.Helpers;
 using System.Linq;
 using Serilog;
 using System.Text.Json;
+using System.Runtime.InteropServices;
+using Microsoft.Win32.SafeHandles;
+using System.Net.NetworkInformation;
 
 namespace LSS.HCM.Core.Domain.Services
 {
@@ -17,18 +20,40 @@ namespace LSS.HCM.Core.Domain.Services
     public class CompartmentService
     {
         /// <summary>
+        ///   To detect redundant calls.
+        ///</summary>
+        private bool _disposed = false;
+
+        /// <summary>
+        ///   Instantiate a SafeHandle instance.
+        ///</summary>
+        private SafeHandle _safeHandle = new SafeFileHandle(IntPtr.Zero, true);
+
+        private readonly CompartmentHelper _compartmentHelper;
+        private readonly CommunicationPortControlService _communicationPortControlService;
+
+        /// <summary>
+        ///   Initializes locker compartment service for open comparment and it's status.
+        ///</summary>
+        public CompartmentService(AppSettings lockerConfiguration)
+        {
+            _compartmentHelper = new CompartmentHelper(lockerConfiguration);
+            _communicationPortControlService = new CommunicationPortControlService(lockerConfiguration);
+        }
+
+        /// <summary>
         /// Prepare open compartment object by communicating command to communication port service. 
         /// </summary>
         /// <returns>
         ///  Open compartment actual result with status. 
         /// </returns>
-        public static Compartment CompartmentOpen(string compartmentId, AppSettings lockerConfiguration)
+        public Compartment CompartmentOpen(string compartmentId, AppSettings lockerConfiguration)
         {
             // Find the target compartment
             var target_compartment = lockerConfiguration.Locker.Compartments.Find(compartment => compartment.CompartmentId.Contains(compartmentId));
 
             // Commanding
-            var DoorOpenResult = CommunicationPortControlService.SendCommand(CommandType.DoorOpen, CompartmentHelper.MapModuleId(target_compartment), lockerConfiguration);
+            var DoorOpenResult = _communicationPortControlService.SendCommand(CommandType.DoorOpen, _compartmentHelper.MapModuleId(target_compartment), lockerConfiguration);
             
             Compartment compartmentResult = new Compartment(lockerConfiguration.Locker.LockerId,
                                                              target_compartment.CompartmentId,
@@ -46,7 +71,7 @@ namespace LSS.HCM.Core.Domain.Services
         /// <returns>
         ///  Compartment status actual result including real hardware status. 
         /// </returns>
-        public static List<Compartment> CompartmentStatus(DataObjects.Models.Compartment model, AppSettings lockerConfiguration)
+        public List<Compartment> CompartmentStatus(DataObjects.Models.Compartment model, AppSettings lockerConfiguration)
         {
             // Find locker controller board module id and object detection module id list
             var lcbModuleList = new List<string> { };
@@ -75,12 +100,12 @@ namespace LSS.HCM.Core.Domain.Services
             var opendoorStatusAry = new Dictionary<string, Dictionary<string, byte>> { };
             foreach (string moduleNo in lcbModuleList)
             {
-                opendoorStatusAry[moduleNo] = CompartmentHelper.GetStatusByModuleId(CommandType.DoorStatus, moduleNo, lockerConfiguration);
+                opendoorStatusAry[moduleNo] = _compartmentHelper.GetStatusByModuleId(CommandType.DoorStatus, moduleNo, lockerConfiguration);
             }
             var objectdetectStatusAry = new Dictionary<string, Dictionary<string, byte>> { };
             foreach (string moduleNo in odbModuleList)
             {
-                objectdetectStatusAry[moduleNo] = CompartmentHelper.GetStatusByModuleId(CommandType.ItemDetection ,moduleNo, lockerConfiguration);
+                objectdetectStatusAry[moduleNo] = _compartmentHelper.GetStatusByModuleId(CommandType.ItemDetection ,moduleNo, lockerConfiguration);
             }
 
             foreach (var compatmentId in model.CompartmentIds)
@@ -108,6 +133,35 @@ namespace LSS.HCM.Core.Domain.Services
 
             return compartmentList;
         }
-        
+
+        /// <summary>
+        ///   Public implementation of Dispose pattern callable by consumers.
+        ///</summary>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        ///   Protected implementation of Dispose pattern.
+        ///</summary>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                // Dispose managed state (managed objects).
+                _safeHandle?.Dispose();
+                _compartmentHelper?.Dispose();
+                _communicationPortControlService?.Dispose();
+            }
+
+            _disposed = true;
+        }
     }
 }

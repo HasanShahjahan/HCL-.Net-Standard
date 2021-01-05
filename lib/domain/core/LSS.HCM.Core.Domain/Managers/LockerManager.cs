@@ -15,6 +15,8 @@ using Serilog;
 using LSS.HCM.Core.Domain.Interfaces;
 using LSS.HCM.Core.Common.Base;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using Microsoft.Win32.SafeHandles;
 
 namespace LSS.HCM.Core.Domain.Managers
 {
@@ -22,8 +24,18 @@ namespace LSS.HCM.Core.Domain.Managers
     /// <summary>
     ///   Represents locker as a sequence of compartment open and it's status.
     ///</summary>
-    public sealed class LockerManager : ILockerManager
+    public class LockerManager : ILockerManager, IDisposable
     {
+        /// <summary>
+        ///   To detect redundant calls.
+        ///</summary>
+        private bool _disposed = false;
+
+        /// <summary>
+        ///   Instantiate a SafeHandle instance.
+        ///</summary>
+        private SafeHandle _safeHandle = new SafeFileHandle(IntPtr.Zero, true);
+
         /// <summary>
         ///   Set Initialization value for locker management.
         ///</summary>
@@ -34,6 +46,9 @@ namespace LSS.HCM.Core.Domain.Managers
         ///</summary>
         public readonly ComPortsHealthCheck PortsHealthCheck;
 
+        private readonly CommunicationPortControlService _communicationPortControlService;
+        private readonly CompartmentManager _compartmentManager;
+
         /// <summary>
         ///   Initialization information for locker configuration including Microcontroller board, Serial port and Communication port.
         ///</summary>
@@ -41,9 +56,10 @@ namespace LSS.HCM.Core.Domain.Managers
         {
             LockerConfiguration = LockerHelper.GetConfiguration(configurationFilePath);
             PortsHealthCheck = LockerHelper.ComPortTest(LockerConfiguration);
+            if (LockerConfiguration != null) _communicationPortControlService = new CommunicationPortControlService(LockerConfiguration);
+            if (LockerConfiguration != null) _compartmentManager = new CompartmentManager(LockerConfiguration);
             Log.Information("[HCM][Locker Manager][Initiated][Service initiated with scanner and logging.]");
         }
-        
 
         /// <summary>
         /// Gets the open compartment parameters with Json web token credentials and MongoDB database credentials.
@@ -63,7 +79,7 @@ namespace LSS.HCM.Core.Domain.Managers
                 var (statusCode, errorResult) = LockerManagementValidator.PayloadValidator(LockerConfiguration, model.JwtCredentials.IsEnabled, model.JwtCredentials.Secret, model.JwtCredentials.Token, PayloadTypes.OpenCompartment, model.LockerId, model.TransactionId, model.CompartmentIds, null);
                 if (statusCode != StatusCode.Status200OK) return OpenCompartmentMapper.ToError(new LockerDto { StatusCode = statusCode, Error = errorResult });
                 
-                var result = CompartmentManager.CompartmentOpen(model, LockerConfiguration);
+                var result = _compartmentManager.CompartmentOpen(model, LockerConfiguration);
                 lockerDto = OpenCompartmentMapper.ToObject(result);
                 Log.Information("[HCM][Open Compartment][Res]" + "[" + JsonSerializer.Serialize(result) + "]");
             }
@@ -96,7 +112,7 @@ namespace LSS.HCM.Core.Domain.Managers
                 var (statusCode, errorResult) = LockerManagementValidator.PayloadValidator(LockerConfiguration, model.JwtCredentials.IsEnabled, model.JwtCredentials.Secret, model.JwtCredentials.Token, PayloadTypes.CompartmentStatus, model.LockerId, model.TransactionId, model.CompartmentIds, null);
                 if (statusCode != StatusCode.Status200OK) return CompartmentStatusMapper.ToError(new CompartmentStatusDto { StatusCode = statusCode, Error = errorResult });
                
-                var result = CompartmentManager.CompartmentStatus(model, LockerConfiguration);
+                var result = _compartmentManager.CompartmentStatus(model, LockerConfiguration);
                 compartmentStatusDto = CompartmentStatusMapper.ToObject(result);
                 Log.Information("[HCM][Compartment Status][Res]" + "[" + JsonSerializer.Serialize(result) + "]");
             }
@@ -141,7 +157,10 @@ namespace LSS.HCM.Core.Domain.Managers
         /// <summary>
         /// Scanner data recieving event
         /// </summary>
-        public void RegisterScannerEvent(Func<string, string> dataProcessFunc) => CommunicationPortControlService.InitializeScanner(PortsHealthCheck, LockerConfiguration, dataProcessFunc);
+        public void RegisterScannerEvent(Func<string, string> dataProcessFunc)
+        {
+            _communicationPortControlService.InitializeScanner(PortsHealthCheck, LockerConfiguration, dataProcessFunc);
+        }
 
         /// <summary>
         /// Gets the open compartment parameters with Json web token credentials and MongoDB database credentials.
@@ -160,6 +179,35 @@ namespace LSS.HCM.Core.Domain.Managers
             };
 
             return response;
+        }
+
+        /// <summary>
+        ///   Public implementation of Dispose pattern callable by consumers.
+        ///</summary>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        ///   Protected implementation of Dispose pattern.
+        ///</summary>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                _safeHandle?.Dispose();
+                _communicationPortControlService.Dispose();
+                _compartmentManager?.Dispose();
+            }
+
+            _disposed = true;
         }
     }
 }

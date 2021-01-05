@@ -1,15 +1,27 @@
 ﻿using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Win32.SafeHandles;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Runtime.InteropServices;
 using System.Security;
 using System.Text;
 
 namespace LSS.BE.Core.Security.Handlers
 {
-    public class HttpHandler : IHttpHandler
+    public class HttpHandler : IHttpHandler, IDisposable
     {
+        /// <summary>
+        ///   To detect redundant calls.
+        ///</summary>
+        private bool _disposed = false;
+
+        /// <summary>
+        ///   Instantiate a SafeHandle instance.
+        ///</summary>
+        private SafeHandle _safeHandle = new SafeFileHandle(IntPtr.Zero, true);
+
         private readonly static HttpClient client = new HttpClient();
         public HttpHandler(string uriString)
         {
@@ -60,6 +72,33 @@ namespace LSS.BE.Core.Security.Handlers
             var task = client.SendAsync(requestMessage);
             var response = task.Result;
             return response;
+        }
+
+        /// <summary>
+        ///   Public implementation of Dispose pattern callable by consumers.
+        ///</summary>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        ///   Protected implementation of Dispose pattern.
+        ///</summary>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed)
+            {
+                client.Dispose();
+            }
+
+            if (disposing)
+            {
+                _safeHandle?.Dispose();
+            }
+
+            _disposed = true;
         }
     }
 }

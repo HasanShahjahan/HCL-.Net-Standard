@@ -1,8 +1,11 @@
-﻿using Serilog;
+﻿using LSS.BE.Core.Domain.Services;
+using Microsoft.Win32.SafeHandles;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace LSS.BE.Core.Domain.Initialization
@@ -10,8 +13,18 @@ namespace LSS.BE.Core.Domain.Initialization
     /// <summary>
     ///   Represents the socket client and it's implementation.
     ///</summary>
-    public class SocketClientInvoke
+    public class SocketClientInvoke 
     {
+        /// <summary>
+        ///   To detect redundant calls.
+        ///</summary>
+        private bool _disposed = false;
+
+        /// <summary>
+        ///   Instantiate a SafeHandle instance.
+        ///</summary>
+        private SafeHandle _safeHandle = new SafeFileHandle(IntPtr.Zero, true);
+
         /// <summary>
         ///   Initialize socket client.
         ///</summary>
@@ -93,6 +106,34 @@ namespace LSS.BE.Core.Domain.Initialization
             {
                 Log.Error("[Socket Client Invoke][Send]" + "[" + ex + "]");
             }
+        }
+
+        /// <summary>
+        ///   Public implementation of Dispose pattern callable by consumers.
+        ///</summary>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        ///   Protected implementation of Dispose pattern.
+        ///</summary>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                _safeHandle?.Dispose();
+                _client?.Dispose();
+            }
+
+            _disposed = true;
         }
     }
 }

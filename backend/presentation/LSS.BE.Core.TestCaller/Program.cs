@@ -22,6 +22,7 @@ namespace LSS.BE.Core.TestCaller
             {
 
                 var (lockerStationId, gatewayService) = GetewayServiceClient.Init();
+                
 
                 if (gatewayService.LockerManager!= null && !gatewayService.LockerManager.PortsHealthCheck.IsLockPortAvailable) Console.WriteLine("Lock Port : Not Available");
                 else Console.WriteLine("Lock Port : Available");
@@ -80,6 +81,7 @@ namespace LSS.BE.Core.TestCaller
             finally
             {
                 Console.ReadKey();
+               
             }
             return 0;
 

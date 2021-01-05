@@ -10,19 +10,31 @@ using LSS.HCM.Core.DataObjects.Models;
 using LSS.HCM.Core.Domain.Interfaces;
 using LSS.HCM.Core.Domain.Managers;
 using LSS.HCM.Core.Domain.Services;
+using Microsoft.Win32.SafeHandles;
 using Newtonsoft.Json.Linq;
 using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Runtime.InteropServices;
 
 namespace LSS.BE.Core.Domain.Services
 {
     /// <summary>
     ///   Represents gateway serive as a sequence of communication with other parties.
     ///</summary>
-    public class GatewayService : ILmsGatewayService
+    public class GatewayService : ILmsGatewayService, IDisposable
     {
+        /// <summary>
+        ///   To detect redundant calls.
+        ///</summary>
+        private bool _disposed = false;
+
+        /// <summary>
+        ///   Instantiate a SafeHandle instance.
+        ///</summary>
+        private SafeHandle _safeHandle = new SafeFileHandle(IntPtr.Zero, true);
+
         /// <summary>
         ///   Get token response initialization value.
         ///</summary>
@@ -41,7 +53,9 @@ namespace LSS.BE.Core.Domain.Services
         /// <summary>
         ///   Set http hander initialization member value.
         ///</summary>
-        public readonly IHttpHandlerHelper HttpHandler;
+        public readonly HttpHandlerHelper HttpHandler;
+
+        private readonly ServiceInvoke _serviceInvoke;
 
         /// <summary>
         ///   Get scanner initialization value.
@@ -55,7 +69,8 @@ namespace LSS.BE.Core.Domain.Services
         {
             MemberInfo = memberInfo;
             HttpHandler = new HttpHandlerHelper(MemberInfo.UriString);
-            TokenResponse = ServiceInvoke.InitAsync(MemberInfo, HttpHandler);
+            _serviceInvoke = new ServiceInvoke(MemberInfo, HttpHandler);
+            TokenResponse = _serviceInvoke.InitAsync();
             if (TokenResponse.StatusCode == 200) LockerManager = new LockerManager(MemberInfo.ConfigurationPath);
             if (LockerManager != null) ScannerInit = ScannerServiceHelper.Start(LockerManager);
         }
@@ -556,6 +571,35 @@ namespace LSS.BE.Core.Domain.Services
             var response = LockerManager.CaptureImage(capture);
             var result = (JObject)JToken.FromObject(response);
             return result;
+        }
+
+        /// <summary>
+        ///   Public implementation of Dispose pattern callable by consumers.
+        ///</summary>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        ///   Protected implementation of Dispose pattern.
+        ///</summary>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                _safeHandle?.Dispose();
+                HttpHandler?.Dispose();
+                _serviceInvoke?.Dispose();
+                LockerManager?.Dispose();
+            }
+            _disposed = true;
         }
     }
 }
