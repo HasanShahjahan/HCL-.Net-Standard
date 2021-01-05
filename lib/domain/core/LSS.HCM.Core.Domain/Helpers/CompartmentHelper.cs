@@ -8,20 +8,40 @@ using System.Collections.Generic;
 using NAudio.Wave;
 using System.Timers;
 using System.Threading;
+using System.Runtime.InteropServices;
+using Microsoft.Win32.SafeHandles;
 
 namespace LSS.HCM.Core.Domain.Helpers
 {
     /// <summary>
     ///   Represents Compartment Manager helper class.
     ///</summary>
-    public sealed class CompartmentHelper
+    public class CompartmentHelper
     {
-        //private static System.Timers.Timer aTimer = new System.Timers.Timer();
-
+        
         private static double _timeout;
-        private static string _audioFileName; // Give configuration from DB
+        private static string _audioFileName; 
         private static int _playbackTime;
         private static WaveOutEvent _outputDevice = new WaveOutEvent();
+        private readonly CommunicationPortControlService _communicationPortControlService;
+
+        /// <summary>
+        ///   To detect redundant calls.
+        ///</summary>
+        private bool _disposed = false;
+
+        /// <summary>
+        ///   Instantiate a SafeHandle instance.
+        ///</summary>
+        private SafeHandle _safeHandle = new SafeFileHandle(IntPtr.Zero, true);
+
+        /// <summary>
+        ///   Initializes Compartment Manager helper class.
+        ///</summary>
+        public CompartmentHelper(AppSettings lockerConfiguration) 
+        {
+            _communicationPortControlService = new CommunicationPortControlService(lockerConfiguration);
+        }
 
         /// <summary>
         /// Map compartment from locker configuration by requested compartment Id.
@@ -41,7 +61,7 @@ namespace LSS.HCM.Core.Domain.Helpers
         /// <returns>
         ///  Return dictionary by getting value from communication port service.
         /// </returns>
-        public static Dictionary<string, byte> GetStatusByModuleId(string commandType, string compartmentModuleId, AppSettings lockerConfiguration)
+        public Dictionary<string, byte> GetStatusByModuleId(string commandType, string compartmentModuleId, AppSettings lockerConfiguration)
         {
             var commandPinCode = new List<byte>()
             {
@@ -50,7 +70,7 @@ namespace LSS.HCM.Core.Domain.Helpers
             };
 
             // Command to get status string
-            var result = CommunicationPortControlService.SendCommand(commandType, commandPinCode, lockerConfiguration);
+            var result = _communicationPortControlService.SendCommand(commandType, commandPinCode, lockerConfiguration);
             Dictionary<string, byte> list = null;
 
             if (commandType == CommandType.DoorStatus) list = Utiles.GetStatusList(result["statusAry"]);
@@ -65,7 +85,7 @@ namespace LSS.HCM.Core.Domain.Helpers
         /// <returns>
         ///  List of byte of compartment pin. 
         /// </returns>
-        public static List<byte> MapModuleId(Compartment compartment)
+        public List<byte> MapModuleId(Compartment compartment)
         {
             List<byte> compartmentPinCode = new List<byte>() {
                 Convert.ToByte(compartment.CompartmentCode.Lcbmod, 16),
@@ -81,33 +101,17 @@ namespace LSS.HCM.Core.Domain.Helpers
         /// <returns>
         ///  Return nothing
         /// </returns>
-        public static void SetDoorOpenTimer(AppSettings lockerConfiguration)
+        public void SetDoorOpenTimer(AppSettings lockerConfiguration)
         {
             _timeout = lockerConfiguration.Buzzer.Timeout;
             _audioFileName = lockerConfiguration.Buzzer.AudioFileName;
             _playbackTime = lockerConfiguration.Buzzer.PlaybackTime;
-
-            // Create a timer with a two second interval.
-            //aTimer = new System.Timers.Timer(timeout);
-            //aTimer.Interval = 5000;
             System.Timers.Timer aTimer = new System.Timers.Timer(_timeout);
+
             // Hook up the Elapsed event for the timer. 
             aTimer.Elapsed += OnTimedEvent;
             aTimer.AutoReset = false;
             aTimer.Enabled = true;
-        }
-
-        /// <summary>
-        /// End door open alert timer
-        /// </summary>
-        /// <returns>
-        ///  Return nothing
-        /// </returns>
-        public static void EndDoorOpenTimer()
-        {
-            //aTimer.Enabled = false;
-            //aTimer.Stop();
-            //aTimer.Dispose();
         }
 
         /// <summary>
@@ -121,19 +125,37 @@ namespace LSS.HCM.Core.Domain.Helpers
             AudioFileReader _audioFile = new AudioFileReader(_audioFileName); // "C:/Windows/media/Ring08.wav");
             _outputDevice.Init(_audioFile);
             _outputDevice.Play();
-
-            /*
-            // Update door status of all modules
-            var objectdetectStatusAry = new Dictionary<string, Dictionary<string, byte>> { };
-            bool compartmentDoorStatusAlert = false;
-            foreach (string moduleNo in odbModuleList)
-            {
-                objectdetectStatusAry[moduleNo] = CompartmentHelper.GetStatusByModuleId(CommandType.DoorStatus, moduleNo, lockerConfiguration);
-                compartmentDoorStatusAlert |= targetCompartment.CompartmentDoorOpen;
-            }*/
-            //while(_outputDevice.PlaybackState == PlaybackState.Playing) Thread.Sleep(playbackTime);
             Thread.Sleep(_playbackTime);
             _outputDevice.Stop();
+        }
+
+        /// <summary>
+        ///   Public implementation of Dispose pattern callable by consumers.
+        ///</summary>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        ///   Protected implementation of Dispose pattern.
+        ///</summary>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                // Dispose managed state (managed objects).
+                _safeHandle?.Dispose();
+                _communicationPortControlService.Dispose();
+            }
+
+            _disposed = true;
         }
     }
 }

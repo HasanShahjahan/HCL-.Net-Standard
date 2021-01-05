@@ -23,6 +23,9 @@ namespace LSS.BE.Core.TestCaller
 
                 var (lockerStationId, gatewayService) = GetewayServiceClient.Init();
 
+
+                gatewayService.Dispose();
+
                 if (gatewayService.LockerManager!= null && !gatewayService.LockerManager.PortsHealthCheck.IsLockPortAvailable) Console.WriteLine("Lock Port : Not Available");
                 else Console.WriteLine("Lock Port : Available");
                 if (gatewayService.LockerManager != null && !gatewayService.LockerManager.PortsHealthCheck.IsDetectionPortAvailable) Console.WriteLine("Object Detection Port : Not Available");

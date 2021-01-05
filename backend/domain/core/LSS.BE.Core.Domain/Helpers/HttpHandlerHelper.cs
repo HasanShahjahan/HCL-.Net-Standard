@@ -2,25 +2,38 @@
 using LSS.BE.Core.Common.Exceptions;
 using LSS.BE.Core.Common.UriPath;
 using LSS.BE.Core.Domain.Interfaces;
+using LSS.BE.Core.Domain.Services;
 using LSS.BE.Core.Security.Handlers;
+using Microsoft.Win32.SafeHandles;
 using Newtonsoft.Json;
 using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
+using System.Runtime.InteropServices;
 
 namespace LSS.BE.Core.Domain.Helpers
 {
     /// <summary>
     ///   Represents http handler for get, post and put request.
     ///</summary>
-    public class HttpHandlerHelper: IHttpHandlerHelper
+    public class HttpHandlerHelper: IHttpHandlerHelper, IDisposable
     {
+        /// <summary>
+        ///   To detect redundant calls.
+        ///</summary>
+        private bool _disposed = false;
+
+        /// <summary>
+        ///   Instantiate a SafeHandle instance.
+        ///</summary>
+        private SafeHandle _safeHandle = new SafeFileHandle(IntPtr.Zero, true);
+        
         /// <summary>
         ///   Initialize the handler interface.
         ///</summary>
-        private readonly IHttpHandler _httpHandler;
+        private readonly HttpHandler _httpHandler;
 
         /// <summary>
         ///   Initialization information for Http Handler.
@@ -97,6 +110,35 @@ namespace LSS.BE.Core.Domain.Helpers
             var response = _httpHandler.PostAsync(request, httpMethod, version, uriPath, accessToken.Type, accessToken.Token);
             var content = response.Content.ReadAsStringAsync().Result;
             return content;
+        }
+
+        /// <summary>
+        ///   Public implementation of Dispose pattern callable by consumers.
+        ///</summary>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        ///   Protected implementation of Dispose pattern.
+        ///</summary>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                // Dispose managed state (managed objects).
+                _safeHandle?.Dispose();
+                _httpHandler?.Dispose();
+            }
+
+            _disposed = true;
         }
     }
 }

@@ -6,14 +6,25 @@ using System.Threading;
 using LSS.HCM.Core.DataObjects.Settings;
 using LSS.HCM.Core.Common.Utiles;
 using Serilog;
+using System.Runtime.InteropServices;
+using Microsoft.Win32.SafeHandles;
 
 namespace LSS.HCM.Core.Domain.Services
 {
     /// <summary>
     ///   Represents actual serial port service of system input and output ports.
     ///</summary>
-    public sealed class SerialPortControlService
+    public class SerialPortControlService
     {
+        /// <summary>
+        ///   To detect redundant calls.
+        ///</summary>
+        private bool _disposed = false;
+
+        /// <summary>
+        ///   Instantiate a SafeHandle instance.
+        ///</summary>
+        private SafeHandle _safeHandle = new SafeFileHandle(IntPtr.Zero, true);
 
         /// <summary>
         /// Initialization of serial port control service by seting serial port resouce. 
@@ -22,7 +33,6 @@ namespace LSS.HCM.Core.Domain.Services
         ///  Open compartment actual result with status. 
         /// </returns>
         private readonly SerialPort _serialPort = new SerialPort();
-
         private string _SerialDataEventName;
         private Func<string, string> _SerialDataProcessing;
 
@@ -230,6 +240,35 @@ namespace LSS.HCM.Core.Domain.Services
             catch (Exception) {
                 throw;
             }
+        }
+
+        /// <summary>
+        ///   Public implementation of Dispose pattern callable by consumers.
+        ///</summary>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        ///   Protected implementation of Dispose pattern.
+        ///</summary>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                // Dispose managed state (managed objects).
+                _safeHandle?.Dispose();
+                _serialPort?.Dispose();
+            }
+
+            _disposed = true;
         }
     }
 }
