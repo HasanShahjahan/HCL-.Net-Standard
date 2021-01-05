@@ -28,6 +28,22 @@ namespace LSS.BE.Core.Domain.Interfaces
         JObject VerifyOtp(VerifyOtp model);
 
         /// <summary>
+        /// Verify 3rd party by lsp id, lsp user id, locker station id
+        /// </summary>
+        /// <returns>
+        ///  Gets the sucess result with bool type true. 
+        /// </returns>
+        JObject Verify3rdParty(string lockerStationId, string lspId, string lspUserId);
+
+        /// <summary>
+        /// Get courier list
+        /// </summary>
+        /// <returns>
+        ///  List of courier.
+        /// </returns>
+        JObject CourierList();
+
+        /// <summary>
         /// Sets the send otp member by providing locker station id, phone number, lsp id, booking id.
         /// </summary>
         /// <returns>
@@ -107,12 +123,17 @@ namespace LSS.BE.Core.Domain.Interfaces
         /// <summary>
         /// Sets the single retrieve locker belongs to courier by locker station id, lsp id, tracking number and status.
         /// </summary>
-        JObject RetrieveLockersBelongsToCourier(string trackingNumber, string lockerStationId, string lspId, string lspUserId, string lspIdToCollect, string status);
+        JObject CourierBookingAll(string trackingNumber, string lockerStationId, string lspId, string lspUserId, string lspIdToCollect, string status);
 
         /// <summary>
         /// Sets the bulk retrieve locker belongs to courier by locker station id, lsp id, tracking number and status.
         /// </summary>
-        JObject RetrieveLockersBelongsToCourier(string lockerStationId, string lspId, string lspUserId, string lspIdToCollect, string status);
+        JObject CourierBookingAll(string lockerStationId, string lspId, string lspUserId, string lspIdToCollect, string status);
+
+        /// <summary>
+        /// Sets the bulk retrieve locker belongs to courier 3rd party by locker station id, lsp id, lsp user id, lsp Id To Collect
+        /// </summary>
+        JObject CourierBooking3rdParty(string lockerStationId, string lspId, string lspUserId, string lspIdToCollect);
 
         /// <summary>
         /// Gets the open compartment parameters with Json web token credentials and MongoDB database credentials.

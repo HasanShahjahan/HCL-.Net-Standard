@@ -125,9 +125,9 @@ namespace LSS.HCM.Core.Domain.Managers
             {
                 var (statusCode, errorResult) = LockerManagementValidator.PayloadValidator(LockerConfiguration, model.JwtCredentials.IsEnabled, model.JwtCredentials.Secret, model.JwtCredentials.Token, PayloadTypes.CaptureImage, model.LockerId, model.TransactionId, null, CaptureType.Photo);
                 if (statusCode != StatusCode.Status200OK) return CaptureMapper.ToError(new CaptureDto { StatusCode = statusCode, Error = errorResult });
-                var result = LockerHelper.CapturePhoto(model);
+                var result = LockerHelper.CapturePhoto(model, LockerConfiguration);
                 captureDto = CaptureMapper.ToObject(result);
-                Log.Information("[HCM][Capture Image][Res]" + "[" + JsonSerializer.Serialize(result) + "]");
+                Log.Information("[HCM][Capture Image][Res]" + "[Success]");
             }
             catch (Exception ex)
             {

@@ -29,7 +29,7 @@ namespace LSS.HCM.Core.Domain.Helpers
         /// <returns>
         ///  Byte array of image with image extension.
         /// </returns>
-        public static CaptureDto CapturePhoto(DataObjects.Models.Capture model)
+        public static CaptureDto CapturePhoto(DataObjects.Models.Capture model, AppSettings lockerConfiguration)
         {
             byte[] imageBytes = null;
             Mat frame = new Mat();
@@ -42,15 +42,16 @@ namespace LSS.HCM.Core.Domain.Helpers
                     capture.Read(frame);
                     Bitmap imageBitmapData = BitmapConverter.ToBitmap(frame);
                     Bitmap snapshot = new Bitmap(imageBitmapData);
-                    string photofileName = string.Format(@"{0}.jpeg", Guid.NewGuid());
-                    snapshot.Save(photofileName, ImageFormat.Jpeg); //This saved real picture to physical location. 
+                    string photofileName = string.Format(@"{0}.jpeg", lockerConfiguration.Locker.LockerId + "_" + Guid.NewGuid());
+
+                    //This saved real picture to physical location. 
+                    if (lockerConfiguration.CaptureImage.IsSnapShotToLocal) snapshot.Save(photofileName, ImageFormat.Jpeg); 
                     imageBytes = ToByteArray(snapshot, ImageFormat.Jpeg);
                     Log.Debug("[HCM][Locker Helper][Capture Photo]" + "[Photo taken File : " + photofileName + "]");
                 }
                 else
                 {
                     Log.Debug("[HCM][Locker Helper][Capture Photo]" + "[Cannot take picture if the camera isn't capturing image!]");
-                    Console.WriteLine("Cannot take picture if the camera isn't capturing image!");
                 }
 
                 var captureResponse = new CaptureDto(model.TransactionId, model.LockerId, "jpeg", imageBytes);

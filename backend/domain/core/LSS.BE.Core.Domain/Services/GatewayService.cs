@@ -56,8 +56,28 @@ namespace LSS.BE.Core.Domain.Services
             MemberInfo = memberInfo;
             HttpHandler = new HttpHandlerHelper(MemberInfo.UriString);
             TokenResponse = ServiceInvoke.InitAsync(MemberInfo, HttpHandler);
-            if(TokenResponse.StatusCode == 200) LockerManager = new LockerManager(MemberInfo.ConfigurationPath);
-            if(LockerManager !=null) ScannerInit = ScannerServiceHelper.Start(LockerManager);
+            if (TokenResponse.StatusCode == 200) LockerManager = new LockerManager(MemberInfo.ConfigurationPath);
+            if (LockerManager != null) ScannerInit = ScannerServiceHelper.Start(LockerManager);
+        }
+
+        /// <summary>
+        /// Sets the health check by providing token.
+        /// </summary>
+        /// <returns>
+        ///  Gets health check status true. 
+        /// </returns>
+        public JObject HealthCheck()
+        {
+            JObject result;
+            if (TokenResponse.StatusCode == 200)
+            {
+                var response = HttpHandler.PostRequestResolver(string.Empty, HttpMethod.Post, MemberInfo.Version, MemberInfo.ClientId, MemberInfo.ClientSecret, UriAbsolutePath.HealthCheck, TokenResponse.AccessToken, TokenResponse.DateTime);
+                Log.Information("[Health Check][Res]" + "[" + response + "]");
+
+                result = JObject.Parse(response);
+                return result;
+            }
+            return JObject.Parse(SerializerHelper<AuthenticationError>.SerializeObject(new AuthenticationError(false, "401", "Unauthenticated")));
         }
 
         /// <summary>
@@ -108,6 +128,33 @@ namespace LSS.BE.Core.Domain.Services
         }
 
         /// <summary>
+        /// Verify 3rd party by lsp id, lsp user id, locker station id
+        /// </summary>
+        /// <returns>
+        ///  Gets the sucess result with bool type true. 
+        /// </returns>
+        public JObject Verify3rdParty(string lockerStationId, string lspId, string lspUserId)
+        {
+            JObject result;
+            if (TokenResponse.StatusCode == 200)
+            {
+                Log.Information("[Verify 3rd Party][Req]" + "[Locker Station Id : " + lockerStationId + "]" + "[lsp Id : " + lspId + "]" + "[Lsp User Id : " + lspUserId + "]");
+                var queryString = new Dictionary<string, string>()
+                {
+                    { "locker_station_id", lockerStationId },
+                    { "lsp_id", lspId},
+                    { "lsp_user_id", lspUserId}
+                };
+                var response = HttpHandler.GetRequestResolver(queryString, MemberInfo.Version, MemberInfo.ClientId, MemberInfo.ClientSecret, UriAbsolutePath.Verify3rdParty, TokenResponse.AccessToken, TokenResponse.DateTime);
+                Log.Information("[Verify 3rd Party][Res]" + "[" + response + "]");
+
+                result = JObject.Parse(response);
+                return result;
+            }
+            return JObject.Parse(SerializerHelper<AuthenticationError>.SerializeObject(new AuthenticationError(false, "401", "Unauthenticated")));
+        }
+
+        /// <summary>
         /// Sets the send otp member by providing locker station id, phone number, lsp id, booking id.
         /// </summary>
         /// <returns>
@@ -123,6 +170,28 @@ namespace LSS.BE.Core.Domain.Services
 
                 var response = HttpHandler.PostRequestResolver(request, HttpMethod.Post, MemberInfo.Version, MemberInfo.ClientId, MemberInfo.ClientSecret, UriAbsolutePath.SendOtp, TokenResponse.AccessToken, TokenResponse.DateTime);
                 Log.Information("[Send Otp][Res]" + "[" + response + "]");
+
+                result = JObject.Parse(response);
+                return result;
+            }
+            return JObject.Parse(SerializerHelper<AuthenticationError>.SerializeObject(new AuthenticationError(false, "401", "Unauthenticated")));
+        }
+
+        /// <summary>
+        /// Get courier list
+        /// </summary>
+        /// <returns>
+        ///  List of courier.
+        /// </returns>
+        public JObject CourierList()
+        {
+            JObject result;
+            if (TokenResponse.StatusCode == 200)
+            {
+                Log.Information("[Courier List][Req]");
+                var queryString = new Dictionary<string, string>();
+                var response = HttpHandler.GetRequestResolver(queryString, MemberInfo.Version, MemberInfo.ClientId, MemberInfo.ClientSecret, UriAbsolutePath.CourierList, TokenResponse.AccessToken, TokenResponse.DateTime);
+                Log.Information("[Courier List][Res]" + "[" + response + "]");
 
                 result = JObject.Parse(response);
                 return result;
@@ -362,23 +431,23 @@ namespace LSS.BE.Core.Domain.Services
         /// <summary>
         /// Sets the single retrieve locker belongs to courier by locker station id, lsp id, tracking number and status.
         /// </summary>
-        public JObject RetrieveLockersBelongsToCourier(string trackingNumber, string lockerStationId, string lspId, string lspUserId, string lspIdToCollect, string status)
+        public JObject CourierBookingAll(string trackingNumber, string lockerStationId, string lspId, string lspUserId, string lspIdToCollect, string status)
         {
             JObject result;
             if (TokenResponse.StatusCode == 200)
             {
-                Log.Information("[Retrieve Lockers Belongs To Courier][Req]" + "[Tracking Number : " + trackingNumber + "]" + "[Locker Station Id : " + lockerStationId + "]" + "[lsp Id : " + lspId + "]" + "[Lsp User Id : " + lspUserId + "]" + "[Lsp Id To Collect : " + lspIdToCollect + "]" + "[Status : " + status + "]");
+                Log.Information("[Courier Booking All][Req]" + "[Tracking Number : " + trackingNumber + "]" + "[Locker Station Id : " + lockerStationId + "]" + "[lsp Id : " + lspId + "]" + "[Lsp User Id : " + lspUserId + "]" + "[Lsp Id To Collect : " + lspIdToCollect + "]" + "[Status : " + status + "]");
                 var queryString = new Dictionary<string, string>()
-            {
-                { "locker_station_id", lockerStationId },
-                { "tracking_number", trackingNumber },
-                { "lsp_id", lspId},
-                { "lsp_user_id", lspUserId},
-                { "lsp_id_to_collect", lspIdToCollect},
-                { "status", status}
-            };
-                var response = HttpHandler.GetRequestResolver(queryString, MemberInfo.Version, MemberInfo.ClientId, MemberInfo.ClientSecret, UriAbsolutePath.RetrieveLockersBelongsCourier, TokenResponse.AccessToken, TokenResponse.DateTime);
-                Log.Information("[Retrieve Lockers Belongs To Courier][Res]" + "[" + response + "]");
+                {
+                    { "locker_station_id", lockerStationId },
+                    { "tracking_number", trackingNumber },
+                    { "lsp_id", lspId},
+                    { "lsp_user_id", lspUserId},
+                    { "lsp_id_to_collect", lspIdToCollect},
+                    { "status", status}
+                };
+                var response = HttpHandler.GetRequestResolver(queryString, MemberInfo.Version, MemberInfo.ClientId, MemberInfo.ClientSecret, UriAbsolutePath.CourierBookingAll, TokenResponse.AccessToken, TokenResponse.DateTime);
+                Log.Information("[Courier Booking All][Res]" + "[" + response + "]");
 
                 result = JObject.Parse(response);
                 return result;
@@ -390,12 +459,12 @@ namespace LSS.BE.Core.Domain.Services
         /// <summary>
         /// Sets the bulk retrieve locker belongs to courier by locker station id, lsp id, tracking number and status.
         /// </summary>
-        public JObject RetrieveLockersBelongsToCourier(string lockerStationId, string lspId, string lspUserId, string lspIdToCollect, string status)
+        public JObject CourierBookingAll(string lockerStationId, string lspId, string lspUserId, string lspIdToCollect, string status)
         {
             JObject result;
             if (TokenResponse.StatusCode == 200)
             {
-                Log.Information("[Retrieve Lockers Belongs To Courier][Req]" +  "[Locker Station Id : " + lockerStationId + "]" + "[lsp Id : " + lspId + "]" + "[ls pUser Id : " + lspUserId + "]" + "[Lsp Id To Collect : " + lspIdToCollect + "]"+ "[Status : " + status + "]");
+                Log.Information("[Courier Booking All][Req]" + "[Locker Station Id : " + lockerStationId + "]" + "[lsp Id : " + lspId + "]" + "[ls pUser Id : " + lspUserId + "]" + "[Lsp Id To Collect : " + lspIdToCollect + "]" + "[Status : " + status + "]");
                 var queryString = new Dictionary<string, string>()
             {
                 { "locker_station_id", lockerStationId },
@@ -404,14 +473,39 @@ namespace LSS.BE.Core.Domain.Services
                 { "lsp_id_to_collect", lspIdToCollect},
                 { "status", status}
             };
-                var response = HttpHandler.GetRequestResolver(queryString, MemberInfo.Version, MemberInfo.ClientId, MemberInfo.ClientSecret, UriAbsolutePath.RetrieveLockersBelongsCourier, TokenResponse.AccessToken, TokenResponse.DateTime);
-                Log.Information("[Retrieve Lockers Belongs To Courier][Res]" + "[" + response + "]");
+                var response = HttpHandler.GetRequestResolver(queryString, MemberInfo.Version, MemberInfo.ClientId, MemberInfo.ClientSecret, UriAbsolutePath.CourierBookingAll, TokenResponse.AccessToken, TokenResponse.DateTime);
+                Log.Information("[Courier Booking All][Res]" + "[" + response + "]");
 
                 result = JObject.Parse(response);
                 return result;
             }
             return JObject.Parse(SerializerHelper<AuthenticationError>.SerializeObject(new AuthenticationError(false, "401", "Unauthenticated")));
 
+        }
+
+        /// <summary>
+        /// Sets the bulk retrieve locker belongs to courier 3rd party by locker station id, lsp id, lsp user id, lsp Id To Collect
+        /// </summary>
+        public JObject CourierBooking3rdParty(string lockerStationId, string lspId, string lspUserId, string lspIdToCollect) 
+        {
+            JObject result;
+            if (TokenResponse.StatusCode == 200)
+            {
+                Log.Information("[Courier Booking 3rd Party][Req]" + "[Locker Station Id : " + lockerStationId + "]" + "[lsp Id : " + lspId + "]" + "[ls pUser Id : " + lspUserId + "]" + "[Lsp Id To Collect : " + lspIdToCollect + "]");
+                var queryString = new Dictionary<string, string>()
+                {
+                    { "locker_station_id", lockerStationId },
+                    { "lsp_id", lspId},
+                    { "lsp_user_id", lspUserId},
+                    { "lsp_id_to_collect", lspIdToCollect}
+                };
+                var response = HttpHandler.GetRequestResolver(queryString, MemberInfo.Version, MemberInfo.ClientId, MemberInfo.ClientSecret, UriAbsolutePath.CourierBooking3rdParty, TokenResponse.AccessToken, TokenResponse.DateTime);
+                Log.Information("[Courier Booking 3rd Party][Res]" + "[" + response + "]");
+
+                result = JObject.Parse(response);
+                return result;
+            }
+            return JObject.Parse(SerializerHelper<AuthenticationError>.SerializeObject(new AuthenticationError(false, "401", "Unauthenticated")));
         }
 
         /// <summary>

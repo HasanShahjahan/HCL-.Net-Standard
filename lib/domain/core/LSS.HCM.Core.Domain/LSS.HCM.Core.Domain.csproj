@@ -20,7 +20,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\common\LSS.Logging\LSS.Logging.csproj" />
     <ProjectReference Include="..\..\common\LSS.HCM.Core.DataObjects\LSS.HCM.Core.DataObjects.csproj" />
     <ProjectReference Include="..\..\common\LSS.HCM.Core.Validator\LSS.HCM.Core.Validator.csproj" />
     <ProjectReference Include="..\LSS.HCM.Core.Entities\LSS.HCM.Core.Entities.csproj" />
