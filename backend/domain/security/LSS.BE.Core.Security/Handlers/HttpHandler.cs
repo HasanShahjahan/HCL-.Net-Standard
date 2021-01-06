@@ -22,9 +22,10 @@ namespace LSS.BE.Core.Security.Handlers
         ///</summary>
         private SafeHandle _safeHandle = new SafeFileHandle(IntPtr.Zero, true);
 
-        private readonly static HttpClient client = new HttpClient();
+        private static HttpClient client;
         public HttpHandler(string uriString)
         {
+            client = new HttpClient();
             Uri baseUri = new Uri(uriString);
             client.BaseAddress = baseUri;
             client.DefaultRequestHeaders.Accept.Clear();
@@ -90,12 +91,13 @@ namespace LSS.BE.Core.Security.Handlers
         {
             if (_disposed)
             {
-                client.Dispose();
+
             }
 
             if (disposing)
             {
                 _safeHandle?.Dispose();
+                
             }
 
             _disposed = true;
