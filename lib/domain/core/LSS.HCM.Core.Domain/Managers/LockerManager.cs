@@ -58,7 +58,7 @@ namespace LSS.HCM.Core.Domain.Managers
             PortsHealthCheck = LockerHelper.ComPortTest(LockerConfiguration);
             if (LockerConfiguration != null) _communicationPortControlService = new CommunicationPortControlService(LockerConfiguration);
             if (LockerConfiguration != null) _compartmentManager = new CompartmentManager(LockerConfiguration);
-            Log.Information("[HCM][Locker Manager][Initiated][Service initiated with scanner and logging.]");
+            Log.Information("[HCM][Locker Manager][Initiated][Service initiated]");
         }
 
         /// <summary>

@@ -63,9 +63,9 @@ namespace LSS.HCM.Core.Domain.Services
                 _serialPort.Open();
                 Log.Debug("[HCM][SerialPort Control Service][Begin]" + "[Port : " + _serialPort.PortName + "]" + "[Baud Rate : " + _serialPort.BaudRate + "]");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                Log.Error("[HCM][SerialPort Control Service][Begin]" + ex);
             }
         }
 
@@ -85,9 +85,9 @@ namespace LSS.HCM.Core.Domain.Services
                     Log.Debug("[HCM][SerialPort Control Service][End]" + "[Port : " + _serialPort.PortName + "]");
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                Log.Error("[HCM][SerialPort Control Service][End]" + ex);
             }
         }
 
@@ -103,9 +103,10 @@ namespace LSS.HCM.Core.Domain.Services
             {
                 return _serialPort.IsOpen;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                Log.Error("[HCM][SerialPort Control Service][IsOpen]" + ex);
+                return false;
             }
         }
 
@@ -124,9 +125,9 @@ namespace LSS.HCM.Core.Domain.Services
                 {
                     _serialPort.Write(inputBuffer.ToArray(), 0, inputBuffer.Count);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    throw;
+                    Log.Error("[HCM][SerialPort Control Service][Write]" + ex);
                 }
                 Log.Debug("[HCM][SerialPort Control Service][Write]" + "[Port : " + _serialPort.PortName + "]" + "[Input Buffer : " + inputBuffer + "]");
 
@@ -154,9 +155,9 @@ namespace LSS.HCM.Core.Domain.Services
                             }
                         }
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
-                        throw;
+                        Log.Error("[HCM][SerialPort Control Service][Write]" + ex);
                     }
                 }
                 return commandResponseByte;
@@ -187,9 +188,9 @@ namespace LSS.HCM.Core.Domain.Services
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                Log.Error("[HCM][SerialPort Control Service][Read]" + ex);
             }
         }
 
@@ -208,9 +209,9 @@ namespace LSS.HCM.Core.Domain.Services
                 _SerialDataEventName = controllerModule.Name;
                 Log.Debug("[HCM][SerialPort Control Service][Set Read Handler]" + "[Port : " + _serialPort.PortName + "]" + "[Event Name : " + _SerialDataEventName + "]");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                Log.Error("[HCM][SerialPort Control Service][Set Read To Publish Handler]" + ex);
             }
         }
         /// <summary>
@@ -226,10 +227,12 @@ namespace LSS.HCM.Core.Domain.Services
                     if (_serialPort.BytesToRead > 0)
                     {
                         string serialInData = _sp.ReadLine();
-                        var dictData = new Dictionary<string, string>();
-                        dictData.Add("eventname", _SerialDataEventName);
-                        dictData.Add("data", serialInData);
-                        
+                        var dictData = new Dictionary<string, string>
+                        {
+                            { "eventname", _SerialDataEventName },
+                            { "data", serialInData }
+                        };
+
                         string jsonString = Utiles.DictToJson(dictData);
                         _SerialDataProcessing(jsonString);
                         Log.Debug("[HCM][SerialPort Control Service][Read Handler]" + "[Port : " + _serialPort.PortName + "]" + "[Event Name : " + _SerialDataEventName + "]" + "[Read Buffer : " + serialInData + "]");
@@ -237,8 +240,8 @@ namespace LSS.HCM.Core.Domain.Services
                     }
                 }
             }
-            catch (Exception) {
-                throw;
+            catch (Exception ex) {
+                Log.Error("[HCM][SerialPort Control Service][Serial Input Event Handler]" + ex);
             }
         }
 

@@ -104,9 +104,10 @@ namespace LSS.HCM.Core.Domain.Services
         {
             if (comPortsHealthCheck.IsScannernPortAvailable)
             {
+                Log.Information("[HCM][Communication Port Control Service][Initialize Scanner]" + "[Scanner Port : " + lockerConfiguration.Microcontroller.Scanner.Port + "]");
                 _scannerControlModule.SetReadToPublishHandler(lockerConfiguration.Microcontroller.Scanner, dataProcessFunc);
                 _scannerControlModule.Begin();
-                Log.Information("[HCM][Communication Port Control Service][Initialize Scanner]" + "[Scanner Port : " + lockerConfiguration.Microcontroller.Scanner.Port + "]");
+                
             }
         }
 

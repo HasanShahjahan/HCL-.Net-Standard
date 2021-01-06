@@ -64,17 +64,19 @@ namespace LSS.BE.Core.Domain.Initialization
         /// <returns>
         ///  Gets the result of socket connection. 
         /// </returns>
-        public void Connect()
+        public bool Connect()
         {
             try
             {
                 _client = new Socket(_ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
                 _client.Connect(_remoteEP);
                 Log.Information("[Socket Client Invoke][Socket connected]" + "[" + _client.RemoteEndPoint.ToString() + "]");
+                return true;
             }
             catch (Exception ex)
             {
                 Log.Error("[Socket Client Invoke][Connect]" + "[" + ex + "]");
+                return false;
             }
         }
 

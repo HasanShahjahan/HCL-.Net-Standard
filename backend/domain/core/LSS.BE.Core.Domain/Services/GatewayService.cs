@@ -55,6 +55,9 @@ namespace LSS.BE.Core.Domain.Services
         ///</summary>
         public readonly HttpHandlerHelper HttpHandler;
 
+        /// <summary>
+        ///   Initialize logger token value.
+        ///</summary>
         private readonly ServiceInvoke _serviceInvoke;
 
         /// <summary>

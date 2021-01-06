@@ -41,17 +41,23 @@ namespace LSS.BE.Core.Domain.Helpers
         /// </returns>
         public static bool Start(LockerManager _lockerManager)
         {
+            bool status = false;
             try
             {
                 _client = new SocketClientInvoke(_lockerManager.LockerConfiguration.Socket.Server, _lockerManager.LockerConfiguration.Socket.Port);
-                _client.Connect();
-                _lockerManager.RegisterScannerEvent(SendDataOnSocket);
-                return true;
+                status = _client.Connect();
+                if (status) 
+                {
+                    _lockerManager.RegisterScannerEvent(SendDataOnSocket);
+                    Log.Information("[Scanner Service Helper][Start][Scanner Initialization is successful.]");
+                }
+                
+                return status;
             }
             catch (Exception ex)
             {
-                Log.Error("[Scanner Service Helper][Start]" + "[" + ex + "]");
-                return false;
+                Log.Error("[Scanner Service Helper][Start][Scanner Initialization is failed.]" + "[" + ex + "]");
+                return status;
             }
 
         }

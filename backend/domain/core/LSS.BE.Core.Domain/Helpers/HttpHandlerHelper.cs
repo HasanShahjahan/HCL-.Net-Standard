@@ -56,7 +56,7 @@ namespace LSS.BE.Core.Domain.Helpers
             var tokenResponse = new TokenResponse();
             var response = _httpHandler.GetTokenAsync(version, UriAbsolutePath.GetToken, clientId, clientSecret);
             var content = response.Content.ReadAsStringAsync().Result;
-            Log.Information("[Get Token][Token Response :" + content + "]");
+            Log.Information("[Get Token][Token Response : Success]");
 
             tokenResponse.StatusCode = (int)response.StatusCode;
             if (response.StatusCode != HttpStatusCode.OK) tokenResponse.Error = JsonConvert.DeserializeObject<TokenError>(content);
