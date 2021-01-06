@@ -46,10 +46,15 @@ namespace LSS.BE.Core.Domain.Helpers
             {
                 _client = new SocketClientInvoke(_lockerManager.LockerConfiguration.Socket.Server, _lockerManager.LockerConfiguration.Socket.Port);
                 status = _client.Connect();
-                if (status) 
+                if (status)
                 {
+                    Log.Information("[Scanner Service Helper][Start][Socket server is ready]");
                     _lockerManager.RegisterScannerEvent(SendDataOnSocket);
                     Log.Information("[Scanner Service Helper][Start][Scanner Initialization is successful.]");
+                }
+                else
+                {
+                    Log.Information("[Scanner Service Helper][Start][Socket server is not ready. Please open socket server.]");
                 }
                 
                 return status;
