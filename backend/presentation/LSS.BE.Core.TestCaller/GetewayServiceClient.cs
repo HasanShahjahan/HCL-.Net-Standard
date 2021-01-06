@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 using SendOtpResponse = LSS.BE.Core.TestCaller.Models.SendOtpResponse;
 
@@ -15,26 +16,34 @@ namespace LSS.BE.Core.TestCaller
     {
         public static (string, GatewayService) Init()
         {
-            Console.Write("Gateway Service Initialization\n");
-
-            Console.Write("Uri String: http://18.138.61.187 (For Staging) https://uat-p.picknetwork.com/ (For UAT)\n");
-            Console.Write("Enter your URI String: ");
-            string uriString = Console.ReadLine();
-
-            Console.Write("LockerStation Id: c17fb923-70f9-4d3c-b081-4226096d6905 (For Staging) 062df68f-7635-4b33-b3a5-e5738ce6b518 (For UAT)\n");
-            Console.Write("Enter your Locker Station Id: ");
-            string lockerStationId = Console.ReadLine();
+            string uriString = string.Empty, lockerStationId = string.Empty, version = string.Empty, clientId = string.Empty, clientSecret = string.Empty;
             
-            Console.Write("Version: v1\n");
-            string version = "v1";
+            Console.Write("Gateway Service Initialization\n");
+            Console.WriteLine("Available environments : \n 1.SIT \n 2.UAT");
+            Console.Write("Please select your environment :");
+            string environmentType = Console.ReadLine();
 
-            Console.Write("Client Id: ef3350f9-ace2-4900-9da0-bba80402535a (For Staging) 06a2fe24-c3e2-409d-8289-e04293e0d8f0 (For UAT)\n");
-            Console.Write("Enter your Client Id: ");
-            string clientId = Console.ReadLine();
+            if (environmentType == "SIT")
+            {
 
-            Console.Write("Client Secret: FA1s0QmZFxXh44QUkVOcEj19hvhjWTsfl1sslwGO (For Staging) JCBGGnsqwtlNBN1K60WNhmNiIR8jfy31U89s0Igz (For UAT)\n");
-            Console.Write("Enter your Client Secret: ");
-            string clientSecret = Console.ReadLine();
+                uriString = "http://18.138.61.187";
+                lockerStationId = "c17fb923-70f9-4d3c-b081-4226096d6905";
+                version = "v1";
+                clientId = "ef3350f9-ace2-4900-9da0-bba80402535a";
+                clientSecret = "FA1s0QmZFxXh44QUkVOcEj19hvhjWTsfl1sslwGO";
+            }
+            else if (environmentType == "UAT")
+            {
+                uriString = "https://uat-p.picknetwork.com/";
+                lockerStationId = "062df68f-7635-4b33-b3a5-e5738ce6b518";
+                version = "v1";
+                clientId = "06a2fe24-c3e2-409d-8289-e04293e0d8f0";
+                clientSecret = "JCBGGnsqwtlNBN1K60WNhmNiIR8jfy31U89s0Igz";
+            }
+            else 
+            {
+                Console.WriteLine("Invalid environment type.");
+            }
 
             Console.Write("Configuration Path : ");
             string configurationPath = Console.ReadLine();
