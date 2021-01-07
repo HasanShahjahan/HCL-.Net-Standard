@@ -38,7 +38,7 @@ namespace LSS.BE.Core.Domain.Services
         /// <summary>
         ///   Get token response initialization value.
         ///</summary>
-        public readonly TokenResponse TokenResponse;
+        public TokenResponse TokenResponse;
 
         /// <summary>
         ///   Set gateway initialization member value.
@@ -78,10 +78,20 @@ namespace LSS.BE.Core.Domain.Services
             MemberInfo = memberInfo;
             HttpHandler = new HttpHandlerHelper(MemberInfo.UriString);
             _serviceInvoke = new ServiceInvoke(MemberInfo, HttpHandler);
-            TokenResponse = _serviceInvoke.InitAsync();
-            if (TokenResponse.StatusCode == 200) LockerManager = new LockerManager(MemberInfo.ConfigurationPath);
+            LockerManager = new LockerManager(MemberInfo.ConfigurationPath);
             if(LockerManager != null) _scannerServiceHelper = new ScannerServiceHelper(LockerManager.LockerConfiguration);
             if (LockerManager != null) ScannerInit = _scannerServiceHelper.Start(LockerManager);
+        }
+
+        /// <summary>
+        /// Setup the token for calling another api calling. 
+        /// </summary>
+        /// <returns>
+        ///  Gets token result.  
+        /// </returns>
+        public void SetupToken()
+        {
+            TokenResponse = _serviceInvoke.InitAsync();
         }
 
         /// <summary>
@@ -236,9 +246,9 @@ namespace LSS.BE.Core.Domain.Services
             {
                 Log.Information("[Locker Station Details][Req]" + "[Locker Station Id : " + lockerStationId + "]");
                 var queryString = new Dictionary<string, string>()
-            {
-                { "locker_station_id", lockerStationId }
-            };
+                {
+                    { "locker_station_id", lockerStationId }
+                };
                 var response = HttpHandler.GetRequestResolver(queryString, MemberInfo.Version, MemberInfo.ClientId, MemberInfo.ClientSecret, UriAbsolutePath.LockerStationDetails, TokenResponse.AccessToken, TokenResponse.DateTime);
                 Log.Information("[Get Available Sizes][Res]" + "[" + response + "]");
 

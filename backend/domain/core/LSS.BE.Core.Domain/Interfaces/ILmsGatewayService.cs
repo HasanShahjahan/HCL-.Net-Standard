@@ -12,6 +12,14 @@ namespace LSS.BE.Core.Domain.Interfaces
     public interface ILmsGatewayService
     {
         /// <summary>
+        /// Setup the token for calling another api calling. 
+        /// </summary>
+        /// <returns>
+        ///  Gets token result.  
+        /// </returns>
+        void SetupToken();
+
+        /// <summary>
         /// Sets the Lsp verification member by providing locker station id, key and pin.
         /// </summary>
         /// <returns>
