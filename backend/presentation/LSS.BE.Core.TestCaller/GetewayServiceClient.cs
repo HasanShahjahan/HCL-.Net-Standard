@@ -35,10 +35,10 @@ namespace LSS.BE.Core.TestCaller
             else if (environmentType == "UAT")
             {
                 uriString = "https://uat-p.picknetwork.com/";
-                lockerStationId = "062df68f-7635-4b33-b3a5-e5738ce6b518";
+                lockerStationId = "3b142420-8dc0-4996-a5fd-9777bd06b95c";
                 version = "v1";
-                clientId = "06a2fe24-c3e2-409d-8289-e04293e0d8f0";
-                clientSecret = "JCBGGnsqwtlNBN1K60WNhmNiIR8jfy31U89s0Igz";
+                clientId = "aaa85d8e-2776-4e76-91ea-d7068ab6a18a";
+                clientSecret = "NRW672B1LQR7u9eyF95qercNRDd345qTuMP8Eyev";
             }
             else 
             {
@@ -153,29 +153,6 @@ namespace LSS.BE.Core.TestCaller
             Console.WriteLine("-----------------------------------------------------------------------------");
 
             #endregion
-
-            //#region Assign Similar Size Locker
-            //Console.WriteLine("[Assign Similar Size Locker][Req]");
-
-            //Console.Write("Booking Id: ");
-            //string bookingId = Console.ReadLine();
-
-            //Console.Write("Reason: ");
-            //string reason = Console.ReadLine();
-
-            //var assignSimilarSizeLocker = new AssignSimilarSizeLocker()
-            //{
-            //    LockerStationId = lockerStationId,
-            //    BookingId = Convert.ToInt32(bookingId),
-            //    Reason = reason
-            //};
-
-            //var similarSizeLockerResult = gatewayService.AssignSimilarSizeLocker(assignSimilarSizeLocker);
-            //Console.WriteLine("[Assign Similar Size Locker][Res]");
-            //Console.WriteLine(JsonConvert.SerializeObject(similarSizeLockerResult, Formatting.Indented));
-            //Console.WriteLine("-----------------------------------------------------------------------------");
-
-            //#endregion
 
             #region Get Available Sizes
             Console.WriteLine("[Get Available Sizes][Req]");
@@ -346,19 +323,15 @@ namespace LSS.BE.Core.TestCaller
             #region Send OTP
             Console.WriteLine("[Send Otp][Req]\n");
 
-            Console.Write("MobileNumber: ");
+            Console.Write("Mobile Number: ");
             string consumerCollectMobileNumber = Console.ReadLine();
 
-            Console.Write("BookingId: ");
+            Console.Write("Booking Id: ");
             string consumerBookingId = Console.ReadLine();
-
-            Console.Write("LspId: ");
-            string consumerLspId = Console.ReadLine();
 
             var sendOtp = new SendOtp()
             {
                 LockerStationId = lockerStationId,
-                LspId = consumerLspId,
                 PhoneNumber = consumerCollectMobileNumber,
                 BookingId = consumerBookingId
             };
@@ -444,7 +417,7 @@ namespace LSS.BE.Core.TestCaller
             {
                 LockerStationId = lockerStationId,
                 BookingId = Convert.ToInt32(consumerUpdateBookingStatusBookingId),
-                LspId = consumerLspId,
+                LspId = string.Empty,
                 MobileNumber = consumerMobileNumber,
                 Status = consumerStatus,
                 Reason = consumerUpdateBookingReason
