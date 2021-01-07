@@ -352,8 +352,8 @@ namespace LSS.BE.Core.TestCaller
             Console.Write("Phone Number: ");
             string ConsumerPhoneNumber = Console.ReadLine();
 
-            Console.Write("LspId: ");
-            string consumerVerifyPinLspId = Console.ReadLine();
+            Console.Write("Booking Id: ");
+            string consumerVerifyPinBookingId = Console.ReadLine();
 
             Console.Write("Ref Code: ");
             string consumerRefCode = Console.ReadLine();
@@ -362,10 +362,10 @@ namespace LSS.BE.Core.TestCaller
             var consumerVerifyOtpModel = new VerifyOtp
             {
                 LockerStationId = lockerStationId,
-                LspId = consumerVerifyPinLspId,
                 Code = consumerCode,
                 PhoneNumber = ConsumerPhoneNumber,
-                RefCode = consumerRefCode
+                RefCode = consumerRefCode,
+                BookingId = consumerVerifyPinBookingId
             };
 
             var consumerVerifyOtpResult = gatewayService.VerifyOtp(consumerVerifyOtpModel);
@@ -417,7 +417,6 @@ namespace LSS.BE.Core.TestCaller
             {
                 LockerStationId = lockerStationId,
                 BookingId = Convert.ToInt32(consumerUpdateBookingStatusBookingId),
-                LspId = string.Empty,
                 MobileNumber = consumerMobileNumber,
                 Status = consumerStatus,
                 Reason = consumerUpdateBookingReason

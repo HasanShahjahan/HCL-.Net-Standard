@@ -49,9 +49,9 @@ namespace LSS.HCM.Core.Domain.Services
                 Log.Debug("[HCM][Socket Listener Service][Async Start][Start Listen Socket]");
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                Log.Error("[HCM][Socket Listener Service][Async Start] :" + ex);
             }
         }
 
@@ -105,9 +105,10 @@ namespace LSS.HCM.Core.Domain.Services
                 }
 
             }
-            catch (SocketException)
+            catch (SocketException ex)
             {
                 _listener.BeginAccept(new AsyncCallback(AcceptCallback), _listener);
+                Log.Error("[HCM][Socket Listener Service][Read Call back] :" + ex);
             }
         }
     }
