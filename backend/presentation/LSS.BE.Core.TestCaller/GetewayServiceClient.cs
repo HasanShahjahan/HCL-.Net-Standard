@@ -811,22 +811,13 @@ namespace LSS.BE.Core.TestCaller
             Console.Write("Status: ");
             string updateBookingStatus = Console.ReadLine();
 
-            Console.Write("MobileNumber: ");
-            string mobileNumber = Console.ReadLine();
-
-            Console.Write("Reason: ");
-            string updateBookingReason = Console.ReadLine();
-
             var bookingStatusUpdate = new BookingStatus()
             {
                 LockerStationId = lockerStationId,
                 BookingId = Convert.ToInt32(UpdateBookingStatusBookingId),
                 LspId = lspVerificationResponse.LspId,
                 LspUserId = lspVerificationResponse.LspUserId,
-                MobileNumber = mobileNumber,
-                Status = updateBookingStatus,
-                Reason = updateBookingReason
-
+                Status = updateBookingStatus
             };
 
             var bookingStatusUpdateResult = gatewayService.UpdateBookingStatus(bookingStatusUpdate);
