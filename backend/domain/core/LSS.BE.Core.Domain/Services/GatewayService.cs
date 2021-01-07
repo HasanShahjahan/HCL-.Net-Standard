@@ -61,6 +61,11 @@ namespace LSS.BE.Core.Domain.Services
         private readonly ServiceInvoke _serviceInvoke;
 
         /// <summary>
+        ///   Initialize scanner helper.
+        ///</summary>
+        private readonly ScannerServiceHelper _scannerServiceHelper;
+
+        /// <summary>
         ///   Get scanner initialization value.
         ///</summary>
         public readonly bool ScannerInit;
@@ -75,7 +80,8 @@ namespace LSS.BE.Core.Domain.Services
             _serviceInvoke = new ServiceInvoke(MemberInfo, HttpHandler);
             TokenResponse = _serviceInvoke.InitAsync();
             if (TokenResponse.StatusCode == 200) LockerManager = new LockerManager(MemberInfo.ConfigurationPath);
-            if (LockerManager != null) ScannerInit = ScannerServiceHelper.Start(LockerManager);
+            if(LockerManager != null) _scannerServiceHelper = new ScannerServiceHelper(LockerManager.LockerConfiguration);
+            if (LockerManager != null) ScannerInit = _scannerServiceHelper.Start(LockerManager);
         }
 
         /// <summary>
@@ -601,6 +607,7 @@ namespace LSS.BE.Core.Domain.Services
                 HttpHandler?.Dispose();
                 _serviceInvoke?.Dispose();
                 LockerManager?.Dispose();
+                _scannerServiceHelper?.Dispose();
             }
             _disposed = true;
         }
